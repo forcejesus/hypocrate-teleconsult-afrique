@@ -71,11 +71,11 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline" className="border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50 font-medium">
-              Se connecter
+            <Button variant="outline" asChild className="border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50 font-medium">
+              <Link to="/login">Se connecter</Link>
             </Button>
-            <Button className="bg-hypocrate-blue hover:bg-blue-600 text-white font-medium">
-              S'inscrire
+            <Button asChild className="bg-hypocrate-blue hover:bg-blue-600 text-white font-medium">
+              <Link to="/register">S'inscrire</Link>
             </Button>
           </div>
 
@@ -134,11 +134,11 @@ const Navbar = () => {
               FAQ
             </Link>
             <div className="flex flex-col space-y-2 pt-4">
-              <Button variant="outline" className="w-full border-hypocrate-blue text-hypocrate-blue font-medium">
-                Se connecter
+              <Button variant="outline" asChild className="w-full border-hypocrate-blue text-hypocrate-blue font-medium">
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>Se connecter</Link>
               </Button>
-              <Button className="w-full bg-hypocrate-blue hover:bg-blue-600 text-white font-medium">
-                S'inscrire
+              <Button asChild className="w-full bg-hypocrate-blue hover:bg-blue-600 text-white font-medium">
+                <Link to="/register" onClick={() => setMobileMenuOpen(false)}>S'inscrire</Link>
               </Button>
             </div>
           </div>

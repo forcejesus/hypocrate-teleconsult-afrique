@@ -16,6 +16,9 @@ import ConseilsMedicaux from "./pages/ConseilsMedicaux";
 import Confidentialite from "./pages/Confidentialite";
 import Cgu from "./pages/Cgu";
 import Consentement from "./pages/Consentement";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +29,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/comment-ca-marche" element={<CommentCaMarche />} />
@@ -37,6 +41,8 @@ const App = () => (
             <Route path="/confidentialite" element={<Confidentialite />} />
             <Route path="/cgu" element={<Cgu />} />
             <Route path="/consentement" element={<Consentement />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
