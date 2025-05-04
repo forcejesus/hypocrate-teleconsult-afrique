@@ -5,6 +5,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const FaqSection = () => {
   const faqItems = [
@@ -35,35 +37,41 @@ const FaqSection = () => {
   ];
 
   return (
-    <section className="section-padding bg-hypocrate-gray" id="faq">
+    <section className="section-padding bg-white" id="faq">
       <div className="container-custom">
-        <h2 className="section-title">Questions fréquentes</h2>
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Questions fréquentes</h2>
+          <p className="text-lg text-gray-600">
+            Trouvez des réponses aux questions les plus courantes sur notre service de téléconsultation médicale.
+          </p>
+        </div>
         
-        <div className="max-w-3xl mx-auto mt-8">
-          <Accordion type="single" collapsible className="bg-white rounded-lg shadow-sm">
-            {faqItems.map((item, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="px-6 text-left font-medium text-gray-900 hover:text-hypocrate-blue hover:no-underline">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="px-6 text-gray-700">
-                  {item.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+            <Accordion type="single" collapsible className="divide-y divide-gray-100">
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border-none">
+                  <AccordionTrigger className="px-6 py-5 text-left font-medium text-gray-900 hover:text-hypocrate-blue hover:no-underline data-[state=open]:text-hypocrate-blue">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-6 pt-0 text-gray-700">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
         
         <div className="mt-12 text-center">
           <p className="text-gray-700 mb-4">
             Vous ne trouvez pas la réponse à votre question ?
           </p>
-          <a 
-            href="mailto:contact@hypocrate-teleconsult.com" 
-            className="text-hypocrate-blue hover:underline font-medium"
-          >
-            Contactez-nous directement
-          </a>
+          <Link to="/faq">
+            <Button variant="outline" className="border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50 font-medium">
+              Voir toutes les questions fréquentes
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 
-import { Book, Info, Mail, MessageCircle, Search } from 'lucide-react';
+import { Book, MessageCircle, Search, FileText, Clock } from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
 
 const AdvantagesSection = () => {
   const advantages = [
@@ -19,63 +20,71 @@ const AdvantagesSection = () => {
       description: "Gardez un historique complet de vos consultations et ordonnances."
     },
     {
-      icon: <Mail className="h-8 w-8 text-hypocrate-blue" />,
+      icon: <FileText className="h-8 w-8 text-hypocrate-blue" />,
       title: "Ordonnances électroniques",
       description: "Recevez vos prescriptions directement par email après la consultation."
     },
     {
-      icon: <Info className="h-8 w-8 text-hypocrate-blue" />,
-      title: "Conseils médicaux",
-      description: "Profitez de conseils personnalisés pour votre santé."
+      icon: <Clock className="h-8 w-8 text-hypocrate-blue" />,
+      title: "Consultation rapide",
+      description: "Obtenez un rendez-vous avec un médecin en moins de 30 minutes."
     }
   ];
 
   return (
-    <section className="section-padding bg-hypocrate-lightBlue">
+    <section className="section-padding bg-gradient-to-b from-white to-hypocrate-lightBlue/30">
       <div className="container-custom">
-        <h2 className="section-title">Les avantages d'Hypocrate</h2>
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Pourquoi choisir Hypocrate</h2>
+          <p className="text-lg text-gray-600">
+            Hypocrate vous offre une expérience de consultation médicale à distance simple, 
+            sécurisée et adaptée aux patients africains.
+          </p>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {advantages.map((advantage, index) => (
-            <div 
+            <Card 
               key={index}
-              className="bg-white p-6 rounded-lg shadow-sm flex items-start animate-fade-in"
+              className="border-none shadow-lg hover:shadow-xl transition-all bg-white animate-fade-in"
               style={{ animationDelay: `${0.1 * index}s` }}
             >
-              <div className="mr-4 mt-1">
-                {advantage.icon}
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2">{advantage.title}</h3>
-                <p className="text-gray-600">{advantage.description}</p>
-              </div>
-            </div>
+              <CardContent className="p-6 flex items-start">
+                <div className="mr-4 mt-1 bg-hypocrate-lightBlue/60 p-3 rounded-lg">
+                  {advantage.icon}
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">{advantage.title}</h3>
+                  <p className="text-gray-600">{advantage.description}</p>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
         
-        <div className="mt-16 bg-white p-8 rounded-lg shadow-md">
+        <div className="mt-16 bg-white p-8 rounded-xl shadow-lg">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-semibold">
+            <h3 className="text-2xl font-bold">
               Une équipe médicale à votre service
             </h3>
-            <p className="text-gray-600 mt-2 max-w-3xl mx-auto">
+            <p className="text-gray-600 mt-4 max-w-3xl mx-auto">
               Notre réseau comprend des professionnels de santé du monde entier, 
               formés aux spécificités des consultations à distance et aux besoins des patients africains.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-hypocrate-gray rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-r from-hypocrate-lightBlue to-blue-100 rounded-xl p-8 text-center transform transition-transform hover:scale-105">
               <div className="text-4xl font-bold text-hypocrate-blue mb-2">100+</div>
-              <p className="text-gray-700">Médecins certifiés</p>
+              <p className="text-gray-700 font-medium">Médecins certifiés</p>
             </div>
-            <div className="bg-hypocrate-gray rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-r from-hypocrate-lightBlue to-blue-100 rounded-xl p-8 text-center transform transition-transform hover:scale-105">
               <div className="text-4xl font-bold text-hypocrate-blue mb-2">20+</div>
-              <p className="text-gray-700">Spécialités médicales</p>
+              <p className="text-gray-700 font-medium">Spécialités médicales</p>
             </div>
-            <div className="bg-hypocrate-gray rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-r from-hypocrate-lightBlue to-blue-100 rounded-xl p-8 text-center transform transition-transform hover:scale-105">
               <div className="text-4xl font-bold text-hypocrate-blue mb-2">15+</div>
-              <p className="text-gray-700">Langues disponibles</p>
+              <p className="text-gray-700 font-medium">Langues disponibles</p>
             </div>
           </div>
         </div>

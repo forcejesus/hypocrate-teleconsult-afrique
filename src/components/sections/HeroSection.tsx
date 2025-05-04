@@ -4,41 +4,75 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
-    <section className="bg-gradient-to-br from-hypocrate-lightBlue to-white py-12 md:py-20">
+    <section className="bg-gradient-to-br from-hypocrate-lightBlue via-white to-white py-20 md:py-28">
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row items-center gap-10">
           {/* Text Content */}
           <div className="w-full lg:w-1/2 space-y-6 animate-fade-in">
+            <div className="inline-block bg-blue-100 text-hypocrate-blue font-medium px-4 py-1 rounded-full text-sm mb-4">
+              Téléconsultation médicale avec traduction
+            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
-              Consultez un médecin en ligne, <span className="text-hypocrate-blue">où que vous soyez</span>
+              Consultez un médecin <span className="text-hypocrate-blue">depuis n'importe où</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-700">
-              Hypocrate connecte les patients africains avec des médecins du monde entier, avec un service de traduction pour faciliter la communication.
+              Accédez à des consultations médicales de qualité sans barrière linguistique, depuis l'Afrique ou n'importe où dans le monde.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button className="btn-primary text-lg py-6" size="lg">
+              <Button className="bg-hypocrate-blue hover:bg-blue-600 text-white font-semibold text-lg py-6 px-8 rounded-md">
                 Prendre rendez-vous
               </Button>
               <Link to="/comment-ca-marche">
-                <Button variant="outline" className="btn-outline text-lg py-6" size="lg">
+                <Button variant="outline" className="border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50 font-semibold text-lg py-6 px-8 rounded-md">
                   Comment ça marche
                 </Button>
               </Link>
             </div>
-            <div className="pt-4">
-              <p className="text-sm text-gray-500">
-                ✓ Disponible 7j/7  ✓ Médecins certifiés  ✓ Service de traduction
-              </p>
+            <div className="pt-4 flex flex-wrap gap-4 items-center">
+              <div className="flex items-center">
+                <div className="bg-green-500 rounded-full p-1">
+                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="ml-2 text-gray-700 font-medium">Disponible 7j/7</span>
+              </div>
+              <div className="flex items-center">
+                <div className="bg-green-500 rounded-full p-1">
+                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="ml-2 text-gray-700 font-medium">Médecins certifiés</span>
+              </div>
+              <div className="flex items-center">
+                <div className="bg-green-500 rounded-full p-1">
+                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="ml-2 text-gray-700 font-medium">Service de traduction</span>
+              </div>
             </div>
           </div>
           
           {/* Image */}
           <div className="w-full lg:w-1/2 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <img 
-              src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=600" 
-              alt="Téléconsultation médicale" 
-              className="w-full h-auto rounded-lg shadow-xl"
-            />
+            <div className="relative">
+              <div className="absolute inset-0 bg-hypocrate-blue/10 rounded-2xl -rotate-3 transform"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                alt="Téléconsultation médicale" 
+                className="w-full h-auto object-cover rounded-2xl shadow-xl relative z-10"
+              />
+              <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-lg shadow-lg z-20 max-w-[200px]">
+                <div className="flex items-center mb-2">
+                  <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                  <p className="text-sm font-semibold text-gray-800">Dr. Sarah est en ligne</p>
+                </div>
+                <p className="text-xs text-gray-600">Consultations disponibles dans les 30 minutes</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
