@@ -5,8 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 
 const FaqSection = () => {
   const faqItems = [
@@ -61,17 +59,6 @@ const FaqSection = () => {
               ))}
             </Accordion>
           </div>
-        </div>
-        
-        <div className="mt-12 text-center">
-          <p className="text-gray-700 mb-4">
-            Vous ne trouvez pas la réponse à votre question ?
-          </p>
-          <Link to="/faq">
-            <Button variant="outline" className="border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50 font-medium">
-              Voir toutes les questions fréquentes
-            </Button>
-          </Link>
         </div>
       </div>
     </section>

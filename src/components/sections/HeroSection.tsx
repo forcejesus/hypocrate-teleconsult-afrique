@@ -61,16 +61,16 @@ const HeroSection = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-hypocrate-blue/10 rounded-2xl -rotate-3 transform"></div>
               <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                alt="Téléconsultation médicale" 
+                src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=600&q=80" 
+                alt="Téléconsultation médicale avec Hypocrate" 
                 className="w-full h-auto object-cover rounded-2xl shadow-xl relative z-10"
               />
-              <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-lg shadow-lg z-20 max-w-[200px]">
+              <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-lg shadow-lg z-20 max-w-[220px]">
                 <div className="flex items-center mb-2">
                   <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
                   <p className="text-sm font-semibold text-gray-800">Dr. Sarah est en ligne</p>
                 </div>
-                <p className="text-xs text-gray-600">Consultations disponibles dans les 30 minutes</p>
+                <p className="text-xs text-gray-600">Traducteur disponible pour votre consultation</p>
               </div>
             </div>
           </div>

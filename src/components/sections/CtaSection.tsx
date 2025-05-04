@@ -24,14 +24,9 @@ const CtaSection = () => {
             Prenez rendez-vous dès maintenant et bénéficiez d'une consultation médicale de qualité, 
             avec l'assistance d'un traducteur si nécessaire.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 sm:gap-4">
-            <Button size="lg" className="bg-white text-hypocrate-blue hover:bg-gray-100 font-semibold px-8 py-6 rounded-md shadow-lg hover:shadow-xl transition-all">
-              Prendre rendez-vous
-            </Button>
-            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 hover:border-white font-semibold px-8 py-6 rounded-md">
-              Créer un compte
-            </Button>
-          </div>
+          <Button size="lg" className="bg-white text-hypocrate-blue hover:bg-gray-100 font-semibold px-8 py-6 rounded-md shadow-lg hover:shadow-xl transition-all">
+            Trouver un médecin
+          </Button>
           
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
