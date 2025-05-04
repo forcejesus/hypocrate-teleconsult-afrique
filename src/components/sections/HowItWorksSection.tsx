@@ -1,6 +1,7 @@
 
 import { Calendar, Video, MessageSquare, CheckCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const HowItWorksSection = () => {
   const steps = [
@@ -82,8 +83,10 @@ const HowItWorksSection = () => {
             </div>
           </div>
           <div className="mt-8 flex justify-center">
-            <Button className="bg-hypocrate-blue hover:bg-blue-600 text-white font-semibold py-5 px-8 rounded-md">
-              Découvrir nos médecins
+            <Button className="bg-hypocrate-blue hover:bg-blue-600 text-white font-semibold py-5 px-8 rounded-md" asChild>
+              <Link to="/nos-medecins">
+                Découvrir nos médecins
+              </Link>
             </Button>
           </div>
         </div>

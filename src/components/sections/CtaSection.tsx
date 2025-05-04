@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const CtaSection = () => {
   return (
@@ -24,8 +25,10 @@ const CtaSection = () => {
             Prenez rendez-vous dès maintenant et bénéficiez d'une consultation médicale de qualité, 
             avec l'assistance d'un traducteur si nécessaire.
           </p>
-          <Button size="lg" className="bg-white text-hypocrate-blue hover:bg-gray-100 font-semibold px-8 py-6 rounded-md shadow-lg hover:shadow-xl transition-all">
-            Trouver un médecin
+          <Button size="lg" className="bg-white text-hypocrate-blue hover:bg-gray-100 font-semibold px-8 py-6 rounded-md shadow-lg hover:shadow-xl transition-all" asChild>
+            <Link to="/nos-medecins">
+              Trouver un médecin
+            </Link>
           </Button>
           
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
