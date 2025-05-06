@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { countries } from '@/data/countries';
+import { countries, getAfricanCountries, getAllCountries } from '@/data/countries';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Eye, EyeOff } from 'lucide-react';
 import { UserTypeSelector } from '@/components/auth/UserTypeSelector';
@@ -36,6 +36,7 @@ const Register = () => {
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [availableCountries, setAvailableCountries] = useState(getAllCountries);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -44,7 +45,7 @@ const Register = () => {
       firstName: '',
       lastName: '',
       email: '',
-      country: 'FR',
+      country: '',
       phone: '',
       gender: '',
       password: '',
@@ -54,6 +55,21 @@ const Register = () => {
 
   const userType = form.watch('userType');
   const selectedCountry = form.watch('country');
+  
+  // Mettre à jour la liste des pays disponibles en fonction du type d'utilisateur
+  useEffect(() => {
+    if (userType === 'patient') {
+      setAvailableCountries(getAfricanCountries());
+      // Réinitialiser le pays sélectionné si ce n'est pas un pays africain
+      const currentCountry = form.getValues('country');
+      const isAfrican = getAfricanCountries().some(c => c.code === currentCountry);
+      if (currentCountry && !isAfrican) {
+        form.setValue('country', '');
+      }
+    } else {
+      setAvailableCountries(getAllCountries());
+    }
+  }, [userType, form]);
   
   const handleCountryChange = (value: string) => {
     form.setValue('country', value);
@@ -105,7 +121,7 @@ const Register = () => {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <motion.main 
-        className="flex-grow bg-gray-50"
+        className="flex-grow bg-gradient-to-b from-gray-50 to-white"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -120,7 +136,7 @@ const Register = () => {
           >
             <div className="md:w-1/2">
               <motion.h1 
-                className="text-3xl md:text-4xl font-bold text-hypocrate-blue mb-4"
+                className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-hypocrate-blue to-hypocrate-green mb-4"
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
@@ -162,8 +178,15 @@ const Register = () => {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <Card>
-                <CardHeader>
+              <Card className="border-0 shadow-lg overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1">
+                  <div className="h-full bg-gradient-to-r from-hypocrate-blue to-hypocrate-green" style={{
+                    width: step === 1 ? "50%" : "100%",
+                    transition: "width 0.5s ease-in-out"
+                  }}></div>
+                </div>
+                
+                <CardHeader className="bg-gray-50">
                   <CardTitle>{step === 1 ? "Informations personnelles" : "Sécurité du compte"}</CardTitle>
                   <CardDescription>
                     {step === 1 
@@ -171,7 +194,7 @@ const Register = () => {
                       : "Créez un mot de passe sécurisé pour protéger votre compte"}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-6">
                   {step === 1 ? (
                     <motion.div
                       variants={containerVariants}
@@ -266,7 +289,7 @@ const Register = () => {
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {countries.map((country) => (
+                                    {availableCountries.map((country) => (
                                       <SelectItem key={country.code} value={country.code}>
                                         <span className="flex items-center">
                                           <span className="mr-2">{country.flag}</span>
@@ -422,7 +445,7 @@ const Register = () => {
                 {step === 1 ? (
                   <Button
                     type="button"
-                    className="ml-auto bg-hypocrate-blue hover:bg-blue-600"
+                    className="ml-auto bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600"
                     onClick={goToNextStep}
                   >
                     Continuer
@@ -430,7 +453,7 @@ const Register = () => {
                 ) : (
                   <Button
                     type="submit"
-                    className="ml-auto bg-hypocrate-blue hover:bg-blue-600"
+                    className="ml-auto bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600"
                   >
                     S'inscrire
                   </Button>
