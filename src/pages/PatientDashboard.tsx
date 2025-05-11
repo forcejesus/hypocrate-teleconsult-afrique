@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import { PatientUpcomingConsultations } from '@/components/patient/PatientUpcomingConsultations';
 import { PatientPendingConsultations } from '@/components/patient/PatientPendingConsultations';
 import { PatientFindDoctor } from '@/components/patient/PatientFindDoctor';
+import { PatientSettings } from '@/components/patient/PatientSettings';
 import { motion } from 'framer-motion';
 
 const PatientDashboard = () => {
@@ -31,10 +32,11 @@ const PatientDashboard = () => {
           </motion.div>
 
           <Tabs defaultValue="upcoming" value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="upcoming" className="text-sm md:text-base">Consultations à venir</TabsTrigger>
               <TabsTrigger value="pending" className="text-sm md:text-base">Consultations en attente</TabsTrigger>
               <TabsTrigger value="find" className="text-sm md:text-base">Trouver un médecin</TabsTrigger>
+              <TabsTrigger value="settings" className="text-sm md:text-base">Paramètres</TabsTrigger>
             </TabsList>
             
             <TabsContent value="upcoming" className="mt-0">
@@ -47,6 +49,10 @@ const PatientDashboard = () => {
             
             <TabsContent value="find" className="mt-0">
               <PatientFindDoctor />
+            </TabsContent>
+            
+            <TabsContent value="settings" className="mt-0">
+              <PatientSettings />
             </TabsContent>
           </Tabs>
         </div>
