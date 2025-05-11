@@ -6,12 +6,27 @@ import { useLocation } from 'react-router-dom';
 import PatientMobileHeader from '@/components/patient/dashboard/PatientMobileHeader';
 import PatientSidebar from '@/components/patient/dashboard/PatientSidebar';
 import PatientContent from '@/components/patient/dashboard/PatientContent';
+import PatientProfileCompletion from '@/components/patient/PatientProfileCompletion';
 
 const PatientDashboard = () => {
   const [activeSection, setActiveSection] = useState("upcoming");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [profileCompleted, setProfileCompleted] = useState(false); // Track if profile is completed
   const isMobile = useIsMobile();
   const location = useLocation();
+
+  // For demo purposes: Check if profile is completed from localStorage
+  // In a real app, this would come from an API call or user context
+  useEffect(() => {
+    const isProfileCompleted = localStorage.getItem('profileCompleted') === 'true';
+    setProfileCompleted(isProfileCompleted);
+  }, []);
+
+  // Mark profile as completed
+  const handleProfileComplete = () => {
+    localStorage.setItem('profileCompleted', 'true');
+    setProfileCompleted(true);
+  };
 
   // Close mobile sidebar when changing sections
   useEffect(() => {
@@ -40,6 +55,15 @@ const PatientDashboard = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [mobileSidebarOpen]);
+
+  // Show profile completion if not yet completed
+  if (!profileCompleted) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <PatientProfileCompletion onComplete={handleProfileComplete} />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
