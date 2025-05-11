@@ -19,7 +19,7 @@ export const NavItem: React.FC<NavItemProps> = ({ id, icon, label, isActive, onC
           : 'text-gray-600 hover:bg-gray-100'
       }`}
     >
-      <div className="flex items-center justify-start w-full">
+      <div className="flex items-center w-full">
         {icon}
         <span className="ml-3">{label}</span>
       </div>
