@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PasswordField } from './PasswordField';
 import { UserTypeSelectDropdown } from '@/components/auth/UserTypeSelectDropdown';
@@ -20,6 +20,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,7 +32,11 @@ export const LoginForm = () => {
 
   const onSubmit = (values: FormValues) => {
     console.log(values);
-    // Implémentation de la connexion à ajouter ici
+    // Rediriger vers l'espace approprié en fonction du type d'utilisateur
+    if (values.userType === 'patient') {
+      navigate('/patient-dashboard');
+    }
+    // Implémentation de la connexion à ajouter ici pour les autres types d'utilisateurs
   };
 
   return (

@@ -18,6 +18,8 @@ import Cgu from "./pages/Cgu";
 import Consentement from "./pages/Consentement";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import PatientDashboard from "./pages/PatientDashboard";
+import DoctorBooking from "./pages/DoctorBooking";
 import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
@@ -43,6 +45,9 @@ const App = () => (
             <Route path="/consentement" element={<Consentement />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            {/* Nouvelles routes pour l'espace patient */}
+            <Route path="/patient-dashboard" element={<PatientDashboard />} />
+            <Route path="/doctor-booking/:doctorId" element={<DoctorBooking />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
