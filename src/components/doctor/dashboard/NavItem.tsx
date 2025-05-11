@@ -20,8 +20,8 @@ export const NavItem: React.FC<NavItemProps> = ({ id, icon, label, isActive, onC
       }`}
     >
       <div className="flex items-center w-full">
-        {icon}
-        <span>{label}</span>
+        <span className="mr-3">{icon}</span>
+        <span className="text-left">{label}</span>
       </div>
     </button>
   );

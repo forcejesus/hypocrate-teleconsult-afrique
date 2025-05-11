@@ -33,10 +33,19 @@ export const LoginForm = () => {
   const onSubmit = (values: FormValues) => {
     console.log(values);
     // Rediriger vers l'espace approprié en fonction du type d'utilisateur
-    if (values.userType === 'patient') {
-      navigate('/patient-dashboard');
+    switch (values.userType) {
+      case 'patient':
+        navigate('/patient-dashboard');
+        break;
+      case 'doctor':
+        navigate('/doctor-dashboard');
+        break;
+      case 'interpreter':
+        navigate('/interpreter-dashboard');
+        break;
+      default:
+        navigate('/patient-dashboard');
     }
-    // Implémentation de la connexion à ajouter ici pour les autres types d'utilisateurs
   };
 
   return (

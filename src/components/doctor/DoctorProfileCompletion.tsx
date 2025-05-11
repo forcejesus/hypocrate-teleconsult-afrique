@@ -60,27 +60,34 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
     }
   };
 
-  const onSubmit = (data: ProfileFormValues) => {
-    if (step === 1 && !licenseFile) {
-      toast({
-        title: "Document manquant",
-        description: "Veuillez télécharger votre licence médicale",
-        variant: "destructive"
-      });
-      return;
-    }
+  const handleNextStep = async () => {
+    // For step 1, validate only the first step fields
+    const fieldsToValidate = ['specialty', 'licenseNumber', 'yearsOfExperience', 'education'];
     
-    if (step < 2) {
-      setStep(step + 1);
-    } else {
-      console.log("Form data:", data);
-      console.log("License file:", licenseFile);
-      toast({
-        title: "Profil complété",
-        description: "Votre profil a été enregistré avec succès. Vos documents seront vérifiés prochainement."
-      });
-      onComplete();
+    const isValid = await form.trigger(fieldsToValidate as any);
+    
+    if (isValid) {
+      if (!licenseFile) {
+        toast({
+          title: "Document manquant",
+          description: "Veuillez télécharger votre licence médicale",
+          variant: "destructive"
+        });
+        return;
+      }
+      setStep(2);
+      window.scrollTo(0, 0);
     }
+  };
+
+  const onSubmit = (data: ProfileFormValues) => {
+    console.log("Form data:", data);
+    console.log("License file:", licenseFile);
+    toast({
+      title: "Profil complété",
+      description: "Votre profil a été enregistré avec succès. Vos documents seront vérifiés prochainement."
+    });
+    onComplete();
   };
 
   const containerVariants = {
@@ -306,12 +313,22 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                   </Button>
                 )}
                 <div className={step === 1 ? "ml-auto" : ""}>
-                  <Button 
-                    type="submit" 
-                    className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
-                  >
-                    {step < 2 ? "Suivant" : "Terminer"}
-                  </Button>
+                  {step === 1 ? (
+                    <Button 
+                      type="button" 
+                      className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+                      onClick={handleNextStep}
+                    >
+                      Suivant
+                    </Button>
+                  ) : (
+                    <Button 
+                      type="submit" 
+                      className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+                    >
+                      Terminer
+                    </Button>
+                  )}
                 </div>
               </div>
             </form>
