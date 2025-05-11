@@ -16,9 +16,14 @@ export const EmailField = ({ form, variants }: EmailFieldProps) => {
         name="email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Email</FormLabel>
+            <FormLabel className="font-medium">Email</FormLabel>
             <FormControl>
-              <Input type="email" placeholder="votre@email.com" {...field} />
+              <Input 
+                type="email" 
+                placeholder="votre@email.com" 
+                className="h-12 rounded-xl focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200" 
+                {...field} 
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

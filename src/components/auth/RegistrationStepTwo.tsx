@@ -5,30 +5,11 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/comp
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from 'lucide-react';
+import { containerVariants, itemVariants } from './registration/AnimationVariants';
 
 interface StepTwoProps {
   form: any;
 }
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1,
-    transition: { 
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    } 
-  }
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: { 
-    y: 0, 
-    opacity: 1,
-    transition: { type: "spring", stiffness: 100 }
-  }
-};
 
 export const RegistrationStepTwo = ({ form }: StepTwoProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,12 +28,13 @@ export const RegistrationStepTwo = ({ form }: StepTwoProps) => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mot de passe</FormLabel>
+              <FormLabel className="font-medium">Mot de passe</FormLabel>
               <div className="relative">
                 <FormControl>
                   <Input 
                     type={showPassword ? "text" : "password"}
                     placeholder="Créez un mot de passe sécurisé" 
+                    className="h-12 rounded-xl pr-10 focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200"
                     {...field} 
                   />
                 </FormControl>
@@ -60,7 +42,7 @@ export const RegistrationStepTwo = ({ form }: StepTwoProps) => {
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="absolute right-0 top-0"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 text-gray-500 hover:text-hypocrate-blue transition-colors"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -78,12 +60,13 @@ export const RegistrationStepTwo = ({ form }: StepTwoProps) => {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirmer le mot de passe</FormLabel>
+              <FormLabel className="font-medium">Confirmer le mot de passe</FormLabel>
               <div className="relative">
                 <FormControl>
                   <Input 
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Confirmez votre mot de passe" 
+                    className="h-12 rounded-xl pr-10 focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200"
                     {...field} 
                   />
                 </FormControl>
@@ -91,7 +74,7 @@ export const RegistrationStepTwo = ({ form }: StepTwoProps) => {
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="absolute right-0 top-0"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 text-gray-500 hover:text-hypocrate-blue transition-colors"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}

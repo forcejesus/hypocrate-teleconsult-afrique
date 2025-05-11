@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PasswordField } from './PasswordField';
 import { UserTypeSelectDropdown } from '@/components/auth/UserTypeSelectDropdown';
+import { containerVariants, itemVariants } from "@/components/auth/registration/AnimationVariants";
 
 const formSchema = z.object({
   userType: z.string().min(1, "Veuillez choisir un type d'utilisateur"),
@@ -31,27 +32,6 @@ export const LoginForm = () => {
   const onSubmit = (values: FormValues) => {
     console.log(values);
     // Implémentation de la connexion à ajouter ici
-  };
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      } 
-    }
-  };
-  
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { type: "spring", stiffness: 100 }
-    }
   };
 
   return (
@@ -88,7 +68,7 @@ export const LoginForm = () => {
                     <Input 
                       type="email" 
                       placeholder="votre@email.com" 
-                      className="h-12 rounded-xl" 
+                      className="h-12 rounded-xl focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200" 
                       {...field} 
                     />
                   </FormControl>
@@ -104,7 +84,7 @@ export const LoginForm = () => {
         </motion.div>
 
         <motion.div 
-          className="space-y-4 pt-2"
+          className="space-y-5 pt-4"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -112,7 +92,7 @@ export const LoginForm = () => {
           <motion.div variants={itemVariants}>
             <Button
               type="submit"
-              className="w-full h-12 bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 rounded-xl text-white font-medium text-lg"
+              className="w-full h-12 bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 rounded-xl text-white font-medium text-lg shadow-md hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200"
             >
               Se connecter
             </Button>
@@ -124,7 +104,7 @@ export const LoginForm = () => {
           >
             <p className="text-sm text-gray-600">
               Pas encore de compte ? {' '}
-              <Link to="/register" className="text-hypocrate-blue hover:underline font-medium">
+              <Link to="/register" className="text-hypocrate-blue hover:underline font-medium hover:text-hypocrate-green transition-colors duration-200">
                 Créer un compte
               </Link>
             </p>

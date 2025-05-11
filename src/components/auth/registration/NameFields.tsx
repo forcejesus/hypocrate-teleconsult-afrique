@@ -17,9 +17,13 @@ export const NameFields = ({ form, variants }: NameFieldsProps) => {
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Prénom</FormLabel>
+              <FormLabel className="font-medium">Prénom</FormLabel>
               <FormControl>
-                <Input placeholder="Votre prénom" {...field} />
+                <Input 
+                  placeholder="Votre prénom" 
+                  className="h-12 rounded-xl focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200" 
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -33,9 +37,13 @@ export const NameFields = ({ form, variants }: NameFieldsProps) => {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nom</FormLabel>
+              <FormLabel className="font-medium">Nom</FormLabel>
               <FormControl>
-                <Input placeholder="Votre nom" {...field} />
+                <Input 
+                  placeholder="Votre nom" 
+                  className="h-12 rounded-xl focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200" 
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
