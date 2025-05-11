@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import Footer from '@/components/Footer';
 import { PatientUpcomingConsultations } from '@/components/patient/PatientUpcomingConsultations';
 import { PatientPendingConsultations } from '@/components/patient/PatientPendingConsultations';
 import { PatientFindDoctor } from '@/components/patient/PatientFindDoctor';
@@ -105,8 +104,8 @@ const PatientDashboard = () => {
         </div>
       </header>
 
-      <div className="flex flex-1 relative">
-        {/* Mobile Sidebar */}
+      <div className="flex flex-1">
+        {/* Mobile Sidebar Overlay */}
         {isMobile && (
           <div 
             className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${
@@ -122,9 +121,9 @@ const PatientDashboard = () => {
             ${isMobile 
               ? `fixed top-0 left-0 h-full z-50 w-[270px] transform transition-transform duration-300 ease-in-out 
                 ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`
-              : 'w-64 flex-shrink-0'
+              : 'w-64 h-screen sticky top-0'
             }
-            bg-white shadow-md overflow-y-auto
+            bg-white shadow-md overflow-y-auto flex flex-col
           `}
         >
           {/* Sidebar Header */}
@@ -134,7 +133,7 @@ const PatientDashboard = () => {
           </div>
           
           {/* Navigation Links */}
-          <nav className="p-4 space-y-2">
+          <nav className="p-4 space-y-2 flex-1">
             <NavItem 
               id="upcoming" 
               icon={<Calendar className="text-hypocrate-blue" size={20} />} 
@@ -157,8 +156,8 @@ const PatientDashboard = () => {
             />
           </nav>
           
-          {/* User Info (Optional) */}
-          <div className="absolute bottom-0 left-0 w-full p-4 border-t bg-gray-50">
+          {/* User Info */}
+          <div className="p-4 border-t bg-gray-50">
             <div className="flex items-center">
               <div className="h-10 w-10 rounded-full bg-hypocrate-blue text-white flex items-center justify-center">
                 <UserRound size={20} />
@@ -172,7 +171,7 @@ const PatientDashboard = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 md:p-6">
+        <main className="flex-1 p-4 md:p-6 h-screen overflow-y-auto">
           {/* Desktop Section Title */}
           <div className="hidden md:block mb-6">
             <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-hypocrate-blue to-hypocrate-green">
@@ -195,15 +194,12 @@ const PatientDashboard = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white rounded-lg shadow-sm p-4 md:p-6"
+            className="bg-white rounded-lg shadow-sm p-4 md:p-6 h-full"
           >
             {renderContent()}
           </motion.div>
         </main>
       </div>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };
