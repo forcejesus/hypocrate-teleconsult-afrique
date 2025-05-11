@@ -17,14 +17,14 @@ export const RegistrationFormContainer = ({ step, children }: RegistrationFormCo
         }}></div>
       </div>
       
-      <CardHeader className="bg-gray-50/80 backdrop-blur-sm p-6">
+      <CardHeader className="bg-gradient-to-r from-hypocrate-lightBlue/50 to-hypocrate-lightGreen/50 backdrop-blur-sm p-7 border-b border-gray-100">
         <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-hypocrate-blue to-hypocrate-green">
           {step === 1 ? "Informations personnelles" : "Sécurité du compte"}
         </CardTitle>
-        <CardDescription className="text-gray-600">
+        <CardDescription className="text-gray-600 mt-1.5">
           {step === 1 
             ? "Veuillez renseigner vos informations de base" 
-            : "Créez un mot de passe sécurisé pour protéger votre compte"}
+            : "Choisissez un mot de passe sécurisé pour protéger votre compte Hypocrate."}
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-8 p-6">
