@@ -7,8 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { UserTypeSelector } from '@/components/auth/UserTypeSelector';
 import { PasswordField } from './PasswordField';
+import { UserTypeSelectDropdown } from '@/components/auth/UserTypeSelectDropdown';
 
 const formSchema = z.object({
   userType: z.string().min(1, "Veuillez choisir un type d'utilisateur"),
@@ -68,16 +68,11 @@ export const LoginForm = () => {
               control={form.control}
               name="userType"
               render={({ field }) => (
-                <FormItem className="space-y-4">
-                  <FormLabel className="text-gray-700 font-medium">Je suis :</FormLabel>
-                  <FormControl>
-                    <UserTypeSelector 
-                      value={field.value} 
-                      onChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <UserTypeSelectDropdown
+                  value={field.value}
+                  onChange={field.onChange}
+                  className="space-y-3"
+                />
               )}
             />
           </motion.div>

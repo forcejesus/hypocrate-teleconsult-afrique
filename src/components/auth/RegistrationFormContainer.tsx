@@ -21,7 +21,7 @@ export const RegistrationFormContainer = ({ step, children }: RegistrationFormCo
         <CardTitle>{step === 1 ? "Informations personnelles" : "Sécurité du compte"}</CardTitle>
         <CardDescription>
           {step === 1 
-            ? "Veuillez renseigner vos informations personnelles" 
+            ? "Veuillez renseigner vos informations de base" 
             : "Créez un mot de passe sécurisé pour protéger votre compte"}
         </CardDescription>
       </CardHeader>

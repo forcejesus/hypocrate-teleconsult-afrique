@@ -15,9 +15,6 @@ const Register = () => {
     form,
     step,
     userType,
-    selectedCountry,
-    availableCountries,
-    handleCountryChange,
     onSubmit,
     goToNextStep,
     goToPrevStep
@@ -43,9 +40,6 @@ const Register = () => {
                   <RegistrationStepOne
                     form={form}
                     userType={userType}
-                    selectedCountry={selectedCountry}
-                    availableCountries={availableCountries}
-                    handleCountryChange={handleCountryChange}
                   />
                 ) : (
                   <RegistrationStepTwo form={form} />
