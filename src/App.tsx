@@ -20,6 +20,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import PatientDashboard from "./pages/PatientDashboard";
 import InterpreterDashboard from "./pages/InterpreterDashboard";
+import DoctorDashboard from "./pages/DoctorDashboard";
 import DoctorBooking from "./pages/DoctorBooking";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -51,6 +52,8 @@ const App = () => (
             <Route path="/doctor-booking/:doctorId" element={<DoctorBooking />} />
             {/* Nouvel espace interprète */}
             <Route path="/interpreter-dashboard" element={<InterpreterDashboard />} />
+            {/* Nouvel espace médecin */}
+            <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

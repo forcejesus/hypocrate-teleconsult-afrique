@@ -3,13 +3,13 @@ import React from 'react';
 import { X, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-interface InterpreterMobileHeaderProps {
+interface DoctorMobileHeaderProps {
   mobileSidebarOpen: boolean;
   setMobileSidebarOpen: (isOpen: boolean) => void;
   activeSection: string;
 }
 
-export const InterpreterMobileHeader: React.FC<InterpreterMobileHeaderProps> = ({ 
+export const DoctorMobileHeader: React.FC<DoctorMobileHeaderProps> = ({ 
   mobileSidebarOpen, 
   setMobileSidebarOpen,
   activeSection
@@ -27,13 +27,13 @@ export const InterpreterMobileHeader: React.FC<InterpreterMobileHeaderProps> = (
           >
             {mobileSidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </Button>
-          <h1 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-green-600">
-            Espace Interprète
+          <h1 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-700">
+            Espace Médecin
           </h1>
         </div>
-        <div className="text-sm text-teal-600 font-semibold">
-          {activeSection === "available" && "Consultations disponibles"}
-          {activeSection === "myconsultations" && "Mes consultations"}
+        <div className="text-sm text-indigo-700 font-semibold">
+          {activeSection === "requests" && "Demandes de consultation"}
+          {activeSection === "active" && "Consultations actives"}
           {activeSection === "history" && "Historique"}
           {activeSection === "settings" && "Paramètres"}
         </div>
@@ -42,4 +42,4 @@ export const InterpreterMobileHeader: React.FC<InterpreterMobileHeaderProps> = (
   );
 };
 
-export default InterpreterMobileHeader;
+export default DoctorMobileHeader;
