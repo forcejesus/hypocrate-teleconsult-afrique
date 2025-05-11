@@ -21,7 +21,7 @@ export const EmailField = ({ form, variants }: EmailFieldProps) => {
               <Input 
                 type="email" 
                 placeholder="votre@email.com" 
-                className="h-12 rounded-xl focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200" 
+                className="h-12 rounded-xl border-gray-200 bg-white focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200" 
                 {...field} 
               />
             </FormControl>

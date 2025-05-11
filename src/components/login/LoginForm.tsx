@@ -43,7 +43,7 @@ export const LoginForm = () => {
           animate="visible"
           className="space-y-6"
         >
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="space-y-1.5">
             <FormField
               control={form.control}
               name="userType"
@@ -51,13 +51,13 @@ export const LoginForm = () => {
                 <UserTypeSelectDropdown
                   value={field.value}
                   onChange={field.onChange}
-                  className="space-y-3"
+                  className="space-y-2.5"
                 />
               )}
             />
           </motion.div>
 
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="space-y-1.5">
             <FormField
               control={form.control}
               name="email"
@@ -68,7 +68,7 @@ export const LoginForm = () => {
                     <Input 
                       type="email" 
                       placeholder="votre@email.com" 
-                      className="h-12 rounded-xl focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200" 
+                      className="h-12 rounded-xl border-gray-200 focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200" 
                       {...field} 
                     />
                   </FormControl>

@@ -11,7 +11,7 @@ export const LoginRightSection = () => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7, delay: 0.3 }}
     >
-      <Card className="w-full max-w-md rounded-2xl shadow-xl border-0 overflow-hidden bg-white/90 backdrop-blur-md">
+      <Card className="w-full max-w-md rounded-2xl shadow-xl border border-gray-100 overflow-hidden bg-white/95 backdrop-blur-md">
         <CardContent className="p-8">
           <motion.div
             className="text-center mb-8"

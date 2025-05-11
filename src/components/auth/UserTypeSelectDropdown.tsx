@@ -21,12 +21,12 @@ export function UserTypeSelectDropdown({
       {label && <FormLabel className="text-gray-700 font-medium">{label}</FormLabel>}
       <Select onValueChange={onChange} value={value}>
         <FormControl>
-          <SelectTrigger className="min-h-[48px] rounded-xl focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200">
+          <SelectTrigger className="min-h-[48px] rounded-xl bg-white border-gray-200 focus:ring-2 focus:ring-hypocrate-blue/40 transition-all duration-200">
             <SelectValue placeholder="Sélectionnez votre type d'utilisateur" />
           </SelectTrigger>
         </FormControl>
-        <SelectContent className="rounded-xl shadow-lg border-0">
-          <SelectItem value="patient" className="py-3">
+        <SelectContent className="rounded-xl bg-white shadow-lg border border-gray-100 overflow-hidden">
+          <SelectItem value="patient" className="py-3 focus:bg-gray-50 focus:text-hypocrate-blue">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-full bg-hypocrate-lightBlue flex items-center justify-center">
                 <UserRound className="h-5 w-5 text-hypocrate-blue" />
@@ -38,7 +38,7 @@ export function UserTypeSelectDropdown({
             </div>
           </SelectItem>
           
-          <SelectItem value="medecin" className="py-3">
+          <SelectItem value="medecin" className="py-3 focus:bg-gray-50 focus:text-hypocrate-blue">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-full bg-hypocrate-lightBlue flex items-center justify-center">
                 <Stethoscope className="h-5 w-5 text-hypocrate-blue" />
@@ -50,7 +50,7 @@ export function UserTypeSelectDropdown({
             </div>
           </SelectItem>
           
-          <SelectItem value="traducteur" className="py-3">
+          <SelectItem value="traducteur" className="py-3 focus:bg-gray-50 focus:text-hypocrate-blue">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-full bg-hypocrate-lightBlue flex items-center justify-center">
                 <Languages className="h-5 w-5 text-hypocrate-blue" />
