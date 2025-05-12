@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ClipboardList, Phone, ClockHistory, Settings } from 'lucide-react';
+import { ClipboardList, Phone, History, Settings } from 'lucide-react';
 import NavItem from './NavItem';
 import LogoutButton from '@/components/auth/LogoutButton';
 
@@ -18,7 +18,7 @@ const DoctorSidebar = ({ activeSection, setActiveSection, isMobile, mobileSideba
   const navItems = [
     { id: 'requests', icon: <ClipboardList size={20} />, label: 'Demandes de consultation' },
     { id: 'active', icon: <Phone size={20} />, label: 'Consultations actives' },
-    { id: 'history', icon: <ClockHistory size={20} />, label: 'Historique' },
+    { id: 'history', icon: <History size={20} />, label: 'Historique' },
     { id: 'settings', icon: <Settings size={20} />, label: 'Paramètres' },
   ];
 

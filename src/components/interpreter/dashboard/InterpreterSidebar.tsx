@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Phone, ClockHistory, Settings } from 'lucide-react';
+import { Globe, Phone, History, Settings } from 'lucide-react';
 import NavItem from '@/components/doctor/dashboard/NavItem'; // Réutiliser le composant NavItem
 import LogoutButton from '@/components/auth/LogoutButton';
 
@@ -18,7 +18,7 @@ const InterpreterSidebar = ({ activeSection, setActiveSection, isMobile, mobileS
   const navItems = [
     { id: 'available', icon: <Globe size={20} />, label: 'Consultations disponibles' },
     { id: 'active', icon: <Phone size={20} />, label: 'Mes consultations' },
-    { id: 'history', icon: <ClockHistory size={20} />, label: 'Historique' },
+    { id: 'history', icon: <History size={20} />, label: 'Historique' },
     { id: 'settings', icon: <Settings size={20} />, label: 'Paramètres' },
   ];
 
