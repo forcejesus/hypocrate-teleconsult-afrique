@@ -1,49 +1,80 @@
-import React from 'react';
-import { Calendar, Settings, UserRound, Search } from 'lucide-react';
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Clock, CalendarDays, Search, Settings, SquarePlus } from 'lucide-react';
 import NavItem from './NavItem';
+import LogoutButton from '@/components/auth/LogoutButton';
+
 interface PatientSidebarProps {
   activeSection: string;
-  setActiveSection: (section: string) => void;
+  setActiveSection: (id: string) => void;
   isMobile: boolean;
   mobileSidebarOpen: boolean;
 }
-export const PatientSidebar: React.FC<PatientSidebarProps> = ({
-  activeSection,
-  setActiveSection,
-  isMobile,
-  mobileSidebarOpen
-}) => {
-  return <aside id="mobile-sidebar" className={`
-        ${isMobile ? `fixed top-0 left-0 h-full z-50 w-[270px] transform transition-transform duration-300 ease-in-out 
-            ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}` : 'w-64 h-screen sticky top-0'}
-        bg-white shadow-md overflow-y-auto flex flex-col
-      `}>
-      {/* Sidebar Header */}
-      <div className="p-5 border-b">
-        <h2 className="text-xl font-bold text-hypocrate-blue">Hypocrate</h2>
-        <p className="text-sm text-gray-500 mt-1">Votre espace santé</p>
-      </div>
-      
-      {/* Navigation Links */}
-      <nav className="p-4 space-y-2 flex-1 px-0 py-0 mx-0 my-0 bg-[#c3c3c3]/[0.18]">
-        <NavItem id="upcoming" icon={<Calendar className="text-hypocrate-blue" size={20} />} label="Consultations à venir" isActive={activeSection === "upcoming"} onClick={setActiveSection} />
-        <NavItem id="pending" icon={<UserRound className="text-hypocrate-blue" size={20} />} label="Consultations en attente" isActive={activeSection === "pending"} onClick={setActiveSection} />
-        <NavItem id="find" icon={<Search className="text-hypocrate-blue" size={20} />} label="Trouver un médecin" isActive={activeSection === "find"} onClick={setActiveSection} />
-        <NavItem id="settings" icon={<Settings className="text-hypocrate-blue" size={20} />} label="Paramètres" isActive={activeSection === "settings"} onClick={setActiveSection} />
-      </nav>
-      
-      {/* User Info */}
-      <div className="p-4 border-t bg-gray-50">
-        <div className="flex items-center">
-          <div className="h-10 w-10 rounded-full bg-hypocrate-blue text-white flex items-center justify-center">
-            <UserRound size={20} />
+
+const PatientSidebar = ({ activeSection, setActiveSection, isMobile, mobileSidebarOpen }: PatientSidebarProps) => {
+  const [isHovering, setIsHovering] = useState(false);
+  
+  const navItems = [
+    { id: 'upcoming', icon: <Clock size={20} />, label: 'Rendez-vous à venir' },
+    { id: 'history', icon: <CalendarDays size={20} />, label: 'Historique' },
+    { id: 'find-doctor', icon: <Search size={20} />, label: 'Trouver un médecin' },
+    { id: 'settings', icon: <Settings size={20} />, label: 'Paramètres' },
+  ];
+
+  const handleClick = (id: string) => {
+    setActiveSection(id);
+  };
+
+  return (
+    <motion.aside 
+      id="mobile-sidebar"
+      className={`bg-white shadow-md z-50 flex flex-col ${
+        isMobile 
+          ? 'fixed left-0 top-0 h-full w-64 transform transition-transform duration-300 ease-in-out' +
+            (mobileSidebarOpen ? ' translate-x-0' : ' -translate-x-full')
+          : 'sticky top-0 h-screen w-64 flex-shrink-0'
+      }`}
+      onHoverStart={() => setIsHovering(true)}
+      onHoverEnd={() => setIsHovering(false)}
+    >
+      <div className="py-6 px-3 flex flex-col h-full">
+        <div className="px-4 mb-8">
+          <h1 className="text-xl font-bold text-gray-800">
+            Espace Patient
+          </h1>
+          <p className="text-sm text-gray-500">Gérez vos consultations</p>
+        </div>
+
+        <div className="space-y-1 px-2 flex-1 overflow-auto">
+          {navItems.map((item) => (
+            <NavItem
+              key={item.id}
+              id={item.id}
+              icon={item.icon}
+              label={item.label}
+              isActive={activeSection === item.id}
+              onClick={handleClick}
+            />
+          ))}
+        </div>
+
+        <div className="mt-auto border-t pt-3 px-2">
+          <div className="mb-4">
+            <NavItem
+              id="new-consultation"
+              icon={<SquarePlus size={20} />}
+              label="Nouvelle consultation"
+              isActive={false}
+              onClick={() => window.location.href = '/nos-medecins'}
+            />
           </div>
-          <div className="ml-3">
-            <p className="text-sm font-medium">Patient</p>
-            <p className="text-xs text-gray-500">patient@example.com</p>
-          </div>
+          
+          <LogoutButton />
         </div>
       </div>
-    </aside>;
+    </motion.aside>
+  );
 };
+
 export default PatientSidebar;

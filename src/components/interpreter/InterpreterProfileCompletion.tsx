@@ -125,14 +125,18 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-blue-50 flex items-center justify-center p-4">
+      <div className="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-10 pointer-events-none" 
+           style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05)' }}>
+      </div>
+
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white rounded-lg shadow-lg p-6 md:p-8 w-full max-w-3xl"
+        className="bg-white/90 backdrop-blur-sm rounded-lg shadow-xl p-6 md:p-8 w-full max-w-3xl border border-white/30 relative z-10"
       >
-        <h1 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-hypocrate-blue to-hypocrate-green mb-2">
+        <h1 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600 mb-2">
           Compléter votre profil d'interprète
         </h1>
         <p className="text-gray-600 mb-6">
@@ -145,7 +149,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
             <div className="mb-6">
               <h3 className="text-md font-medium mb-4">Photo de profil (optionnelle)</h3>
               <div className="flex items-center gap-4">
-                <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-teal-100 to-blue-100 flex items-center justify-center overflow-hidden border-4 border-white shadow-md">
                   {profileImage ? (
                     <img src={profileImage} alt="Photo de profil" className="w-full h-full object-cover" />
                   ) : (
@@ -154,7 +158,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                 </div>
                 <div>
                   <Label htmlFor="profile-image" className="cursor-pointer">
-                    <div className="bg-hypocrate-blue text-white px-4 py-2 rounded-md hover:bg-hypocrate-blue/90 transition-colors">
+                    <div className="bg-gradient-to-r from-teal-500 to-blue-500 text-white px-4 py-2 rounded-md hover:from-teal-600 hover:to-blue-600 transition-colors shadow-md hover:shadow-lg">
                       Choisir une image
                     </div>
                     <Input
@@ -170,7 +174,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
               </div>
             </div>
             
-            <Separator />
+            <Separator className="bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
             
             {/* Pays */}
             <FormField
@@ -184,7 +188,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-white shadow-sm">
                         <SelectValue placeholder="Sélectionnez votre pays" />
                       </SelectTrigger>
                     </FormControl>
@@ -214,7 +218,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-white shadow-sm">
                           <SelectValue placeholder="+" />
                         </SelectTrigger>
                       </FormControl>
@@ -239,7 +243,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                     <FormItem>
                       <FormLabel>Numéro de téléphone</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Votre numéro de téléphone" />
+                        <Input {...field} className="bg-white shadow-sm" placeholder="Votre numéro de téléphone" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -264,8 +268,8 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                         key={language}
                         className={`cursor-pointer p-2 rounded-md border ${
                           selectedLanguages.includes(language)
-                            ? 'bg-hypocrate-lightBlue border-hypocrate-blue text-hypocrate-blue'
-                            : 'bg-white border-gray-200 hover:bg-gray-50'
+                            ? 'bg-gradient-to-r from-teal-100 to-blue-100 border-teal-300 text-teal-800 font-medium'
+                            : 'bg-white border-gray-200 hover:bg-gray-50 shadow-sm'
                         }`}
                         onClick={() => toggleLanguage(language)}
                       >
@@ -290,7 +294,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                 <FormItem>
                   <FormLabel>Tarif horaire (€)</FormLabel>
                   <FormControl>
-                    <Input {...field} type="number" min="0" step="0.01" />
+                    <Input {...field} type="number" min="0" step="0.01" className="bg-white shadow-sm" />
                   </FormControl>
                   <FormDescription>
                     Votre tarif horaire pour les services d'interprétation.
@@ -301,7 +305,12 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
             />
             
             <div className="flex justify-end pt-4">
-              <Button type="submit">Compléter mon profil</Button>
+              <Button 
+                type="submit" 
+                className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 shadow-md hover:shadow-lg"
+              >
+                Compléter mon profil
+              </Button>
             </div>
           </form>
         </Form>

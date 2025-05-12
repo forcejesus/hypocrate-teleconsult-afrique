@@ -110,10 +110,14 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex flex-col items-center justify-center p-4">
+      <div className="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-10 pointer-events-none" 
+           style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7)' }}>
+      </div>
+      
+      <div className="w-full max-w-2xl relative z-10">
         <motion.div 
-          className="bg-white rounded-2xl shadow-xl overflow-hidden"
+          className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/30"
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -156,7 +160,7 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                         <FormItem>
                           <FormLabel>Spécialité Médicale</FormLabel>
                           <FormControl>
-                            <Input placeholder="Ex: Cardiologie, Pédiatrie, Généraliste..." {...field} />
+                            <Input placeholder="Ex: Cardiologie, Pédiatrie, Généraliste..." className="bg-white shadow-sm" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -172,7 +176,7 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                         <FormItem>
                           <FormLabel>Numéro de Licence / RPPS</FormLabel>
                           <FormControl>
-                            <Input placeholder="Entrez votre numéro de licence ou RPPS" {...field} />
+                            <Input placeholder="Entrez votre numéro de licence ou RPPS" className="bg-white shadow-sm" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -188,7 +192,7 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                         <FormItem>
                           <FormLabel>Formation & Diplômes</FormLabel>
                           <FormControl>
-                            <Input placeholder="Ex: Doctorat en Médecine, Université de Paris" {...field} />
+                            <Input placeholder="Ex: Doctorat en Médecine, Université de Paris" className="bg-white shadow-sm" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -204,7 +208,7 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                         <FormItem>
                           <FormLabel>Années d'expérience</FormLabel>
                           <FormControl>
-                            <Input type="number" min="0" placeholder="Ex: 10" {...field} />
+                            <Input type="number" min="0" placeholder="Ex: 10" className="bg-white shadow-sm" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -217,8 +221,8 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                       <FormLabel>Documents Officiels</FormLabel>
                       <div className="flex items-center space-x-3">
                         <div className="flex-1">
-                          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-indigo-400 transition-colors cursor-pointer">
-                            <FileText className="w-6 h-6 mx-auto text-gray-400 mb-2" />
+                          <div className="border-2 border-dashed border-indigo-200 rounded-lg p-6 text-center hover:border-indigo-400 transition-colors cursor-pointer bg-white/50 shadow-inner hover:shadow-md">
+                            <FileText className="w-6 h-6 mx-auto text-indigo-500 mb-2" />
                             <label className="cursor-pointer">
                               <span className="text-sm text-indigo-600 font-medium">
                                 {licenseFile ? licenseFile.name : "Télécharger votre licence ou autorisation d'exercer"}
@@ -257,7 +261,7 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                         <FormItem>
                           <FormLabel>Langues parlées</FormLabel>
                           <FormControl>
-                            <Input placeholder="Ex: Français, Anglais, Arabe" {...field} />
+                            <Input placeholder="Ex: Français, Anglais, Arabe" className="bg-white shadow-sm" {...field} />
                           </FormControl>
                           <p className="text-xs text-gray-500 mt-1">Séparez les langues par des virgules</p>
                           <FormMessage />
@@ -279,7 +283,7 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                         <FormItem>
                           <FormLabel>Tarif horaire (€)</FormLabel>
                           <FormControl>
-                            <Input type="number" min="0" placeholder="Ex: 80" {...field} />
+                            <Input type="number" min="0" placeholder="Ex: 80" className="bg-white shadow-sm" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -308,6 +312,7 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                     type="button" 
                     variant="outline"
                     onClick={() => setStep(step - 1)}
+                    className="bg-white"
                   >
                     Précédent
                   </Button>
@@ -316,7 +321,7 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                   {step === 1 ? (
                     <Button 
                       type="button" 
-                      className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+                      className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-md hover:shadow-lg"
                       onClick={handleNextStep}
                     >
                       Suivant
@@ -324,7 +329,7 @@ const DoctorProfileCompletion: React.FC<DoctorProfileCompletionProps> = ({ onCom
                   ) : (
                     <Button 
                       type="submit" 
-                      className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+                      className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-md hover:shadow-lg"
                     >
                       Terminer
                     </Button>
