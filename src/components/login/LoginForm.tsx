@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import { PasswordField } from './PasswordField';
 import { UserTypeSelectDropdown } from '@/components/auth/UserTypeSelectDropdown';
 import { containerVariants, itemVariants } from "@/components/auth/registration/AnimationVariants";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   userType: z.string().min(1, "Veuillez choisir un type d'utilisateur"),
@@ -32,19 +33,26 @@ export const LoginForm = () => {
 
   const onSubmit = (values: FormValues) => {
     console.log(values);
+    
     // Rediriger vers l'espace approprié en fonction du type d'utilisateur
     switch (values.userType) {
       case 'patient':
+        toast.success("Connexion réussie en tant que patient");
         navigate('/patient-dashboard');
         break;
+      case 'medecin':
       case 'doctor':
+        toast.success("Connexion réussie en tant que médecin");
         navigate('/doctor-dashboard');
         break;
+      case 'traducteur':
       case 'interpreter':
+        toast.success("Connexion réussie en tant qu'interprète");
         navigate('/interpreter-dashboard');
         break;
       default:
-        navigate('/patient-dashboard');
+        toast.error("Type d'utilisateur non reconnu");
+        console.error("Type d'utilisateur non reconnu:", values.userType);
     }
   };
 
