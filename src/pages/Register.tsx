@@ -9,8 +9,10 @@ import { RegistrationFormContainer } from '@/components/auth/RegistrationFormCon
 import { RegistrationStepOne } from '@/components/auth/RegistrationStepOne';
 import { RegistrationStepTwo } from '@/components/auth/RegistrationStepTwo';
 import { useRegistrationForm } from '@/hooks/useRegistrationForm';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Register = () => {
+  const { t } = useLanguage();
   const {
     form,
     step,
@@ -70,7 +72,7 @@ const Register = () => {
                     type="submit"
                     className="ml-auto px-8 py-2.5 h-12 bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 rounded-xl shadow-md hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200"
                   >
-                    S'inscrire
+                    {t('login.register')}
                   </Button>
                 )}
               </div>

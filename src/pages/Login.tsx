@@ -5,8 +5,10 @@ import Footer from '@/components/Footer';
 import { LoginLeftSection } from '@/components/login/LoginLeftSection';
 import { LoginRightSection } from '@/components/login/LoginRightSection';
 import { useForm } from 'react-hook-form';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Login = () => {
+  const { t } = useLanguage();
   const animationComplete = useAnimationComplete();
   const form = useForm();
   const userType = form.watch('userType') || '';

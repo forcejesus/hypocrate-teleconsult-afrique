@@ -2,8 +2,11 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { CheckCircle } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const APropos = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -11,9 +14,9 @@ const APropos = () => {
         {/* Hero Section */}
         <div className="bg-hypocrate-lightBlue py-12">
           <div className="container-custom">
-            <h1 className="text-4xl font-bold text-center">À propos d'Hypocrate</h1>
+            <h1 className="text-4xl font-bold text-center">{t('about.title')}</h1>
             <p className="text-xl text-center mt-4 text-gray-700 max-w-3xl mx-auto">
-              Notre mission est de faciliter l'accès aux soins médicaux pour tous les patients d'Afrique grâce à la télémédecine.
+              {t('about.description')}
             </p>
           </div>
         </div>

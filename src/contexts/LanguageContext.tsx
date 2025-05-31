@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = 'fr' | 'en';
 
@@ -9,347 +9,381 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
-
-export const useLanguage = () => {
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
-};
-
 const translations = {
   fr: {
     // Navigation
     'nav.home': 'Accueil',
     'nav.how_it_works': 'Comment ça marche',
     'nav.our_doctors': 'Nos médecins',
+    'nav.medical_advice': 'Conseils médicaux',
+    'nav.about': 'À propos',
+    'nav.contact': 'Contact',
     'nav.faq': 'FAQ',
     'nav.login': 'Se connecter',
-    'nav.register': "S'inscrire",
-    
+    'nav.register': 'S\'inscrire',
+    'nav.privacy': 'Confidentialité',
+    'nav.terms': 'CGU',
+
     // Hero Section
-    'hero.badge': 'Téléconsultation médicale avec traduction',
-    'hero.title': 'Consultez un médecin',
-    'hero.title_highlight': 'depuis n\'importe où',
-    'hero.description': 'Accédez à des consultations médicales de qualité sans barrière linguistique, depuis l\'Afrique ou n\'importe où dans le monde.',
-    'hero.book_appointment': 'Prendre rendez-vous',
-    'hero.how_it_works': 'Comment ça marche',
-    'hero.available_24_7': 'Disponible 7j/7',
-    'hero.certified_doctors': 'Médecins certifiés',
-    'hero.translation_service': 'Service de traduction',
-    
-    // Login
-    'login.title': 'Connexion',
-    'login.user_type': 'Type d\'utilisateur',
-    'login.email': 'Email',
-    'login.password': 'Mot de passe',
-    'login.submit': 'Se connecter',
-    'login.no_account': 'Pas encore de compte ?',
-    'login.create_account': 'Créer un compte',
-    'login.success_patient': 'Connexion réussie en tant que patient',
-    'login.success_doctor': 'Connexion réussie en tant que médecin',
-    'login.success_interpreter': 'Connexion réussie en tant qu\'interprète',
-    'login.error_user_type': 'Type d\'utilisateur non reconnu',
-    
-    // User Types
-    'user_type.patient': 'Patient',
-    'user_type.doctor': 'Médecin',
-    'user_type.interpreter': 'Interprète',
-    'user_type.choose': 'Veuillez choisir un type d\'utilisateur',
-    
-    // Dashboard
-    'dashboard.patient_space': 'Espace Patient',
-    'dashboard.doctor_space': 'Espace Médecin',
-    'dashboard.interpreter_space': 'Espace Interprète',
-    'dashboard.logout': 'Se déconnecter',
-    
-    // How it works
-    'how_it_works.title': 'Comment fonctionne une téléconsultation avec Hypocrate',
-    'how_it_works.description': 'Notre plateforme connecte les patients africains avec des médecins du monde entier, avec l\'assistance d\'un traducteur si nécessaire.',
-    'how_it_works.step1_title': 'Prenez rendez-vous',
-    'how_it_works.step1_desc': 'Choisissez une date et une heure qui vous conviennent pour votre consultation médicale en ligne.',
-    'how_it_works.step2_title': 'Consultez par vidéo',
-    'how_it_works.step2_desc': 'Rencontrez virtuellement votre médecin depuis n\'importe quel appareil (ordinateur, tablette, smartphone).',
-    'how_it_works.step3_title': 'Traduction en direct',
-    'how_it_works.step3_desc': 'Un interprète vous assiste pendant la consultation pour faciliter la communication avec le médecin.',
-    
+    'hero.title': 'Consultations médicales à distance avec traduction',
+    'hero.subtitle': 'Accédez à des soins de qualité depuis chez vous grâce à notre plateforme de téléconsultation avec service de traduction en temps réel.',
+    'hero.cta.book': 'Prendre rendez-vous',
+    'hero.cta.learn': 'En savoir plus',
+
+    // How it Works
+    'how_it_works.title': 'Comment ça marche',
+    'how_it_works.step1.title': 'Choisissez votre médecin',
+    'how_it_works.step1.description': 'Sélectionnez un médecin selon votre besoin et sa disponibilité',
+    'how_it_works.step2.title': 'Planifiez votre consultation',
+    'how_it_works.step2.description': 'Réservez un créneau qui vous convient avec traduction si nécessaire',
+    'how_it_works.step3.title': 'Consultez en ligne',
+    'how_it_works.step3.description': 'Rencontrez votre médecin par vidéo avec notre traducteur professionnel',
+
+    // How it Works Page
+    'how_it_works_page.title': 'Comment fonctionne Hypocrate',
+    'how_it_works_page.services_title': 'Nos services détaillés',
+    'how_it_works_page.patients_title': 'Pour les patients',
+    'how_it_works_page.patients_step1': 'Inscription simple et rapide sur notre plateforme',
+    'how_it_works_page.patients_step2': 'Sélection d\'un médecin selon vos besoins',
+    'how_it_works_page.patients_step3': 'Réservation d\'un créneau avec ou sans traducteur',
+    'how_it_works_page.patients_step4': 'Consultation sécurisée par vidéoconférence',
+    'how_it_works_page.doctors_title': 'Pour les médecins',
+    'how_it_works_page.doctors_step1': 'Vérification des diplômes et certifications',
+    'how_it_works_page.doctors_step2': 'Formation à l\'utilisation de notre plateforme',
+    'how_it_works_page.doctors_step3': 'Définition de vos créneaux de disponibilité',
+    'how_it_works_page.doctors_step4': 'Consultation des patients avec support technique',
+
+    // Advantages
+    'advantages.title': 'Pourquoi choisir Hypocrate ?',
+    'advantages.accessibility.title': 'Accessibilité',
+    'advantages.accessibility.description': 'Consultez depuis n\'importe où, à tout moment',
+    'advantages.translation.title': 'Traduction en temps réel',
+    'advantages.translation.description': 'Communication fluide dans votre langue maternelle',
+    'advantages.security.title': 'Sécurité',
+    'advantages.security.description': 'Données médicales protégées et confidentielles',
+
+    // Testimonials
+    'testimonials.title': 'Ce que disent nos patients',
+    'testimonials.1.text': 'Excellent service ! J\'ai pu consulter un médecin rapidement malgré la barrière de la langue.',
+    'testimonials.1.author': 'Aminata S.',
+    'testimonials.1.location': 'Dakar, Sénégal',
+    'testimonials.2.text': 'La plateforme est très facile à utiliser et le service de traduction est parfait.',
+    'testimonials.2.author': 'Mohamed K.',
+    'testimonials.2.location': 'Casablanca, Maroc',
+    'testimonials.3.text': 'Grâce à Hypocrate, j\'ai enfin pu avoir accès à un spécialiste de qualité.',
+    'testimonials.3.author': 'Sarah M.',
+    'testimonials.3.location': 'Abidjan, Côte d\'Ivoire',
+
     // FAQ
-    'faq.title': 'Questions fréquentes',
-    'faq.description': 'Trouvez des réponses aux questions les plus courantes sur notre service de téléconsultation médicale.',
-    
+    'faq.title': 'Questions fréquemment posées',
+    'faq.description': 'Trouvez les réponses aux questions les plus courantes sur nos services de téléconsultation.',
+    'faq.q1': 'Comment prendre un rendez-vous ?',
+    'faq.a1': 'Il suffit de vous inscrire sur notre plateforme, choisir un médecin et sélectionner un créneau disponible.',
+    'faq.q2': 'Le service de traduction est-il fiable ?',
+    'faq.a2': 'Oui, nous travaillons avec des traducteurs professionnels certifiés spécialisés dans le domaine médical.',
+    'faq.q3': 'Mes données médicales sont-elles sécurisées ?',
+    'faq.a3': 'Absolument. Nous utilisons un chiffrement de niveau bancaire pour protéger toutes vos données.',
+    'faq.q4': 'Puis-je obtenir une ordonnance ?',
+    'faq.a4': 'Oui, nos médecins peuvent délivrer des ordonnances électroniques valides.',
+
+    // CTA Section
+    'cta.title': 'Prêt à consulter ?',
+    'cta.description': 'Prenez rendez-vous dès maintenant avec l\'un de nos médecins certifiés.',
+    'cta.button': 'Commencer maintenant',
+
     // Footer
-    'footer.copyright': 'Hypocrate Téléconsult Afrique. Tous droits réservés.',
+    'footer.description': 'Plateforme de téléconsultation médicale avec service de traduction pour l\'Afrique.',
+    'footer.quick_links': 'Liens rapides',
+    'footer.legal': 'Légal',
+    'footer.contact_us': 'Nous contacter',
     'footer.language_fr': 'Français',
     'footer.language_en': 'English',
-    
-    // CTA
-    'cta.title': 'Prêt à consulter un médecin en ligne ?',
-    'cta.description': 'Prenez rendez-vous dès maintenant et bénéficiez d\'une consultation médicale de qualité, avec l\'assistance d\'un traducteur si nécessaire.',
-    'cta.find_doctor': 'Trouver un médecin',
-    
-    // Comment ça marche page
-    'how_it_works_page.title': 'Comment ça marche',
-    'how_it_works_page.services_title': 'Nos services de téléconsultation',
-    'how_it_works_page.patients_title': 'Pour les patients',
-    'how_it_works_page.patients_step1': 'Créez votre compte en quelques minutes',
-    'how_it_works_page.patients_step2': 'Choisissez votre médecin et la date de consultation',
-    'how_it_works_page.patients_step3': 'Indiquez si vous avez besoin d\'un service de traduction',
-    'how_it_works_page.patients_step4': 'Connectez-vous à l\'heure du rendez-vous via notre plateforme',
-    'how_it_works_page.doctors_title': 'Pour les médecins',
-    'how_it_works_page.doctors_step1': 'Inscrivez-vous en fournissant vos qualifications',
-    'how_it_works_page.doctors_step2': 'Définissez vos disponibilités sur votre agenda',
-    'how_it_works_page.doctors_step3': 'Recevez des notifications pour vos rendez-vous',
-    'how_it_works_page.doctors_step4': 'Consultez avec l\'assistance d\'un traducteur si nécessaire',
-    
-    // Contact page
-    'contact.title': 'Nos contacts',
-    'contact.description': 'Nous sommes à votre disposition pour répondre à toutes vos questions et vous accompagner dans votre parcours de santé.',
+    'footer.rights': 'Tous droits réservés.',
+
+    // Contact Page
+    'contact.title': 'Contactez-nous',
+    'contact.description': 'Nous sommes là pour répondre à toutes vos questions et vous accompagner.',
     'contact.our_info': 'Nos coordonnées',
     'contact.address': 'Adresse',
     'contact.address_text': '123 Avenue de la Médecine\n75000 Paris, France',
     'contact.email': 'Email',
     'contact.phone': 'Téléphone',
-    'contact.hours': 'Heures d\'ouverture',
-    'contact.weekdays': 'Lundi - Vendredi:',
-    'contact.saturday': 'Samedi:',
-    'contact.sunday': 'Dimanche:',
+    'contact.hours': 'Horaires d\'ouverture',
+    'contact.weekdays': 'Lundi - Vendredi',
+    'contact.saturday': 'Samedi',
+    'contact.sunday': 'Dimanche',
     'contact.closed': 'Fermé',
     'contact.send_message': 'Envoyez-nous un message',
     'contact.name': 'Nom complet',
-    'contact.name_placeholder': 'Votre nom',
-    'contact.email_placeholder': 'votre.email@exemple.com',
+    'contact.name_placeholder': 'Votre nom complet',
+    'contact.email_placeholder': 'votre@email.com',
     'contact.subject': 'Sujet',
     'contact.subject_placeholder': 'Sujet de votre message',
     'contact.message': 'Message',
-    'contact.message_placeholder': 'Votre message...',
+    'contact.message_placeholder': 'Décrivez votre demande...',
     'contact.send': 'Envoyer le message',
-    
-    // About page
-    'about.title': 'À propos d\'Hypocrate',
-    'about.description': 'Notre mission est de faciliter l\'accès aux soins médicaux pour tous les patients d\'Afrique grâce à la télémédecine.',
-    'about.our_story': 'Notre histoire',
-    'about.our_mission': 'Notre mission',
-    'about.mission_description': 'Hypocrate a pour mission de révolutionner l\'accès aux soins de santé en Afrique en offrant une solution de téléconsultation qui surmonte les barrières géographiques et linguistiques.',
-    'about.accessibility': 'Accessibilité',
-    'about.accessibility_desc': 'Nous croyons que l\'accès à des soins médicaux de qualité est un droit fondamental. Notre plateforme permet de consulter un médecin depuis n\'importe où, réduisant ainsi les obstacles géographiques.',
-    'about.linguistic_inclusion': 'Inclusion linguistique',
-    'about.linguistic_inclusion_desc': 'La barrière de la langue ne devrait jamais limiter l\'accès aux soins. Notre service de traduction en temps réel permet une communication fluide entre patients et médecins.',
-    'about.medical_excellence': 'Excellence médicale',
-    'about.medical_excellence_desc': 'Nous collaborons uniquement avec des médecins certifiés et expérimentés, garantissant ainsi la qualité des consultations et des diagnostics fournis sur notre plateforme.',
-    'about.our_values': 'Nos valeurs',
-    'about.health_equity': 'Équité en santé',
-    'about.continuous_innovation': 'Innovation continue',
-    'about.privacy_ethics': 'Confidentialité et éthique',
-    'about.constructive_collaboration': 'Collaboration constructive',
-    'about.our_impact': 'Notre impact',
-    'about.consultations_completed': 'Consultations réalisées',
-    'about.certified_doctors': 'Médecins certifiés',
-    'about.languages_available': 'Langues disponibles',
-    'about.african_countries': 'Pays africains desservis',
-    'about.future_vision': 'Notre vision pour l\'avenir',
-    
-    // Not Found page
-    'not_found.title': 'Oups ! Page introuvable',
+
+    // Not Found Page
+    'not_found.title': 'Page non trouvée',
     'not_found.description': 'La page que vous recherchez n\'existe pas ou a été déplacée.',
-    'not_found.back_home': 'Retourner à l\'accueil',
-    
-    // Medical Advice page
+    'not_found.back_home': 'Retour à l\'accueil',
+
+    // Medical Advice Page
     'medical_advice.title': 'Conseils médicaux',
-    'medical_advice.description': 'Des conseils médicaux généraux pour prendre soin de votre santé et celle de votre famille au quotidien.',
+    'medical_advice.description': 'Découvrez nos conseils et recommandations pour maintenir une bonne santé.',
     'medical_advice.important_note': 'Note importante',
-    'medical_advice.disclaimer1': 'Les informations fournies sur cette page sont des conseils généraux et ne remplacent en aucun cas une consultation médicale. Si vous présentez des symptômes persistants ou inquiétants, consultez un médecin sans délai.',
-    'medical_advice.disclaimer2': 'Pour des conseils médicaux personnalisés, n\'hésitez pas à prendre rendez-vous avec l\'un de nos médecins certifiés.',
+    'medical_advice.disclaimer1': 'Les conseils présentés sur cette page sont fournis à titre informatif uniquement et ne remplacent pas une consultation médicale professionnelle.',
+    'medical_advice.disclaimer2': 'En cas de problème de santé, consultez toujours un professionnel de santé qualifié.',
     'medical_advice.consult_doctor': 'Consulter un médecin',
     'medical_advice.general_prevention': 'Prévention générale',
     'medical_advice.nutrition_wellness': 'Nutrition et bien-être',
     'medical_advice.family_health': 'Santé familiale',
     'medical_advice.physical_activity': 'Activité physique',
-    'medical_advice.general_tips': 'Conseils généraux pour rester en bonne santé',
-    'medical_advice.lifestyle': 'Hygiène de vie',
-    'medical_advice.nutrition': 'Alimentation',
+    'medical_advice.general_tips': 'Conseils généraux',
+    'medical_advice.lifestyle': 'Mode de vie',
+    'medical_advice.nutrition': 'Nutrition',
     'medical_advice.mental_health': 'Santé mentale',
+
+    // Login Page
+    'login.title': 'Connexion à votre espace',
+    'login.subtitle': 'Accédez à votre tableau de bord personnalisé',
+    'login.user_type': 'Je suis un(e)',
+    'login.patient': 'Patient',
+    'login.doctor': 'Médecin',
+    'login.interpreter': 'Interprète',
+    'login.email': 'Adresse email',
+    'login.email_placeholder': 'votre@email.com',
+    'login.password': 'Mot de passe',
+    'login.password_placeholder': 'Votre mot de passe',
+    'login.remember': 'Se souvenir de moi',
+    'login.forgot_password': 'Mot de passe oublié ?',
+    'login.submit': 'Se connecter',
+    'login.no_account': 'Pas encore de compte ?',
+    'login.register': 'S\'inscrire',
+    'login.patient_space': 'Espace patient',
+    'login.doctor_space': 'Espace médecin',
+    'login.interpreter_space': 'Espace interprète',
+    'login.patient_description': 'Prenez rendez-vous et consultez vos médecins',
+    'login.doctor_description': 'Gérez vos consultations et vos patients',
+    'login.interpreter_description': 'Assistez les consultations médicales',
+    'login.success_patient': 'Connexion réussie ! Redirection vers l\'espace patient...',
+    'login.success_doctor': 'Connexion réussie ! Redirection vers l\'espace médecin...',
+    'login.success_interpreter': 'Connexion réussie ! Redirection vers l\'espace interprète...',
+
+    // About Page
+    'about.title': 'À propos d\'Hypocrate',
+    'about.description': 'Notre mission est de faciliter l\'accès aux soins médicaux pour tous les patients d\'Afrique grâce à la télémédecine.',
+
+    // Our Doctors Page
+    'doctors.title': 'Nos médecins',
+    'doctors.description': 'Consultez notre réseau de médecins certifiés, disponibles pour des téléconsultations avec service de traduction.',
+
+    // Privacy Page
+    'privacy.title': 'Politique de confidentialité',
+    'privacy.description': 'Comment nous protégeons vos données et respectons votre vie privée.',
+
+    // Terms Page
+    'terms.title': 'Conditions générales d\'utilisation',
+    'terms.description': 'Veuillez lire attentivement ces conditions avant d\'utiliser notre plateforme.',
   },
   en: {
     // Navigation
     'nav.home': 'Home',
-    'nav.how_it_works': 'How it Works',
-    'nav.our_doctors': 'Our Doctors',
+    'nav.how_it_works': 'How it works',
+    'nav.our_doctors': 'Our doctors',
+    'nav.medical_advice': 'Medical advice',
+    'nav.about': 'About',
+    'nav.contact': 'Contact',
     'nav.faq': 'FAQ',
-    'nav.login': 'Sign In',
-    'nav.register': 'Sign Up',
-    
+    'nav.login': 'Login',
+    'nav.register': 'Register',
+    'nav.privacy': 'Privacy',
+    'nav.terms': 'Terms',
+
     // Hero Section
-    'hero.badge': 'Medical teleconsultation with translation',
-    'hero.title': 'Consult a doctor',
-    'hero.title_highlight': 'from anywhere',
-    'hero.description': 'Access quality medical consultations without language barriers, from Africa or anywhere in the world.',
-    'hero.book_appointment': 'Book Appointment',
-    'hero.how_it_works': 'How it Works',
-    'hero.available_24_7': 'Available 24/7',
-    'hero.certified_doctors': 'Certified Doctors',
-    'hero.translation_service': 'Translation Service',
-    
-    // Login
-    'login.title': 'Sign In',
-    'login.user_type': 'User Type',
-    'login.email': 'Email',
-    'login.password': 'Password',
-    'login.submit': 'Sign In',
-    'login.no_account': 'Don\'t have an account?',
-    'login.create_account': 'Create Account',
-    'login.success_patient': 'Successfully signed in as patient',
-    'login.success_doctor': 'Successfully signed in as doctor',
-    'login.success_interpreter': 'Successfully signed in as interpreter',
-    'login.error_user_type': 'Unrecognized user type',
-    
-    // User Types
-    'user_type.patient': 'Patient',
-    'user_type.doctor': 'Doctor',
-    'user_type.interpreter': 'Interpreter',
-    'user_type.choose': 'Please choose a user type',
-    
-    // Dashboard
-    'dashboard.patient_space': 'Patient Space',
-    'dashboard.doctor_space': 'Doctor Space',
-    'dashboard.interpreter_space': 'Interpreter Space',
-    'dashboard.logout': 'Sign Out',
-    
-    // How it works
-    'how_it_works.title': 'How teleconsultation works with Hypocrate',
-    'how_it_works.description': 'Our platform connects African patients with doctors from around the world, with interpreter assistance if needed.',
-    'how_it_works.step1_title': 'Book an appointment',
-    'how_it_works.step1_desc': 'Choose a date and time that suits you for your online medical consultation.',
-    'how_it_works.step2_title': 'Video consultation',
-    'how_it_works.step2_desc': 'Meet your doctor virtually from any device (computer, tablet, smartphone).',
-    'how_it_works.step3_title': 'Live translation',
-    'how_it_works.step3_desc': 'An interpreter assists you during the consultation to facilitate communication with the doctor.',
-    
+    'hero.title': 'Remote medical consultations with translation',
+    'hero.subtitle': 'Access quality care from home with our telemedicine platform featuring real-time translation services.',
+    'hero.cta.book': 'Book appointment',
+    'hero.cta.learn': 'Learn more',
+
+    // How it Works
+    'how_it_works.title': 'How it works',
+    'how_it_works.step1.title': 'Choose your doctor',
+    'how_it_works.step1.description': 'Select a doctor based on your needs and their availability',
+    'how_it_works.step2.title': 'Schedule your consultation',
+    'how_it_works.step2.description': 'Book a convenient time slot with translation if needed',
+    'how_it_works.step3.title': 'Consult online',
+    'how_it_works.step3.description': 'Meet your doctor via video with our professional translator',
+
+    // How it Works Page
+    'how_it_works_page.title': 'How Hypocrate works',
+    'how_it_works_page.services_title': 'Our detailed services',
+    'how_it_works_page.patients_title': 'For patients',
+    'how_it_works_page.patients_step1': 'Simple and quick registration on our platform',
+    'how_it_works_page.patients_step2': 'Select a doctor according to your needs',
+    'how_it_works_page.patients_step3': 'Book a slot with or without translator',
+    'how_it_works_page.patients_step4': 'Secure consultation via video conference',
+    'how_it_works_page.doctors_title': 'For doctors',
+    'how_it_works_page.doctors_step1': 'Verification of diplomas and certifications',
+    'how_it_works_page.doctors_step2': 'Training on using our platform',
+    'how_it_works_page.doctors_step3': 'Set your availability slots',
+    'how_it_works_page.doctors_step4': 'Consult patients with technical support',
+
+    // Advantages
+    'advantages.title': 'Why choose Hypocrate?',
+    'advantages.accessibility.title': 'Accessibility',
+    'advantages.accessibility.description': 'Consult from anywhere, anytime',
+    'advantages.translation.title': 'Real-time translation',
+    'advantages.translation.description': 'Smooth communication in your native language',
+    'advantages.security.title': 'Security',
+    'advantages.security.description': 'Protected and confidential medical data',
+
+    // Testimonials
+    'testimonials.title': 'What our patients say',
+    'testimonials.1.text': 'Excellent service! I was able to consult a doctor quickly despite the language barrier.',
+    'testimonials.1.author': 'Aminata S.',
+    'testimonials.1.location': 'Dakar, Senegal',
+    'testimonials.2.text': 'The platform is very easy to use and the translation service is perfect.',
+    'testimonials.2.author': 'Mohamed K.',
+    'testimonials.2.location': 'Casablanca, Morocco',
+    'testimonials.3.text': 'Thanks to Hypocrate, I finally had access to a quality specialist.',
+    'testimonials.3.author': 'Sarah M.',
+    'testimonials.3.location': 'Abidjan, Ivory Coast',
+
     // FAQ
-    'faq.title': 'Frequently Asked Questions',
-    'faq.description': 'Find answers to the most common questions about our medical teleconsultation service.',
-    
+    'faq.title': 'Frequently asked questions',
+    'faq.description': 'Find answers to the most common questions about our telemedicine services.',
+    'faq.q1': 'How to make an appointment?',
+    'faq.a1': 'Simply register on our platform, choose a doctor and select an available slot.',
+    'faq.q2': 'Is the translation service reliable?',
+    'faq.a2': 'Yes, we work with certified professional translators specialized in the medical field.',
+    'faq.q3': 'Is my medical data secure?',
+    'faq.a3': 'Absolutely. We use bank-level encryption to protect all your data.',
+    'faq.q4': 'Can I get a prescription?',
+    'faq.a4': 'Yes, our doctors can issue valid electronic prescriptions.',
+
+    // CTA Section
+    'cta.title': 'Ready to consult?',
+    'cta.description': 'Book an appointment now with one of our certified doctors.',
+    'cta.button': 'Get started now',
+
     // Footer
-    'footer.copyright': 'Hypocrate Teleconsult Africa. All rights reserved.',
+    'footer.description': 'Medical telemedicine platform with translation service for Africa.',
+    'footer.quick_links': 'Quick links',
+    'footer.legal': 'Legal',
+    'footer.contact_us': 'Contact us',
     'footer.language_fr': 'Français',
     'footer.language_en': 'English',
-    
-    // CTA
-    'cta.title': 'Ready to consult a doctor online?',
-    'cta.description': 'Book an appointment now and benefit from quality medical consultation, with interpreter assistance if needed.',
-    'cta.find_doctor': 'Find a Doctor',
-    
-    // Comment ça marche page
-    'how_it_works_page.title': 'How it Works',
-    'how_it_works_page.services_title': 'Our teleconsultation services',
-    'how_it_works_page.patients_title': 'For patients',
-    'how_it_works_page.patients_step1': 'Create your account in just a few minutes',
-    'how_it_works_page.patients_step2': 'Choose your doctor and consultation date',
-    'how_it_works_page.patients_step3': 'Indicate if you need a translation service',
-    'how_it_works_page.patients_step4': 'Connect at the appointment time via our platform',
-    'how_it_works_page.doctors_title': 'For doctors',
-    'how_it_works_page.doctors_step1': 'Register by providing your qualifications',
-    'how_it_works_page.doctors_step2': 'Set your availability on your schedule',
-    'how_it_works_page.doctors_step3': 'Receive notifications for your appointments',
-    'how_it_works_page.doctors_step4': 'Consult with the assistance of a translator if needed',
-    
-    // Contact page
-    'contact.title': 'Contact Us',
-    'contact.description': 'We are at your disposal to answer all your questions and accompany you in your health journey.',
-    'contact.our_info': 'Our contact information',
+    'footer.rights': 'All rights reserved.',
+
+    // Contact Page
+    'contact.title': 'Contact us',
+    'contact.description': 'We are here to answer all your questions and support you.',
+    'contact.our_info': 'Our information',
     'contact.address': 'Address',
     'contact.address_text': '123 Medicine Avenue\n75000 Paris, France',
     'contact.email': 'Email',
     'contact.phone': 'Phone',
     'contact.hours': 'Opening hours',
-    'contact.weekdays': 'Monday - Friday:',
-    'contact.saturday': 'Saturday:',
-    'contact.sunday': 'Sunday:',
+    'contact.weekdays': 'Monday - Friday',
+    'contact.saturday': 'Saturday',
+    'contact.sunday': 'Sunday',
     'contact.closed': 'Closed',
     'contact.send_message': 'Send us a message',
     'contact.name': 'Full name',
-    'contact.name_placeholder': 'Your name',
-    'contact.email_placeholder': 'your.email@example.com',
+    'contact.name_placeholder': 'Your full name',
+    'contact.email_placeholder': 'your@email.com',
     'contact.subject': 'Subject',
     'contact.subject_placeholder': 'Subject of your message',
     'contact.message': 'Message',
-    'contact.message_placeholder': 'Your message...',
+    'contact.message_placeholder': 'Describe your request...',
     'contact.send': 'Send message',
-    
-    // About page
-    'about.title': 'About Hypocrate',
-    'about.description': 'Our mission is to facilitate access to medical care for all patients in Africa through telemedicine.',
-    'about.our_story': 'Our story',
-    'about.our_mission': 'Our mission',
-    'about.mission_description': 'Hypocrate\'s mission is to revolutionize access to healthcare in Africa by offering a teleconsultation solution that overcomes geographical and linguistic barriers.',
-    'about.accessibility': 'Accessibility',
-    'about.accessibility_desc': 'We believe that access to quality medical care is a fundamental right. Our platform allows you to consult a doctor from anywhere, reducing geographical barriers.',
-    'about.linguistic_inclusion': 'Linguistic inclusion',
-    'about.linguistic_inclusion_desc': 'Language barriers should never limit access to care. Our real-time translation service enables smooth communication between patients and doctors.',
-    'about.medical_excellence': 'Medical excellence',
-    'about.medical_excellence_desc': 'We work only with certified and experienced doctors, ensuring the quality of consultations and diagnoses provided on our platform.',
-    'about.our_values': 'Our values',
-    'about.health_equity': 'Health equity',
-    'about.continuous_innovation': 'Continuous innovation',
-    'about.privacy_ethics': 'Privacy and ethics',
-    'about.constructive_collaboration': 'Constructive collaboration',
-    'about.our_impact': 'Our impact',
-    'about.consultations_completed': 'Consultations completed',
-    'about.certified_doctors': 'Certified doctors',
-    'about.languages_available': 'Languages available',
-    'about.african_countries': 'African countries served',
-    'about.future_vision': 'Our vision for the future',
-    
-    // Not Found page
-    'not_found.title': 'Oops! Page not found',
+
+    // Not Found Page
+    'not_found.title': 'Page not found',
     'not_found.description': 'The page you are looking for does not exist or has been moved.',
     'not_found.back_home': 'Back to home',
-    
-    // Medical Advice page
-    'medical_advice.title': 'Medical Advice',
-    'medical_advice.description': 'General medical advice to take care of your health and that of your family on a daily basis.',
+
+    // Medical Advice Page
+    'medical_advice.title': 'Medical advice',
+    'medical_advice.description': 'Discover our tips and recommendations to maintain good health.',
     'medical_advice.important_note': 'Important note',
-    'medical_advice.disclaimer1': 'The information provided on this page is general advice and does not replace medical consultation in any way. If you have persistent or concerning symptoms, consult a doctor without delay.',
-    'medical_advice.disclaimer2': 'For personalized medical advice, do not hesitate to make an appointment with one of our certified doctors.',
+    'medical_advice.disclaimer1': 'The advice presented on this page is provided for informational purposes only and does not replace professional medical consultation.',
+    'medical_advice.disclaimer2': 'In case of health problems, always consult a qualified healthcare professional.',
     'medical_advice.consult_doctor': 'Consult a doctor',
     'medical_advice.general_prevention': 'General prevention',
     'medical_advice.nutrition_wellness': 'Nutrition and wellness',
     'medical_advice.family_health': 'Family health',
     'medical_advice.physical_activity': 'Physical activity',
-    'medical_advice.general_tips': 'General tips to stay healthy',
+    'medical_advice.general_tips': 'General tips',
     'medical_advice.lifestyle': 'Lifestyle',
     'medical_advice.nutrition': 'Nutrition',
     'medical_advice.mental_health': 'Mental health',
+
+    // Login Page
+    'login.title': 'Login to your space',
+    'login.subtitle': 'Access your personalized dashboard',
+    'login.user_type': 'I am a',
+    'login.patient': 'Patient',
+    'login.doctor': 'Doctor',
+    'login.interpreter': 'Interpreter',
+    'login.email': 'Email address',
+    'login.email_placeholder': 'your@email.com',
+    'login.password': 'Password',
+    'login.password_placeholder': 'Your password',
+    'login.remember': 'Remember me',
+    'login.forgot_password': 'Forgot password?',
+    'login.submit': 'Sign in',
+    'login.no_account': 'No account yet?',
+    'login.register': 'Register',
+    'login.patient_space': 'Patient space',
+    'login.doctor_space': 'Doctor space',
+    'login.interpreter_space': 'Interpreter space',
+    'login.patient_description': 'Book appointments and consult your doctors',
+    'login.doctor_description': 'Manage your consultations and patients',
+    'login.interpreter_description': 'Assist medical consultations',
+    'login.success_patient': 'Login successful! Redirecting to patient space...',
+    'login.success_doctor': 'Login successful! Redirecting to doctor space...',
+    'login.success_interpreter': 'Login successful! Redirecting to interpreter space...',
+
+    // About Page
+    'about.title': 'About Hypocrate',
+    'about.description': 'Our mission is to facilitate access to medical care for all patients in Africa through telemedicine.',
+
+    // Our Doctors Page
+    'doctors.title': 'Our doctors',
+    'doctors.description': 'Consult our network of certified doctors, available for telemedicine consultations with translation service.',
+
+    // Privacy Page
+    'privacy.title': 'Privacy policy',
+    'privacy.description': 'How we protect your data and respect your privacy.',
+
+    // Terms Page
+    'terms.title': 'Terms of use',
+    'terms.description': 'Please read these terms carefully before using our platform.',
   }
 };
 
-interface LanguageProviderProps {
-  children: React.ReactNode;
-}
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
+export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('fr');
-
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && (savedLanguage === 'fr' || savedLanguage === 'en')) {
-      setLanguage(savedLanguage);
-    }
-  }, []);
-
-  const handleSetLanguage = (lang: Language) => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
-  };
 
   const t = (key: string): string => {
     return translations[language][key] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (context === undefined) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
 };
