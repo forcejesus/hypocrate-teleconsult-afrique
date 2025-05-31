@@ -1,8 +1,11 @@
 
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { LanguageSelector } from '@/components/LanguageSelector';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-gray-50 pt-16 pb-8">
@@ -15,7 +18,7 @@ const Footer = () => {
             <ul className="space-y-4">
               <li>
                 <Link to="/" className="text-gray-600 hover:text-hypocrate-blue transition-colors">
-                  Accueil
+                  {t('nav.home')}
                 </Link>
               </li>
               <li>
@@ -25,7 +28,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/nos-medecins" className="text-gray-600 hover:text-hypocrate-blue transition-colors">
-                  Nos médecins
+                  {t('nav.our_doctors')}
                 </Link>
               </li>
               <li>
@@ -47,12 +50,12 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/comment-ca-marche" className="text-gray-600 hover:text-hypocrate-blue transition-colors">
-                  Comment ça marche
+                  {t('nav.how_it_works')}
                 </Link>
               </li>
               <li>
                 <Link to="/faq" className="text-gray-600 hover:text-hypocrate-blue transition-colors">
-                  FAQ
+                  {t('nav.faq')}
                 </Link>
               </li>
             </ul>
@@ -120,11 +123,10 @@ const Footer = () => {
         <div className="pt-8 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-500 mb-4 md:mb-0">
-              © {currentYear} Hypocrate Téléconsult Afrique. Tous droits réservés.
+              © {currentYear} {t('footer.copyright')}
             </p>
-            <div className="flex space-x-6">
-              <button className="text-gray-400 hover:text-hypocrate-blue transition-colors">Français</button>
-              <button className="text-gray-400 hover:text-hypocrate-blue transition-colors">English</button>
+            <div className="flex space-x-6 items-center">
+              <LanguageSelector />
             </div>
           </div>
         </div>

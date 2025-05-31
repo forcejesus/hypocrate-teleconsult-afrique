@@ -1,8 +1,11 @@
 
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const HeroSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-gradient-to-br from-hypocrate-lightBlue via-white to-white py-20 md:py-28">
       <div className="container-custom">
@@ -10,21 +13,21 @@ const HeroSection = () => {
           {/* Text Content */}
           <div className="w-full lg:w-1/2 space-y-6 animate-fade-in">
             <div className="inline-block bg-blue-100 text-hypocrate-blue font-medium px-4 py-1 rounded-full text-sm mb-4">
-              Téléconsultation médicale avec traduction
+              {t('hero.badge')}
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
-              Consultez un médecin <span className="text-hypocrate-blue">depuis n'importe où</span>
+              {t('hero.title')} <span className="text-hypocrate-blue">{t('hero.title_highlight')}</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-700">
-              Accédez à des consultations médicales de qualité sans barrière linguistique, depuis l'Afrique ou n'importe où dans le monde.
+              {t('hero.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button className="bg-hypocrate-blue hover:bg-blue-600 text-white font-semibold text-lg py-6 px-8 rounded-md">
-                Prendre rendez-vous
+                {t('hero.book_appointment')}
               </Button>
               <Link to="/comment-ca-marche">
                 <Button variant="outline" className="border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50 font-semibold text-lg py-6 px-8 rounded-md">
-                  Comment ça marche
+                  {t('hero.how_it_works')}
                 </Button>
               </Link>
             </div>
@@ -35,7 +38,7 @@ const HeroSection = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="ml-2 text-gray-700 font-medium">Disponible 7j/7</span>
+                <span className="ml-2 text-gray-700 font-medium">{t('hero.available_24_7')}</span>
               </div>
               <div className="flex items-center">
                 <div className="bg-green-500 rounded-full p-1">
@@ -43,7 +46,7 @@ const HeroSection = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="ml-2 text-gray-700 font-medium">Médecins certifiés</span>
+                <span className="ml-2 text-gray-700 font-medium">{t('hero.certified_doctors')}</span>
               </div>
               <div className="flex items-center">
                 <div className="bg-green-500 rounded-full p-1">
@@ -51,7 +54,7 @@ const HeroSection = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="ml-2 text-gray-700 font-medium">Service de traduction</span>
+                <span className="ml-2 text-gray-700 font-medium">{t('hero.translation_service')}</span>
               </div>
             </div>
           </div>

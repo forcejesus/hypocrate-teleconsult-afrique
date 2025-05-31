@@ -3,11 +3,14 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import { LanguageSelector } from '@/components/LanguageSelector';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,7 +44,7 @@ const Navbar = () => {
                 ? 'text-hypocrate-blue' 
                 : 'text-gray-700 hover:text-hypocrate-blue'}`}
             >
-              Accueil
+              {t('nav.home')}
             </Link>
             <Link 
               to="/comment-ca-marche" 
@@ -49,7 +52,7 @@ const Navbar = () => {
                 ? 'text-hypocrate-blue' 
                 : 'text-gray-700 hover:text-hypocrate-blue'}`}
             >
-              Comment ça marche
+              {t('nav.how_it_works')}
             </Link>
             <Link 
               to="/nos-medecins" 
@@ -57,7 +60,7 @@ const Navbar = () => {
                 ? 'text-hypocrate-blue' 
                 : 'text-gray-700 hover:text-hypocrate-blue'}`}
             >
-              Nos médecins
+              {t('nav.our_doctors')}
             </Link>
             <Link 
               to="/faq" 
@@ -65,17 +68,18 @@ const Navbar = () => {
                 ? 'text-hypocrate-blue' 
                 : 'text-gray-700 hover:text-hypocrate-blue'}`}
             >
-              FAQ
+              {t('nav.faq')}
             </Link>
           </div>
 
-          {/* Auth Buttons */}
+          {/* Auth Buttons and Language Selector */}
           <div className="hidden md:flex items-center space-x-4">
+            <LanguageSelector />
             <Button variant="outline" asChild className="border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50 font-medium">
-              <Link to="/login">Se connecter</Link>
+              <Link to="/login">{t('nav.login')}</Link>
             </Button>
             <Button asChild className="bg-hypocrate-blue hover:bg-blue-600 text-white font-medium">
-              <Link to="/register">S'inscrire</Link>
+              <Link to="/register">{t('nav.register')}</Link>
             </Button>
           </div>
 
@@ -104,7 +108,7 @@ const Navbar = () => {
                 : 'text-gray-700'}`}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Accueil
+              {t('nav.home')}
             </Link>
             <Link 
               to="/comment-ca-marche" 
@@ -113,7 +117,7 @@ const Navbar = () => {
                 : 'text-gray-700'}`}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Comment ça marche
+              {t('nav.how_it_works')}
             </Link>
             <Link 
               to="/nos-medecins" 
@@ -122,7 +126,7 @@ const Navbar = () => {
                 : 'text-gray-700'}`}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Nos médecins
+              {t('nav.our_doctors')}
             </Link>
             <Link 
               to="/faq" 
@@ -131,14 +135,17 @@ const Navbar = () => {
                 : 'text-gray-700'}`}
               onClick={() => setMobileMenuOpen(false)}
             >
-              FAQ
+              {t('nav.faq')}
             </Link>
             <div className="flex flex-col space-y-2 pt-4">
+              <div className="mb-2">
+                <LanguageSelector />
+              </div>
               <Button variant="outline" asChild className="w-full border-hypocrate-blue text-hypocrate-blue font-medium">
-                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>Se connecter</Link>
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>{t('nav.login')}</Link>
               </Button>
               <Button asChild className="w-full bg-hypocrate-blue hover:bg-blue-600 text-white font-medium">
-                <Link to="/register" onClick={() => setMobileMenuOpen(false)}>S'inscrire</Link>
+                <Link to="/register" onClick={() => setMobileMenuOpen(false)}>{t('nav.register')}</Link>
               </Button>
             </div>
           </div>

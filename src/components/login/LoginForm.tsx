@@ -11,17 +11,20 @@ import { PasswordField } from './PasswordField';
 import { UserTypeSelectDropdown } from '@/components/auth/UserTypeSelectDropdown';
 import { containerVariants, itemVariants } from "@/components/auth/registration/AnimationVariants";
 import { toast } from "sonner";
+import { useLanguage } from '@/contexts/LanguageContext';
 
-const formSchema = z.object({
-  userType: z.string().min(1, "Veuillez choisir un type d'utilisateur"),
-  email: z.string().email("L'email n'est pas valide"),
-  password: z.string().min(1, "Veuillez entrer votre mot de passe"),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
-export const LoginForm = () => {
+const LoginForm = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  
+  const formSchema = z.object({
+    userType: z.string().min(1, t('user_type.choose')),
+    email: z.string().email("L'email n'est pas valide"),
+    password: z.string().min(1, "Veuillez entrer votre mot de passe"),
+  });
+
+  type FormValues = z.infer<typeof formSchema>;
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,21 +40,21 @@ export const LoginForm = () => {
     // Rediriger vers l'espace approprié en fonction du type d'utilisateur
     switch (values.userType) {
       case 'patient':
-        toast.success("Connexion réussie en tant que patient");
+        toast.success(t('login.success_patient'));
         navigate('/patient-dashboard');
         break;
       case 'medecin':
       case 'doctor':
-        toast.success("Connexion réussie en tant que médecin");
+        toast.success(t('login.success_doctor'));
         navigate('/doctor-dashboard');
         break;
       case 'traducteur':
       case 'interpreter':
-        toast.success("Connexion réussie en tant qu'interprète");
+        toast.success(t('login.success_interpreter'));
         navigate('/interpreter-dashboard');
         break;
       default:
-        toast.error("Type d'utilisateur non reconnu");
+        toast.error(t('login.error_user_type'));
         console.error("Type d'utilisateur non reconnu:", values.userType);
     }
   };
@@ -85,7 +88,7 @@ export const LoginForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-700 font-medium">Email</FormLabel>
+                  <FormLabel className="text-gray-700 font-medium">{t('login.email')}</FormLabel>
                   <FormControl>
                     <Input 
                       type="email" 
@@ -116,7 +119,7 @@ export const LoginForm = () => {
               type="submit"
               className="w-full h-12 bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 rounded-xl text-white font-medium text-lg shadow-md hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200"
             >
-              Se connecter
+              {t('login.submit')}
             </Button>
           </motion.div>
 
@@ -125,9 +128,9 @@ export const LoginForm = () => {
             className="text-center"
           >
             <p className="text-sm text-gray-600">
-              Pas encore de compte ? {' '}
+              {t('login.no_account')} {' '}
               <Link to="/register" className="text-hypocrate-blue hover:underline font-medium hover:text-hypocrate-green transition-colors duration-200">
-                Créer un compte
+                {t('login.create_account')}
               </Link>
             </p>
           </motion.div>
@@ -136,3 +139,5 @@ export const LoginForm = () => {
     </Form>
   );
 };
+
+export { LoginForm };
