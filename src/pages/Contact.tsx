@@ -3,8 +3,11 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Mail, MapPin, Phone } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Contact = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -12,9 +15,9 @@ const Contact = () => {
         {/* Hero Section */}
         <div className="bg-hypocrate-lightBlue py-12">
           <div className="container-custom">
-            <h1 className="text-4xl font-bold text-center">Nos contacts</h1>
+            <h1 className="text-4xl font-bold text-center">{t('contact.title')}</h1>
             <p className="text-xl text-center mt-4 text-gray-700 max-w-3xl mx-auto">
-              Nous sommes à votre disposition pour répondre à toutes vos questions et vous accompagner dans votre parcours de santé.
+              {t('contact.description')}
             </p>
           </div>
         </div>
@@ -24,7 +27,7 @@ const Contact = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact Information */}
             <div className="bg-white rounded-xl shadow-md p-8 border border-gray-100">
-              <h2 className="text-2xl font-bold mb-6 text-hypocrate-blue">Nos coordonnées</h2>
+              <h2 className="text-2xl font-bold mb-6 text-hypocrate-blue">{t('contact.our_info')}</h2>
               
               <div className="space-y-6">
                 <div className="flex items-start">
@@ -32,10 +35,9 @@ const Contact = () => {
                     <MapPin className="h-6 w-6 text-hypocrate-blue" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">Adresse</h3>
-                    <p className="text-gray-600 mt-1">
-                      123 Avenue de la Médecine<br />
-                      75000 Paris, France
+                    <h3 className="font-semibold text-lg">{t('contact.address')}</h3>
+                    <p className="text-gray-600 mt-1 whitespace-pre-line">
+                      {t('contact.address_text')}
                     </p>
                   </div>
                 </div>
@@ -45,7 +47,7 @@ const Contact = () => {
                     <Mail className="h-6 w-6 text-hypocrate-blue" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">Email</h3>
+                    <h3 className="font-semibold text-lg">{t('contact.email')}</h3>
                     <p className="text-gray-600 mt-1">
                       <a href="mailto:contact@hypocrate-teleconsult.com" className="text-hypocrate-blue hover:underline">
                         contact@hypocrate-teleconsult.com
@@ -59,7 +61,7 @@ const Contact = () => {
                     <Phone className="h-6 w-6 text-hypocrate-blue" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">Téléphone</h3>
+                    <h3 className="font-semibold text-lg">{t('contact.phone')}</h3>
                     <p className="text-gray-600 mt-1">
                       <a href="tel:+33123456789" className="text-hypocrate-blue hover:underline">
                         +33 1 23 45 67 89
@@ -70,19 +72,19 @@ const Contact = () => {
               </div>
               
               <div className="mt-10">
-                <h3 className="font-semibold text-lg mb-3">Heures d'ouverture</h3>
+                <h3 className="font-semibold text-lg mb-3">{t('contact.hours')}</h3>
                 <ul className="space-y-2 text-gray-600">
                   <li className="flex justify-between">
-                    <span>Lundi - Vendredi:</span>
+                    <span>{t('contact.weekdays')}</span>
                     <span>9:00 - 20:00</span>
                   </li>
                   <li className="flex justify-between">
-                    <span>Samedi:</span>
+                    <span>{t('contact.saturday')}</span>
                     <span>9:00 - 18:00</span>
                   </li>
                   <li className="flex justify-between">
-                    <span>Dimanche:</span>
-                    <span>Fermé</span>
+                    <span>{t('contact.sunday')}</span>
+                    <span>{t('contact.closed')}</span>
                   </li>
                 </ul>
               </div>
@@ -90,59 +92,59 @@ const Contact = () => {
             
             {/* Contact Form */}
             <div className="bg-white rounded-xl shadow-md p-8 border border-gray-100">
-              <h2 className="text-2xl font-bold mb-6 text-hypocrate-blue">Envoyez-nous un message</h2>
+              <h2 className="text-2xl font-bold mb-6 text-hypocrate-blue">{t('contact.send_message')}</h2>
               
               <form className="space-y-5">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Nom complet
+                    {t('contact.name')}
                   </label>
                   <input
                     type="text"
                     id="name"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue"
-                    placeholder="Votre nom"
+                    placeholder={t('contact.name_placeholder')}
                   />
                 </div>
                 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
+                    {t('contact.email')}
                   </label>
                   <input
                     type="email"
                     id="email"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue"
-                    placeholder="votre.email@exemple.com"
+                    placeholder={t('contact.email_placeholder')}
                   />
                 </div>
                 
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                    Sujet
+                    {t('contact.subject')}
                   </label>
                   <input
                     type="text"
                     id="subject"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue"
-                    placeholder="Sujet de votre message"
+                    placeholder={t('contact.subject_placeholder')}
                   />
                 </div>
                 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                    Message
+                    {t('contact.message')}
                   </label>
                   <textarea
                     id="message"
                     rows={5}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue"
-                    placeholder="Votre message..."
+                    placeholder={t('contact.message_placeholder')}
                   ></textarea>
                 </div>
                 
                 <Button className="w-full bg-hypocrate-blue hover:bg-blue-600 text-white">
-                  Envoyer le message
+                  {t('contact.send')}
                 </Button>
               </form>
             </div>

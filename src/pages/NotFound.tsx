@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const NotFound = () => {
   const location = useLocation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     console.error(
@@ -22,13 +24,13 @@ const NotFound = () => {
       <main className="flex-grow flex items-center justify-center py-16">
         <div className="text-center px-4">
           <h1 className="text-6xl font-bold text-hypocrate-blue mb-6">404</h1>
-          <p className="text-2xl text-gray-700 mb-6">Oups ! Page introuvable</p>
+          <p className="text-2xl text-gray-700 mb-6">{t('not_found.title')}</p>
           <p className="text-gray-600 mb-8 max-w-md mx-auto">
-            La page que vous recherchez n'existe pas ou a été déplacée.
+            {t('not_found.description')}
           </p>
           <Link to="/">
             <Button className="btn-primary">
-              Retourner à l'accueil
+              {t('not_found.back_home')}
             </Button>
           </Link>
         </div>
