@@ -5,26 +5,23 @@ import Footer from '@/components/Footer';
 import { LoginLeftSection } from '@/components/login/LoginLeftSection';
 import { LoginRightSection } from '@/components/login/LoginRightSection';
 import { useForm } from 'react-hook-form';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const Login = () => {
-  const { t } = useLanguage();
   const animationComplete = useAnimationComplete();
   const form = useForm();
   const userType = form.watch('userType') || '';
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-hypocrate-lightBlue via-white to-blue-50">
       <Navbar />
       <main className="flex-grow relative overflow-hidden">
-        {/* Section oblique de fond */}
-        <div className="absolute top-0 left-0 w-full h-full -z-10 bg-gradient-to-r from-gray-50 to-white"></div>
-        <div className="absolute top-0 left-0 w-full h-full -z-10 
-          after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full 
-          after:bg-hypocrate-blue after:opacity-10 after:transform after:rotate-6 after:origin-top-right after:translate-y-[-10%]">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-full -z-10">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-hypocrate-blue/10 to-hypocrate-green/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-hypocrate-green/10 to-hypocrate-blue/10 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="container mx-auto px-4 py-10 md:py-16">
+        <div className="container mx-auto px-4 py-10 md:py-16 relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-stretch gap-8 md:gap-12">
             <LoginLeftSection userType={userType} animationComplete={animationComplete} />
             <LoginRightSection />
