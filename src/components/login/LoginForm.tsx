@@ -11,14 +11,12 @@ import { PasswordField } from './PasswordField';
 import { UserTypeSelectDropdown } from '@/components/auth/UserTypeSelectDropdown';
 import { containerVariants, itemVariants } from "@/components/auth/registration/AnimationVariants";
 import { toast } from "sonner";
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
   
   const formSchema = z.object({
-    userType: z.string().min(1, t('user_type.choose')),
+    userType: z.string().min(1, "Veuillez choisir votre type de profil"),
     email: z.string().email("L'email n'est pas valide"),
     password: z.string().min(1, "Veuillez entrer votre mot de passe"),
   });
@@ -40,21 +38,21 @@ const LoginForm = () => {
     // Rediriger vers l'espace approprié en fonction du type d'utilisateur
     switch (values.userType) {
       case 'patient':
-        toast.success(t('login.success_patient'));
+        toast.success("Connexion réussie ! Redirection vers votre espace patient...");
         navigate('/patient-dashboard');
         break;
       case 'medecin':
       case 'doctor':
-        toast.success(t('login.success_doctor'));
+        toast.success("Connexion réussie ! Redirection vers votre espace médecin...");
         navigate('/doctor-dashboard');
         break;
       case 'traducteur':
       case 'interpreter':
-        toast.success(t('login.success_interpreter'));
+        toast.success("Connexion réussie ! Redirection vers votre espace traducteur...");
         navigate('/interpreter-dashboard');
         break;
       default:
-        toast.error(t('login.error_user_type'));
+        toast.error("Type d'utilisateur non reconnu");
         console.error("Type d'utilisateur non reconnu:", values.userType);
     }
   };
@@ -88,7 +86,7 @@ const LoginForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-700 font-medium">{t('login.email')}</FormLabel>
+                  <FormLabel className="text-gray-700 font-medium">Adresse e-mail</FormLabel>
                   <FormControl>
                     <Input 
                       type="email" 
@@ -119,7 +117,7 @@ const LoginForm = () => {
               type="submit"
               className="w-full h-12 bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 rounded-xl text-white font-medium text-lg shadow-md hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200"
             >
-              {t('login.submit')}
+              Se connecter
             </Button>
           </motion.div>
 
@@ -128,9 +126,9 @@ const LoginForm = () => {
             className="text-center"
           >
             <p className="text-sm text-gray-600">
-              {t('login.no_account')} {' '}
+              Pas encore de compte ? {' '}
               <Link to="/register" className="text-hypocrate-blue hover:underline font-medium hover:text-hypocrate-green transition-colors duration-200">
-                {t('login.create_account')}
+                Créer un compte
               </Link>
             </p>
           </motion.div>

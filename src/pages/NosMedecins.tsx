@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -12,11 +11,8 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const NosMedecins = () => {
-  const { t } = useLanguage();
-
   // Sample data
   const doctors = [
     {
@@ -125,9 +121,9 @@ const NosMedecins = () => {
       <main className="flex-grow">
         <div className="bg-hypocrate-lightBlue py-12">
           <div className="container-custom">
-            <h1 className="text-4xl font-bold text-center">{t('doctors.title')}</h1>
+            <h1 className="text-4xl font-bold text-center">Nos médecins</h1>
             <p className="text-xl text-center mt-4 text-gray-700 max-w-3xl mx-auto">
-              {t('doctors.description')}
+              Découvrez notre équipe de professionnels de santé certifiés
             </p>
           </div>
         </div>

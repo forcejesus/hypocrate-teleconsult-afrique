@@ -3,14 +3,11 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const ConseilsMedicaux = () => {
-  const { t } = useLanguage();
-
   const categories = [
     {
-      title: t('medical_advice.general_prevention'),
+      title: "Prévention générale",
       icon: "🛡️",
       articles: [
         {
@@ -24,7 +21,7 @@ const ConseilsMedicaux = () => {
       ]
     },
     {
-      title: t('medical_advice.nutrition_wellness'),
+      title: "Nutrition et bien-être",
       icon: "🥗",
       articles: [
         {
@@ -38,7 +35,7 @@ const ConseilsMedicaux = () => {
       ]
     },
     {
-      title: t('medical_advice.family_health'),
+      title: "Santé familiale",
       icon: "👪",
       articles: [
         {
@@ -52,7 +49,7 @@ const ConseilsMedicaux = () => {
       ]
     },
     {
-      title: t('medical_advice.physical_activity'),
+      title: "Activité physique",
       icon: "🏃‍♂️",
       articles: [
         {
@@ -74,9 +71,9 @@ const ConseilsMedicaux = () => {
         {/* Hero Section */}
         <div className="bg-hypocrate-lightBlue py-12">
           <div className="container-custom">
-            <h1 className="text-4xl font-bold text-center">{t('medical_advice.title')}</h1>
+            <h1 className="text-4xl font-bold text-center">Conseils médicaux</h1>
             <p className="text-xl text-center mt-4 text-gray-700 max-w-3xl mx-auto">
-              {t('medical_advice.description')}
+              Découvrez nos conseils santé rédigés par des professionnels
             </p>
           </div>
         </div>
@@ -90,18 +87,18 @@ const ConseilsMedicaux = () => {
                 </svg>
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-800">{t('medical_advice.important_note')}</h2>
+                <h2 className="text-2xl font-bold text-gray-800">Note importante</h2>
               </div>
             </div>
             <p className="text-gray-700 mb-4">
-              {t('medical_advice.disclaimer1')}
+              Ces conseils sont fournis à titre informatif uniquement et ne remplacent en aucun cas une consultation médicale professionnelle.
             </p>
             <p className="text-gray-700">
-              {t('medical_advice.disclaimer2')}
+              En cas de symptômes persistants ou préoccupants, consultez toujours un médecin qualifié.
             </p>
             <div className="mt-6">
               <Button asChild className="bg-hypocrate-blue hover:bg-blue-600 text-white">
-                <Link to="/nos-medecins">{t('medical_advice.consult_doctor')}</Link>
+                <Link to="/nos-medecins">Consulter un médecin</Link>
               </Button>
             </div>
           </div>
@@ -128,10 +125,10 @@ const ConseilsMedicaux = () => {
           ))}
           
           <div className="bg-gray-50 rounded-xl p-8 border border-gray-200 mt-12">
-            <h2 className="text-2xl font-bold mb-6 text-center">{t('medical_advice.general_tips')}</h2>
+            <h2 className="text-2xl font-bold mb-6 text-center">Conseils généraux</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-5 rounded-lg shadow-sm">
-                <h3 className="font-semibold mb-2">{t('medical_advice.lifestyle')}</h3>
+                <h3 className="font-semibold mb-2">Mode de vie</h3>
                 <ul className="list-disc list-inside text-gray-700 space-y-1">
                   <li>Dormez 7-8 heures par nuit</li>
                   <li>Buvez suffisamment d'eau</li>
@@ -141,7 +138,7 @@ const ConseilsMedicaux = () => {
                 </ul>
               </div>
               <div className="bg-white p-5 rounded-lg shadow-sm">
-                <h3 className="font-semibold mb-2">{t('medical_advice.nutrition')}</h3>
+                <h3 className="font-semibold mb-2">Nutrition</h3>
                 <ul className="list-disc list-inside text-gray-700 space-y-1">
                   <li>Mangez des fruits et légumes quotidiennement</li>
                   <li>Limitez le sel et le sucre</li>
@@ -151,7 +148,7 @@ const ConseilsMedicaux = () => {
                 </ul>
               </div>
               <div className="bg-white p-5 rounded-lg shadow-sm">
-                <h3 className="font-semibold mb-2">{t('medical_advice.mental_health')}</h3>
+                <h3 className="font-semibold mb-2">Santé mentale</h3>
                 <ul className="list-disc list-inside text-gray-700 space-y-1">
                   <li>Pratiquez la relaxation ou la méditation</li>
                   <li>Prenez du temps pour vous</li>
