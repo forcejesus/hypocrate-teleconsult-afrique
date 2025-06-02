@@ -48,7 +48,7 @@ const CtaSection = () => {
           {/* Features highlight */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-              <div className="text-3xl font-bold mb-2">< 24h</div>
+              <div className="text-3xl font-bold mb-2">&lt; 24h</div>
               <div className="text-white/80">Consultation disponible</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
