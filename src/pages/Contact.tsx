@@ -60,7 +60,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg">Téléphone</h3>
-                    <p className="text-gray-600 mt-1">
+                    <p className="text-gray-600 mt-1 flex items-center">
+                      <span className="text-lg mr-2">🇫🇷</span>
                       <a href="tel:+33123456789" className="text-hypocrate-blue hover:underline">
                         +33 1 23 45 67 89
                       </a>

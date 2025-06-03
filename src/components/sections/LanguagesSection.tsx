@@ -3,22 +3,22 @@ import { Languages, Globe, MessageSquare } from 'lucide-react';
 
 const LanguagesSection = () => {
   const languages = [
-    { name: "Wolof", region: "Sénégal, Gambie", priority: true },
-    { name: "Bambara", region: "Mali, Burkina Faso", priority: true },
-    { name: "Hausa", region: "Nigeria, Niger", priority: true },
-    { name: "Swahili", region: "Kenya, Tanzanie", priority: true },
-    { name: "Lingala", region: "RDC, Congo", priority: true },
-    { name: "Amharique", region: "Éthiopie", priority: true },
-    { name: "Yoruba", region: "Nigeria, Bénin", priority: true },
-    { name: "Arabe", region: "Maghreb, Moyen-Orient", priority: true },
-    { name: "Français", region: "France, Afrique francophone", priority: false },
-    { name: "Anglais", region: "International", priority: false },
-    { name: "Espagnol", region: "Espagne, Amérique latine", priority: false },
-    { name: "Portugais", region: "Portugal, Brésil", priority: false },
-    { name: "Mandingue", region: "Sénégal, Mali", priority: true },
-    { name: "Peul (Fulfulde)", region: "Sahel", priority: true },
-    { name: "Sango", region: "République centrafricaine", priority: true },
-    { name: "Malagasy", region: "Madagascar", priority: true }
+    { name: "Wolof", region: "Sénégal, Gambie", flag: "🇸🇳", priority: true },
+    { name: "Bambara", region: "Mali, Burkina Faso", flag: "🇲🇱", priority: true },
+    { name: "Hausa", region: "Nigeria, Niger", flag: "🇳🇬", priority: true },
+    { name: "Swahili", region: "Kenya, Tanzanie", flag: "🇰🇪", priority: true },
+    { name: "Lingala", region: "RDC, Congo", flag: "🇨🇩", priority: true },
+    { name: "Amharique", region: "Éthiopie", flag: "🇪🇹", priority: true },
+    { name: "Yoruba", region: "Nigeria, Bénin", flag: "🇳🇬", priority: true },
+    { name: "Arabe", region: "Maghreb, Moyen-Orient", flag: "🇲🇦", priority: true },
+    { name: "Mandingue", region: "Sénégal, Mali", flag: "🇸🇳", priority: true },
+    { name: "Peul (Fulfulde)", region: "Sahel", flag: "🇸🇳", priority: true },
+    { name: "Sango", region: "République centrafricaine", flag: "🇨🇫", priority: true },
+    { name: "Malagasy", region: "Madagascar", flag: "🇲🇬", priority: true },
+    { name: "Français", region: "France, Afrique francophone", flag: "🇫🇷", priority: false },
+    { name: "Anglais", region: "International", flag: "🇺🇸", priority: false },
+    { name: "Espagnol", region: "Espagne, Amérique latine", flag: "🇪🇸", priority: false },
+    { name: "Portugais", region: "Portugal, Brésil", flag: "🇵🇹", priority: false }
   ];
 
   const priorityLanguages = languages.filter(lang => lang.priority);
@@ -56,8 +56,11 @@ const LanguagesSection = () => {
               <div key={index} className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-orange-100 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-orange-100 to-yellow-100 rounded-full -translate-y-8 translate-x-8 opacity-50 group-hover:opacity-70 transition-opacity"></div>
                 <div className="relative">
-                  <div className="bg-orange-50 rounded-full p-3 inline-flex mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <MessageSquare className="w-6 h-6 text-orange-600" />
+                  <div className="flex items-center mb-4">
+                    <div className="text-3xl mr-3">{language.flag}</div>
+                    <div className="bg-orange-50 rounded-full p-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <MessageSquare className="w-6 h-6 text-orange-600" />
+                    </div>
                   </div>
                   <h4 className="text-lg font-bold text-gray-900 mb-2">{language.name}</h4>
                   <p className="text-sm text-gray-600">{language.region}</p>
@@ -82,33 +85,16 @@ const LanguagesSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {otherLanguages.map((language, index) => (
               <div key={index} className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-blue-100 group">
-                <div className="bg-blue-50 rounded-full p-3 inline-flex mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <MessageSquare className="w-6 h-6 text-hypocrate-blue" />
+                <div className="flex items-center mb-4">
+                  <div className="text-3xl mr-3">{language.flag}</div>
+                  <div className="bg-blue-50 rounded-full p-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <MessageSquare className="w-6 h-6 text-hypocrate-blue" />
+                  </div>
                 </div>
                 <h4 className="text-lg font-bold text-gray-900 mb-2">{language.name}</h4>
                 <p className="text-sm text-gray-600">{language.region}</p>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* CTA pour demander d'autres langues */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-hypocrate-blue/10 to-hypocrate-green/10 p-8 rounded-3xl border border-blue-200">
-            <h3 className="text-2xl font-bold mb-4 text-gray-900">
-              Votre langue n'est pas listée ?
-            </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Nous travaillons constamment pour élargir notre réseau d'interprètes. 
-              Contactez-nous pour nous faire part de vos besoins linguistiques.
-            </p>
-            <a 
-              href="/contact" 
-              className="inline-flex items-center bg-gradient-to-r from-hypocrate-blue to-hypocrate-green text-white font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-200 transform hover:scale-105"
-            >
-              Demander une langue
-              <MessageSquare className="ml-2 w-5 h-5" />
-            </a>
           </div>
         </div>
       </div>

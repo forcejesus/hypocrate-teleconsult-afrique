@@ -78,7 +78,7 @@ const Navbar = () => {
                 <NavigationMenuItem>
                   <Link 
                     to="/" 
-                    className={`px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${isActive('/') 
+                    className={`px-4 py-2 rounded-lg font-semibold text-base transition-all duration-200 ${isActive('/') 
                       ? 'text-hypocrate-blue bg-blue-50' 
                       : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
                   >
@@ -87,7 +87,7 @@ const Navbar = () => {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-semibold text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50 transition-all duration-200">
+                  <NavigationMenuTrigger className="font-semibold text-base text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50 transition-all duration-200">
                     Services
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -112,7 +112,7 @@ const Navbar = () => {
                 <NavigationMenuItem>
                   <Link 
                     to="/comment-ca-marche" 
-                    className={`px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${isActive('/comment-ca-marche') 
+                    className={`px-4 py-2 rounded-lg font-semibold text-base transition-all duration-200 ${isActive('/comment-ca-marche') 
                       ? 'text-hypocrate-blue bg-blue-50' 
                       : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
                   >
@@ -123,11 +123,22 @@ const Navbar = () => {
                 <NavigationMenuItem>
                   <Link 
                     to="/nos-medecins" 
-                    className={`px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${isActive('/nos-medecins') 
+                    className={`px-4 py-2 rounded-lg font-semibold text-base transition-all duration-200 ${isActive('/nos-medecins') 
                       ? 'text-hypocrate-blue bg-blue-50' 
                       : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
                   >
                     Notre équipe
+                  </Link>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <Link 
+                    to="/contact" 
+                    className={`px-4 py-2 rounded-lg font-semibold text-base transition-all duration-200 ${isActive('/contact') 
+                      ? 'text-hypocrate-blue bg-blue-50' 
+                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
+                  >
+                    Contact
                   </Link>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -136,7 +147,7 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Button variant="ghost" asChild className="font-semibold text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50 transition-all duration-200">
+            <Button variant="ghost" asChild className="font-semibold text-base text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50 transition-all duration-200">
               <Link to="/login">Se connecter</Link>
             </Button>
             <Button asChild className="bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 px-6 py-2.5 rounded-xl">
@@ -166,7 +177,7 @@ const Navbar = () => {
                 <div className="flex flex-col space-y-6 mt-8">
                   <Link 
                     to="/" 
-                    className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/') 
+                    className={`py-3 px-4 font-semibold text-base rounded-lg transition-all duration-200 ${isActive('/') 
                       ? 'text-hypocrate-blue bg-blue-50' 
                       : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
                     onClick={() => setMobileMenuOpen(false)}
@@ -184,7 +195,7 @@ const Navbar = () => {
                         className="block py-3 px-3 text-gray-600 hover:text-hypocrate-blue hover:bg-blue-50 rounded transition-all duration-200 mb-2"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <div className="font-medium">{item.title}</div>
+                        <div className="font-medium text-base">{item.title}</div>
                         <div className="text-sm text-gray-500">{item.description}</div>
                       </Link>
                     ))}
@@ -192,7 +203,7 @@ const Navbar = () => {
                   
                   <Link 
                     to="/comment-ca-marche" 
-                    className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/comment-ca-marche') 
+                    className={`py-3 px-4 font-semibold text-base rounded-lg transition-all duration-200 ${isActive('/comment-ca-marche') 
                       ? 'text-hypocrate-blue bg-blue-50' 
                       : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
                     onClick={() => setMobileMenuOpen(false)}
@@ -202,12 +213,22 @@ const Navbar = () => {
                   
                   <Link 
                     to="/nos-medecins" 
-                    className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/nos-medecins') 
+                    className={`py-3 px-4 font-semibold text-base rounded-lg transition-all duration-200 ${isActive('/nos-medecins') 
                       ? 'text-hypocrate-blue bg-blue-50' 
                       : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Notre équipe
+                  </Link>
+
+                  <Link 
+                    to="/contact" 
+                    className={`py-3 px-4 font-semibold text-base rounded-lg transition-all duration-200 ${isActive('/contact') 
+                      ? 'text-hypocrate-blue bg-blue-50' 
+                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Contact
                   </Link>
                   
                   <div className="flex flex-col space-y-3 pt-6 border-t">

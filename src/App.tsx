@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -23,6 +22,7 @@ import NotFound from "./pages/NotFound";
 import ServicePatients from "./pages/ServicePatients";
 import ServiceMedecins from "./pages/ServiceMedecins";
 import ServiceInterpretes from "./pages/ServiceInterpretes";
+import Faq from "./pages/Faq";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +40,7 @@ function App() {
             <Route path="/comment-ca-marche" element={<CommentCaMarche />} />
             <Route path="/nos-medecins" element={<NosMedecins />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/faq" element={<Faq />} />
             <Route path="/a-propos" element={<APropos />} />
             <Route path="/confidentialite" element={<Confidentialite />} />
             <Route path="/cgu" element={<Cgu />} />

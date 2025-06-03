@@ -79,21 +79,24 @@ const Footer = () => {
             <h3 className="text-lg font-bold mb-6 text-white">Services</h3>
             <ul className="space-y-4">
               <li>
-                <Link to="/conseils-medicaux" className="text-gray-300 hover:text-hypocrate-blue transition-colors hover:translate-x-1 transform inline-block">
-                  Conseils médicaux
+                <Link to="/services/patients" className="text-gray-300 hover:text-hypocrate-blue transition-colors hover:translate-x-1 transform inline-block">
+                  Pour les patients
                 </Link>
               </li>
               <li>
-                <span className="text-gray-300">Consultation générale</span>
+                <Link to="/services/medecins" className="text-gray-300 hover:text-hypocrate-blue transition-colors hover:translate-x-1 transform inline-block">
+                  Pour les médecins
+                </Link>
               </li>
               <li>
-                <span className="text-gray-300">Spécialistes</span>
+                <Link to="/services/interpretes" className="text-gray-300 hover:text-hypocrate-blue transition-colors hover:translate-x-1 transform inline-block">
+                  Pour les interprètes
+                </Link>
               </li>
               <li>
-                <span className="text-gray-300">Traduction médicale</span>
-              </li>
-              <li>
-                <span className="text-gray-300">Ordonnances en ligne</span>
+                <Link to="/conseils-medicaux" className="text-gray-300 hover:text-hypocrate-blue transition-colors hover:translate-x-1 transform inline-block">
+                  Conseils médicaux
+                </Link>
               </li>
             </ul>
           </div>
@@ -117,7 +120,10 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-hypocrate-blue flex-shrink-0" />
-                <span className="text-gray-300">+33 1 23 45 67 89</span>
+                <div className="flex items-center">
+                  <span className="text-lg mr-2">🇫🇷</span>
+                  <span className="text-gray-300">+33 1 23 45 67 89</span>
+                </div>
               </div>
             </div>
             

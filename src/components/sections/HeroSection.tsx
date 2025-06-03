@@ -21,7 +21,7 @@ const HeroSection = () => {
               Télémédecine avec traduction en temps réel
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
               <span className="bg-gradient-to-r from-hypocrate-blue to-hypocrate-green bg-clip-text text-transparent">
                 Un médecin, chez vous,
               </span>
