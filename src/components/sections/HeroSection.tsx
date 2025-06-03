@@ -1,9 +1,27 @@
 
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Play, Star, CheckCircle, ArrowRight } from 'lucide-react';
+import { Play, Star, CheckCircle, ArrowRight, Users, Video, MessageSquare } from 'lucide-react';
 
 const HeroSection = () => {
+  const steps = [
+    {
+      icon: Users,
+      title: "Choisissez votre médecin",
+      description: "Sélectionnez un spécialiste selon vos besoins"
+    },
+    {
+      icon: Video,
+      title: "Consultation vidéo",
+      description: "Rencontrez votre médecin en ligne"
+    },
+    {
+      icon: MessageSquare,
+      title: "Traduction en temps réel",
+      description: "Un interprète vous assiste si nécessaire"
+    }
+  ];
+
   return (
     <section className="relative bg-gradient-to-br from-hypocrate-lightBlue via-white to-blue-50 py-20 md:py-32 overflow-hidden">
       {/* Background decorative elements */}
@@ -18,33 +36,51 @@ const HeroSection = () => {
           <div className="w-full lg:w-1/2 space-y-8 animate-fade-in">
             <div className="inline-flex items-center bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 text-hypocrate-blue font-semibold px-6 py-3 rounded-full text-sm shadow-sm">
               <Star className="w-4 h-4 mr-2 text-yellow-500 fill-current" />
-              Télémédecine nouvelle génération
+              Télémédecine avec traduction en temps réel
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              <span className="text-gray-900">Consultations médicales</span>
+              <span className="text-gray-900">Consultez un médecin</span>
               <br />
               <span className="bg-gradient-to-r from-hypocrate-blue to-hypocrate-green bg-clip-text text-transparent">
-                à distance
+                dans votre langue
               </span>
               <br />
-              <span className="text-gray-900">avec traduction</span>
+              <span className="text-gray-900">depuis chez vous</span>
             </h1>
             
             <p className="text-xl text-gray-600 leading-relaxed max-w-xl">
-              Accédez à des soins de qualité depuis chez vous grâce à notre plateforme 
-              de téléconsultation avec service de traduction en temps réel.
+              Connectez-vous avec des médecins certifiés du monde entier. Nos interprètes professionnels 
+              facilitent la communication pour que vous receviez les meilleurs soins.
             </p>
+
+            {/* How it works steps */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
+              {steps.map((step, index) => (
+                <div key={index} className="bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-gray-100 group hover:shadow-md transition-all duration-300">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="bg-gradient-to-br from-hypocrate-blue/10 to-hypocrate-green/10 p-3 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
+                      <step.icon className="w-5 h-5 text-hypocrate-blue" />
+                    </div>
+                    <h3 className="font-semibold text-sm text-gray-900 mb-1">{step.title}</h3>
+                    <p className="text-xs text-gray-600">{step.description}</p>
+                  </div>
+                  {index < steps.length - 1 && (
+                    <div className="hidden sm:block absolute top-1/2 -right-2 w-4 h-0.5 bg-gradient-to-r from-hypocrate-blue to-hypocrate-green"></div>
+                  )}
+                </div>
+              ))}
+            </div>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
               <Button className="bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 text-white font-bold text-lg py-6 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 group">
-                Prendre rendez-vous
+                Commencer maintenant
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Link to="/comment-ca-marche">
                 <Button variant="outline" className="border-2 border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50 font-bold text-lg py-6 px-8 rounded-xl transition-all duration-200 group">
                   <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
-                  Comment ça marche
+                  Voir la démo
                 </Button>
               </Link>
             </div>
@@ -65,7 +101,7 @@ const HeroSection = () => {
                 </div>
                 <div>
                   <div className="font-bold text-gray-900">100+</div>
-                  <div className="text-sm text-gray-600">Médecins certifiés</div>
+                  <div className="text-sm text-gray-600">Médecins & Interprètes</div>
                 </div>
               </div>
               <div className="flex items-center bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-sm">
@@ -91,19 +127,22 @@ const HeroSection = () => {
               />
               
               {/* Floating card */}
-              <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl z-20 max-w-[280px] transform hover:scale-105 transition-transform duration-300">
+              <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl z-20 max-w-[300px] transform hover:scale-105 transition-transform duration-300">
                 <div className="flex items-center mb-3">
                   <div className="w-3 h-3 rounded-full bg-green-500 mr-3 animate-pulse"></div>
-                  <p className="text-lg font-bold text-gray-900">Dr. Sarah est en ligne</p>
+                  <p className="text-lg font-bold text-gray-900">Dr. Sarah & Interprète</p>
                 </div>
-                <p className="text-sm text-gray-600 mb-3">Traducteur disponible pour votre consultation</p>
-                <div className="flex items-center">
-                  <div className="flex -space-x-2 mr-3">
-                    <div className="w-6 h-6 rounded-full bg-blue-500 border-2 border-white"></div>
-                    <div className="w-6 h-6 rounded-full bg-green-500 border-2 border-white"></div>
-                    <div className="w-6 h-6 rounded-full bg-purple-500 border-2 border-white"></div>
+                <p className="text-sm text-gray-600 mb-3">Consultation en cours avec traduction français-anglais</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex -space-x-2">
+                    <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-white flex items-center justify-center">
+                      <Users className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-green-500 border-2 border-white flex items-center justify-center">
+                      <MessageSquare className="w-4 h-4 text-white" />
+                    </div>
                   </div>
-                  <span className="text-xs text-gray-500">+50 patients satisfaits</span>
+                  <span className="text-xs text-gray-500 bg-green-50 px-2 py-1 rounded-full">Traduction active</span>
                 </div>
               </div>
             </div>
