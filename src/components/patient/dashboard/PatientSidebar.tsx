@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, CalendarDays, Search, Settings, SquarePlus } from 'lucide-react';
+import { Clock, History, Search, Settings, Plus } from 'lucide-react';
 import NavItem from './NavItem';
 import LogoutButton from '@/components/auth/LogoutButton';
 
@@ -16,8 +16,8 @@ const PatientSidebar = ({ activeSection, setActiveSection, isMobile, mobileSideb
   const [isHovering, setIsHovering] = useState(false);
   
   const navItems = [
-    { id: 'upcoming', icon: <Clock size={20} />, label: 'Rendez-vous à venir' },
-    { id: 'history', icon: <CalendarDays size={20} />, label: 'Historique' },
+    { id: 'upcoming', icon: <Clock size={20} />, label: 'Mes rendez-vous' },
+    { id: 'history', icon: <History size={20} />, label: 'Historique' },
     { id: 'find-doctor', icon: <Search size={20} />, label: 'Trouver un médecin' },
     { id: 'settings', icon: <Settings size={20} />, label: 'Paramètres' },
   ];
@@ -29,24 +29,24 @@ const PatientSidebar = ({ activeSection, setActiveSection, isMobile, mobileSideb
   return (
     <motion.aside 
       id="mobile-sidebar"
-      className={`bg-white shadow-md z-50 flex flex-col ${
+      className={`bg-white shadow-lg z-50 flex flex-col ${
         isMobile 
-          ? 'fixed left-0 top-0 h-full w-64 transform transition-transform duration-300 ease-in-out' +
+          ? 'fixed left-0 top-0 h-full w-72 transform transition-transform duration-300 ease-in-out border-r border-gray-200' +
             (mobileSidebarOpen ? ' translate-x-0' : ' -translate-x-full')
-          : 'sticky top-0 h-screen w-64 flex-shrink-0'
+          : 'sticky top-0 h-screen w-72 flex-shrink-0 border-r border-gray-100'
       }`}
       onHoverStart={() => setIsHovering(true)}
       onHoverEnd={() => setIsHovering(false)}
     >
-      <div className="py-6 px-3 flex flex-col h-full">
-        <div className="px-4 mb-8">
-          <h1 className="text-xl font-bold text-gray-800">
+      <div className="py-6 px-4 flex flex-col h-full">
+        <div className="px-2 mb-8">
+          <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-hypocrate-blue to-hypocrate-green">
             Espace Patient
           </h1>
-          <p className="text-sm text-gray-500">Gérez vos consultations</p>
+          <p className="text-sm text-gray-500 mt-1">Gérez vos consultations</p>
         </div>
 
-        <div className="space-y-1 px-2 flex-1 overflow-auto">
+        <div className="space-y-2 px-2 flex-1 overflow-auto">
           {navItems.map((item) => (
             <NavItem
               key={item.id}
@@ -59,15 +59,17 @@ const PatientSidebar = ({ activeSection, setActiveSection, isMobile, mobileSideb
           ))}
         </div>
 
-        <div className="mt-auto border-t pt-3 px-2">
+        <div className="mt-auto border-t border-gray-100 pt-4 px-2">
           <div className="mb-4">
-            <NavItem
-              id="new-consultation"
-              icon={<SquarePlus size={20} />}
-              label="Nouvelle consultation"
-              isActive={false}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => window.location.href = '/nos-medecins'}
-            />
+              className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-hypocrate-blue to-hypocrate-green text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+            >
+              <Plus size={20} />
+              <span>Nouvelle consultation</span>
+            </motion.button>
           </div>
           
           <LogoutButton />

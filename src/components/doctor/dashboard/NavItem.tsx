@@ -1,5 +1,5 @@
 
-import React from 'react';
+import { motion } from 'framer-motion';
 
 interface NavItemProps {
   id: string;
@@ -9,21 +9,23 @@ interface NavItemProps {
   onClick: (id: string) => void;
 }
 
-export const NavItem: React.FC<NavItemProps> = ({ id, icon, label, isActive, onClick }) => {
+const NavItem = ({ id, icon, label, isActive, onClick }: NavItemProps) => {
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       onClick={() => onClick(id)}
-      className={`flex items-center w-full px-4 py-3 rounded-lg transition-all text-left ${
-        isActive 
-          ? 'bg-indigo-50 text-indigo-700 font-medium' 
-          : 'text-gray-600 hover:bg-gray-100'
+      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200 ${
+        isActive
+          ? 'bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-700 border border-purple-200 shadow-sm'
+          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
       }`}
     >
-      <div className="flex items-center w-full">
-        <span className="mr-3">{icon}</span>
-        <span className="text-left">{label}</span>
+      <div className={`${isActive ? 'text-purple-600' : 'text-gray-400'}`}>
+        {icon}
       </div>
-    </button>
+      <span className="font-medium">{label}</span>
+    </motion.button>
   );
 };
 

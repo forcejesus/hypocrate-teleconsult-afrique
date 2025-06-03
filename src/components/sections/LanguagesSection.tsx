@@ -3,22 +3,22 @@ import { Languages, Globe, MessageSquare } from 'lucide-react';
 
 const LanguagesSection = () => {
   const languages = [
-    { name: "Wolof", region: "Sénégal, Gambie", flag: "🇸🇳", priority: true },
-    { name: "Bambara", region: "Mali, Burkina Faso", flag: "🇲🇱", priority: true },
-    { name: "Hausa", region: "Nigeria, Niger", flag: "🇳🇬", priority: true },
-    { name: "Swahili", region: "Kenya, Tanzanie", flag: "🇰🇪", priority: true },
-    { name: "Lingala", region: "RDC, Congo", flag: "🇨🇩", priority: true },
-    { name: "Amharique", region: "Éthiopie", flag: "🇪🇹", priority: true },
-    { name: "Yoruba", region: "Nigeria, Bénin", flag: "🇳🇬", priority: true },
-    { name: "Arabe", region: "Maghreb, Moyen-Orient", flag: "🇲🇦", priority: true },
-    { name: "Mandingue", region: "Sénégal, Mali", flag: "🇸🇳", priority: true },
-    { name: "Peul (Fulfulde)", region: "Sahel", flag: "🇸🇳", priority: true },
-    { name: "Sango", region: "République centrafricaine", flag: "🇨🇫", priority: true },
-    { name: "Malagasy", region: "Madagascar", flag: "🇲🇬", priority: true },
-    { name: "Français", region: "France, Afrique francophone", flag: "🇫🇷", priority: false },
-    { name: "Anglais", region: "International", flag: "🇺🇸", priority: false },
-    { name: "Espagnol", region: "Espagne, Amérique latine", flag: "🇪🇸", priority: false },
-    { name: "Portugais", region: "Portugal, Brésil", flag: "🇵🇹", priority: false }
+    { name: "Wolof", regions: ["Sénégal", "Gambie"], flags: ["🇸🇳", "🇬🇲"], priority: true },
+    { name: "Bambara", regions: ["Mali", "Burkina Faso"], flags: ["🇲🇱", "🇧🇫"], priority: true },
+    { name: "Hausa", regions: ["Nigeria", "Niger"], flags: ["🇳🇬", "🇳🇪"], priority: true },
+    { name: "Swahili", regions: ["Kenya", "Tanzanie"], flags: ["🇰🇪", "🇹🇿"], priority: true },
+    { name: "Lingala", regions: ["RDC", "Congo"], flags: ["🇨🇩", "🇨🇬"], priority: true },
+    { name: "Amharique", regions: ["Éthiopie"], flags: ["🇪🇹"], priority: true },
+    { name: "Yoruba", regions: ["Nigeria", "Bénin"], flags: ["🇳🇬", "🇧🇯"], priority: true },
+    { name: "Arabe", regions: ["Maghreb", "Moyen-Orient"], flags: ["🇲🇦", "🇸🇦"], priority: true },
+    { name: "Mandingue", regions: ["Sénégal", "Mali"], flags: ["🇸🇳", "🇲🇱"], priority: true },
+    { name: "Peul (Fulfulde)", regions: ["Sahel"], flags: ["🇸🇳", "🇲🇱"], priority: true },
+    { name: "Sango", regions: ["République centrafricaine"], flags: ["🇨🇫"], priority: true },
+    { name: "Malagasy", regions: ["Madagascar"], flags: ["🇲🇬"], priority: true },
+    { name: "Français", regions: ["France", "Afrique francophone"], flags: ["🇫🇷", "🇨🇮"], priority: false },
+    { name: "Anglais", regions: ["International"], flags: ["🇺🇸", "🇬🇧"], priority: false },
+    { name: "Espagnol", regions: ["Espagne", "Amérique latine"], flags: ["🇪🇸", "🇲🇽"], priority: false },
+    { name: "Portugais", regions: ["Portugal", "Brésil"], flags: ["🇵🇹", "🇧🇷"], priority: false }
   ];
 
   const priorityLanguages = languages.filter(lang => lang.priority);
@@ -57,13 +57,17 @@ const LanguagesSection = () => {
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-orange-100 to-yellow-100 rounded-full -translate-y-8 translate-x-8 opacity-50 group-hover:opacity-70 transition-opacity"></div>
                 <div className="relative">
                   <div className="flex items-center mb-4">
-                    <div className="text-3xl mr-3">{language.flag}</div>
+                    <div className="flex space-x-1 mr-3">
+                      {language.flags.map((flag, idx) => (
+                        <span key={idx} className="text-2xl">{flag}</span>
+                      ))}
+                    </div>
                     <div className="bg-orange-50 rounded-full p-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <MessageSquare className="w-6 h-6 text-orange-600" />
                     </div>
                   </div>
                   <h4 className="text-lg font-bold text-gray-900 mb-2">{language.name}</h4>
-                  <p className="text-sm text-gray-600">{language.region}</p>
+                  <p className="text-sm text-gray-600">{language.regions.join(", ")}</p>
                   <div className="absolute top-2 right-2">
                     <span className="bg-orange-100 text-orange-600 text-xs font-bold px-2 py-1 rounded-full">
                       Priorité
@@ -86,13 +90,17 @@ const LanguagesSection = () => {
             {otherLanguages.map((language, index) => (
               <div key={index} className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-blue-100 group">
                 <div className="flex items-center mb-4">
-                  <div className="text-3xl mr-3">{language.flag}</div>
+                  <div className="flex space-x-1 mr-3">
+                    {language.flags.map((flag, idx) => (
+                      <span key={idx} className="text-2xl">{flag}</span>
+                    ))}
+                  </div>
                   <div className="bg-blue-50 rounded-full p-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <MessageSquare className="w-6 h-6 text-hypocrate-blue" />
                   </div>
                 </div>
                 <h4 className="text-lg font-bold text-gray-900 mb-2">{language.name}</h4>
-                <p className="text-sm text-gray-600">{language.region}</p>
+                <p className="text-sm text-gray-600">{language.regions.join(", ")}</p>
               </div>
             ))}
           </div>

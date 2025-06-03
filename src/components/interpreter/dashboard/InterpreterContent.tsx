@@ -26,34 +26,59 @@ export const InterpreterContent: React.FC<InterpreterContentProps> = ({ activeSe
     }
   };
 
-  return (
-    <main className="flex-1 p-4 md:p-6 h-screen overflow-y-auto">
-      {/* Desktop Section Title */}
-      <div className="hidden md:block mb-6">
-        <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-hypocrate-blue to-hypocrate-green">
-          {activeSection === "available" && "Consultations disponibles"}
-          {activeSection === "myconsultations" && "Mes consultations"}
-          {activeSection === "history" && "Historique"}
-          {activeSection === "settings" && "Paramètres"}
-        </h1>
-        <p className="text-gray-600 mt-2">
-          {activeSection === "available" && "Liste des consultations disponibles"}
-          {activeSection === "myconsultations" && "Vos consultations programmées"}
-          {activeSection === "history" && "Historique des consultations effectuées"}
-          {activeSection === "settings" && "Gérez vos informations personnelles"}
-        </p>
-      </div>
+  const getSectionTitle = (section: string) => {
+    switch(section) {
+      case "available": return "Consultations disponibles";
+      case "myconsultations": return "Mes consultations programmées";
+      case "history": return "Historique des interprétations";
+      case "settings": return "Paramètres du compte";
+      default: return "Consultations disponibles";
+    }
+  };
 
-      {/* Content Area */}
-      <motion.div 
-        key={activeSection}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="bg-white rounded-lg shadow-sm p-4 md:p-6 h-full"
-      >
-        {renderContent()}
-      </motion.div>
+  const getSectionDescription = (section: string) => {
+    switch(section) {
+      case "available": return "Nouvelles demandes d'interprétation disponibles";
+      case "myconsultations": return "Vos consultations d'interprétation programmées";
+      case "history": return "Consultations d'interprétation passées et évaluations";
+      case "settings": return "Gérez vos langues, disponibilités et informations";
+      default: return "Nouvelles demandes d'interprétation disponibles";
+    }
+  };
+
+  return (
+    <main className="flex-1 p-4 md:p-6 lg:p-8 min-h-screen bg-gray-50">
+      <div className="max-w-6xl mx-auto">
+        {/* Desktop Section Title */}
+        <div className="hidden md:block mb-8">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-3xl font-bold text-gray-900 mb-2"
+          >
+            {getSectionTitle(activeSection)}
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-gray-600"
+          >
+            {getSectionDescription(activeSection)}
+          </motion.p>
+        </div>
+
+        {/* Content Area */}
+        <motion.div 
+          key={activeSection}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8"
+        >
+          {renderContent()}
+        </motion.div>
+      </div>
     </main>
   );
 };

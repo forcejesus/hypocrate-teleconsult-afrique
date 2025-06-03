@@ -17,8 +17,10 @@ export const PatientContent: React.FC<PatientContentProps> = ({ activeSection })
         return <PatientUpcomingConsultations />;
       case 'pending':
         return <PatientPendingConsultations />;
-      case 'find':
+      case 'find-doctor':
         return <PatientFindDoctor />;
+      case 'history':
+        return <PatientUpcomingConsultations />; // Temporary, should be history component
       case 'settings':
         return <PatientSettings />;
       default:
@@ -26,34 +28,61 @@ export const PatientContent: React.FC<PatientContentProps> = ({ activeSection })
     }
   };
 
-  return (
-    <main className="flex-1 p-4 md:p-6 h-screen overflow-y-auto">
-      {/* Desktop Section Title */}
-      <div className="hidden md:block mb-6">
-        <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-hypocrate-blue to-hypocrate-green">
-          {activeSection === "upcoming" && "Consultations à venir"}
-          {activeSection === "pending" && "Consultations en attente"}
-          {activeSection === "find" && "Trouver un médecin"}
-          {activeSection === "settings" && "Paramètres"}
-        </h1>
-        <p className="text-gray-600 mt-2">
-          {activeSection === "upcoming" && "Vos rendez-vous à venir"}
-          {activeSection === "pending" && "Consultations en cours de validation"}
-          {activeSection === "find" && "Trouvez un médecin disponible"}
-          {activeSection === "settings" && "Gérez vos informations personnelles"}
-        </p>
-      </div>
+  const getSectionTitle = (section: string) => {
+    switch(section) {
+      case "upcoming": return "Mes rendez-vous";
+      case "pending": return "En attente de confirmation";
+      case "find-doctor": return "Trouver un médecin";
+      case "history": return "Historique des consultations";
+      case "settings": return "Paramètres du compte";
+      default: return "Mes rendez-vous";
+    }
+  };
 
-      {/* Content Area */}
-      <motion.div 
-        key={activeSection}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="bg-white rounded-lg shadow-sm p-4 md:p-6 h-full"
-      >
-        {renderContent()}
-      </motion.div>
+  const getSectionDescription = (section: string) => {
+    switch(section) {
+      case "upcoming": return "Vos prochaines consultations confirmées";
+      case "pending": return "Consultations en cours de validation";
+      case "find-doctor": return "Trouvez un médecin disponible dans votre langue";
+      case "history": return "Consultations passées et rapports médicaux";
+      case "settings": return "Gérez vos informations personnelles et préférences";
+      default: return "Vos prochaines consultations confirmées";
+    }
+  };
+
+  return (
+    <main className="flex-1 p-4 md:p-6 lg:p-8 min-h-screen bg-gray-50">
+      <div className="max-w-6xl mx-auto">
+        {/* Desktop Section Title */}
+        <div className="hidden md:block mb-8">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-3xl font-bold text-gray-900 mb-2"
+          >
+            {getSectionTitle(activeSection)}
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-gray-600"
+          >
+            {getSectionDescription(activeSection)}
+          </motion.p>
+        </div>
+
+        {/* Content Area */}
+        <motion.div 
+          key={activeSection}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8"
+        >
+          {renderContent()}
+        </motion.div>
+      </div>
     </main>
   );
 };

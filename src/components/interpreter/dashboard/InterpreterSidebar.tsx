@@ -1,8 +1,8 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Phone, History, Settings } from 'lucide-react';
-import NavItem from '@/components/doctor/dashboard/NavItem'; // Réutiliser le composant NavItem
+import { Globe, MessageSquare, History, Settings, Languages } from 'lucide-react';
+import NavItem from '@/components/doctor/dashboard/NavItem';
 import LogoutButton from '@/components/auth/LogoutButton';
 
 interface InterpreterSidebarProps {
@@ -17,7 +17,7 @@ const InterpreterSidebar = ({ activeSection, setActiveSection, isMobile, mobileS
   
   const navItems = [
     { id: 'available', icon: <Globe size={20} />, label: 'Consultations disponibles' },
-    { id: 'active', icon: <Phone size={20} />, label: 'Mes consultations' },
+    { id: 'myconsultations', icon: <MessageSquare size={20} />, label: 'Mes consultations' },
     { id: 'history', icon: <History size={20} />, label: 'Historique' },
     { id: 'settings', icon: <Settings size={20} />, label: 'Paramètres' },
   ];
@@ -29,37 +29,55 @@ const InterpreterSidebar = ({ activeSection, setActiveSection, isMobile, mobileS
   return (
     <motion.aside 
       id="mobile-sidebar"
-      className={`bg-white shadow-md z-50 flex flex-col ${
+      className={`bg-white shadow-lg z-50 flex flex-col ${
         isMobile 
-          ? 'fixed left-0 top-0 h-full w-64 transform transition-transform duration-300 ease-in-out' +
+          ? 'fixed left-0 top-0 h-full w-72 transform transition-transform duration-300 ease-in-out border-r border-gray-200' +
             (mobileSidebarOpen ? ' translate-x-0' : ' -translate-x-full')
-          : 'sticky top-0 h-screen w-64 flex-shrink-0'
+          : 'sticky top-0 h-screen w-72 flex-shrink-0 border-r border-gray-100'
       }`}
       onHoverStart={() => setIsHovering(true)}
       onHoverEnd={() => setIsHovering(false)}
     >
-      <div className="py-6 px-3 flex flex-col h-full">
-        <div className="px-4 mb-8">
-          <h1 className="text-xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+      <div className="py-6 px-4 flex flex-col h-full">
+        <div className="px-2 mb-8">
+          <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-green-600">
             Espace Interprète
           </h1>
-          <p className="text-sm text-gray-500">Gérez vos services d'interprétation</p>
+          <p className="text-sm text-gray-500 mt-1">Gérez vos services d'interprétation</p>
         </div>
 
-        <div className="space-y-1 px-2 flex-1 overflow-auto">
+        <div className="space-y-2 px-2 flex-1 overflow-auto">
           {navItems.map((item) => (
-            <NavItem
+            <motion.button
               key={item.id}
-              id={item.id}
-              icon={item.icon}
-              label={item.label}
-              isActive={activeSection === item.id}
-              onClick={handleClick}
-            />
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => handleClick(item.id)}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200 ${
+                activeSection === item.id
+                  ? 'bg-gradient-to-r from-teal-50 to-green-50 text-teal-700 border border-teal-200 shadow-sm'
+                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+              }`}
+            >
+              <div className={`${activeSection === item.id ? 'text-teal-600' : 'text-gray-400'}`}>
+                {item.icon}
+              </div>
+              <span className="font-medium">{item.label}</span>
+            </motion.button>
           ))}
         </div>
 
-        <div className="mt-auto border-t pt-3 px-2">
+        <div className="mt-auto border-t border-gray-100 pt-4 px-2">
+          <div className="mb-4 p-4 bg-gradient-to-r from-teal-50 to-green-50 rounded-xl border border-teal-100">
+            <div className="flex items-center space-x-2 mb-2">
+              <Languages className="w-4 h-4 text-teal-600" />
+              <span className="text-sm font-medium text-teal-700">Langues</span>
+            </div>
+            <div className="text-xs text-gray-600">
+              Français, Wolof, Arabe
+            </div>
+          </div>
+          
           <LogoutButton />
         </div>
       </div>
