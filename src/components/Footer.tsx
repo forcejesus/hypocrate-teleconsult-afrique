@@ -1,12 +1,8 @@
-
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
-  return (
-    <footer className="bg-gray-900 text-white pt-16 pb-8">
+  return <footer className="bg-gray-900 text-white pt-16 pb-8">
       <div className="container-custom">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
@@ -26,20 +22,7 @@ const Footer = () => {
               Plateforme de téléconsultation médicale avec service de traduction pour l'Afrique. 
               Connectons les patients aux meilleurs médecins du monde.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="bg-hypocrate-blue hover:bg-blue-600 transition-colors p-3 rounded-full group">
-                <Facebook className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              </a>
-              <a href="#" className="bg-hypocrate-blue hover:bg-blue-600 transition-colors p-3 rounded-full group">
-                <Twitter className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              </a>
-              <a href="#" className="bg-hypocrate-blue hover:bg-blue-600 transition-colors p-3 rounded-full group">
-                <Instagram className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              </a>
-              <a href="#" className="bg-hypocrate-blue hover:bg-blue-600 transition-colors p-3 rounded-full group">
-                <Linkedin className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              </a>
-            </div>
+            
           </div>
 
           {/* Quick Links */}
@@ -158,8 +141,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
