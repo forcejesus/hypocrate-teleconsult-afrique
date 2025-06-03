@@ -11,6 +11,13 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,17 +40,17 @@ const Navbar = () => {
   const servicesMenuItems = [
     {
       title: "Pour les patients",
-      href: "/register?type=patient",
+      href: "/services/patients",
       description: "Consultez un médecin dans votre langue"
     },
     {
       title: "Pour les médecins", 
-      href: "/register?type=medecin",
+      href: "/services/medecins",
       description: "Rejoignez notre réseau de professionnels"
     },
     {
       title: "Pour les interprètes",
-      href: "/register?type=interprete", 
+      href: "/services/interpretes", 
       description: "Facilitez l'accès aux soins médicaux"
     }
   ];
@@ -84,7 +91,7 @@ const Navbar = () => {
                     Services
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid w-[400px] gap-3 p-4">
+                    <div className="grid w-[400px] gap-3 p-4 bg-white">
                       {servicesMenuItems.map((item) => (
                         <NavigationMenuLink key={item.href} asChild>
                           <Link
@@ -123,17 +130,6 @@ const Navbar = () => {
                     Notre équipe
                   </Link>
                 </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <Link 
-                    to="/faq" 
-                    className={`px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${isActive('/faq') 
-                      ? 'text-hypocrate-blue bg-blue-50' 
-                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
-                  >
-                    FAQ
-                  </Link>
-                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -148,87 +144,86 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button - Sidebar */}
           <div className="lg:hidden">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-hypocrate-blue hover:bg-blue-50 transition-all duration-200"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </Button>
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="text-hypocrate-blue hover:bg-blue-50 transition-all duration-200"
+                >
+                  <Menu size={24} />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-80 bg-white">
+                <SheetHeader className="text-left">
+                  <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-hypocrate-blue to-hypocrate-green bg-clip-text text-transparent">
+                    Hypocrate
+                  </SheetTitle>
+                </SheetHeader>
+                
+                <div className="flex flex-col space-y-6 mt-8">
+                  <Link 
+                    to="/" 
+                    className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/') 
+                      ? 'text-hypocrate-blue bg-blue-50' 
+                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Accueil
+                  </Link>
+                  
+                  {/* Mobile Services Menu */}
+                  <div className="border-l-4 border-hypocrate-blue/20 pl-4">
+                    <div className="text-lg font-bold text-hypocrate-blue mb-4">Services</div>
+                    {servicesMenuItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        className="block py-3 px-3 text-gray-600 hover:text-hypocrate-blue hover:bg-blue-50 rounded transition-all duration-200 mb-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <div className="font-medium">{item.title}</div>
+                        <div className="text-sm text-gray-500">{item.description}</div>
+                      </Link>
+                    ))}
+                  </div>
+                  
+                  <Link 
+                    to="/comment-ca-marche" 
+                    className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/comment-ca-marche') 
+                      ? 'text-hypocrate-blue bg-blue-50' 
+                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Comment ça marche
+                  </Link>
+                  
+                  <Link 
+                    to="/nos-medecins" 
+                    className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/nos-medecins') 
+                      ? 'text-hypocrate-blue bg-blue-50' 
+                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Notre équipe
+                  </Link>
+                  
+                  <div className="flex flex-col space-y-3 pt-6 border-t">
+                    <Button variant="outline" asChild className="w-full border-2 border-hypocrate-blue text-hypocrate-blue font-semibold hover:bg-blue-50 transition-all duration-200">
+                      <Link to="/login" onClick={() => setMobileMenuOpen(false)}>Se connecter</Link>
+                    </Button>
+                    <Button asChild className="w-full bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 text-white font-semibold shadow-lg transition-all duration-200">
+                      <Link to="/register" onClick={() => setMobileMenuOpen(false)}>S'inscrire</Link>
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
-
-      {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden py-6 bg-white/95 backdrop-blur-xl border-t shadow-xl absolute w-full">
-          <div className="container-custom flex flex-col space-y-4">
-            <Link 
-              to="/" 
-              className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/') 
-                ? 'text-hypocrate-blue bg-blue-50' 
-                : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Accueil
-            </Link>
-            
-            {/* Mobile Services Menu */}
-            <div className="border-l-2 border-hypocrate-blue/20 pl-4">
-              <div className="text-sm font-medium text-hypocrate-blue mb-2">Services</div>
-              {servicesMenuItems.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className="block py-2 px-3 text-sm text-gray-600 hover:text-hypocrate-blue hover:bg-blue-50 rounded transition-all duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.title}
-                </Link>
-              ))}
-            </div>
-            
-            <Link 
-              to="/comment-ca-marche" 
-              className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/comment-ca-marche') 
-                ? 'text-hypocrate-blue bg-blue-50' 
-                : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Comment ça marche
-            </Link>
-            <Link 
-              to="/nos-medecins" 
-              className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/nos-medecins') 
-                ? 'text-hypocrate-blue bg-blue-50' 
-                : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Notre équipe
-            </Link>
-            <Link 
-              to="/faq" 
-              className={`py-3 px-4 font-semibold rounded-lg transition-all duration-200 ${isActive('/faq') 
-                ? 'text-hypocrate-blue bg-blue-50' 
-                : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              FAQ
-            </Link>
-            <div className="flex flex-col space-y-3 pt-4 border-t">
-              <Button variant="outline" asChild className="w-full border-2 border-hypocrate-blue text-hypocrate-blue font-semibold hover:bg-blue-50 transition-all duration-200">
-                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>Se connecter</Link>
-              </Button>
-              <Button asChild className="w-full bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 text-white font-semibold shadow-lg transition-all duration-200">
-                <Link to="/register" onClick={() => setMobileMenuOpen(false)}>S'inscrire</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </nav>
   );
 };

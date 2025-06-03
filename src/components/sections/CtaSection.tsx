@@ -1,36 +1,9 @@
 
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Phone, Calendar, Users, Stethoscope, Languages, CheckCircle } from 'lucide-react';
+import { ArrowRight, Phone, Calendar, CheckCircle } from 'lucide-react';
 
 const CtaSection = () => {
-  const userTypes = [
-    {
-      icon: Users,
-      title: "Patients",
-      description: "Consultez un médecin dans votre langue",
-      features: ["Accès 24/7", "Traduction incluse", "Ordonnances numériques"],
-      cta: "Commencer",
-      color: "from-blue-500 to-blue-600"
-    },
-    {
-      icon: Stethoscope,
-      title: "Médecins",
-      description: "Élargissez votre patientèle internationale",
-      features: ["Patients du monde entier", "Support traduction", "Plateforme sécurisée"],
-      cta: "Rejoindre",
-      color: "from-green-500 to-green-600"
-    },
-    {
-      icon: Languages,
-      title: "Interprètes",
-      description: "Facilitez l'accès aux soins médicaux",
-      features: ["Spécialisation médicale", "Horaires flexibles", "Impact social"],
-      cta: "Candidater",
-      color: "from-purple-500 to-purple-600"
-    }
-  ];
-
   return (
     <section className="py-24 bg-gradient-to-br from-hypocrate-blue via-blue-600 to-hypocrate-green text-white relative overflow-hidden">
       {/* Background decorative elements */}
@@ -41,52 +14,6 @@ const CtaSection = () => {
       </div>
       
       <div className="container-custom text-center relative z-10">
-        <div className="max-w-4xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8">
-            Rejoignez la révolution de la télémédecine
-          </h2>
-          <p className="text-xl mb-8 opacity-90 leading-relaxed">
-            Que vous soyez patient, médecin ou interprète, Hypocrate vous offre la plateforme 
-            pour connecter le monde médical sans frontières.
-          </p>
-        </div>
-
-        {/* User type cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {userTypes.map((userType, index) => {
-            const UserIcon = userType.icon;
-            return (
-              <div key={index} className="bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/20 hover:bg-white/15 transition-all duration-300 transform hover:-translate-y-2 group">
-                <div className={`bg-gradient-to-br ${userType.color} rounded-2xl p-4 inline-flex mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <UserIcon className="w-8 h-8 text-white" />
-                </div>
-                
-                <h3 className="text-2xl font-bold mb-4">{userType.title}</h3>
-                <p className="text-blue-100 mb-6 text-lg">{userType.description}</p>
-                
-                <ul className="space-y-3 mb-8">
-                  {userType.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center justify-center">
-                      <CheckCircle className="w-5 h-5 text-green-300 mr-3 flex-shrink-0" />
-                      <span className="text-blue-50">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <Button 
-                  className="w-full bg-white text-hypocrate-blue hover:bg-gray-100 font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
-                  asChild
-                >
-                  <Link to="/register">
-                    {userType.cta}
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Link>
-                </Button>
-              </div>
-            );
-          })}
-        </div>
-        
         {/* Main CTA */}
         <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-12 border border-white/20 mb-12">
           <h3 className="text-3xl font-bold mb-6">
@@ -110,9 +37,8 @@ const CtaSection = () => {
             </Button>
             
             <Button 
-              variant="outline" 
               size="lg" 
-              className="border-2 border-white text-white hover:bg-white hover:text-hypocrate-blue font-bold text-lg py-6 px-8 rounded-xl transition-all duration-200 group"
+              className="bg-white/20 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-hypocrate-blue font-bold text-lg py-6 px-8 rounded-xl transition-all duration-200 group"
               asChild
             >
               <Link to="/contact">

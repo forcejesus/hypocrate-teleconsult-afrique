@@ -4,9 +4,8 @@ import Footer from '@/components/Footer';
 import HeroSection from '@/components/sections/HeroSection';
 import HowItWorksSection from '@/components/sections/HowItWorksSection';
 import AdvantagesSection from '@/components/sections/AdvantagesSection';
-import TestimonialsSection from '@/components/sections/TestimonialsSection';
-import FaqSection from '@/components/sections/FaqSection';
 import CtaSection from '@/components/sections/CtaSection';
+import LanguagesSection from '@/components/sections/LanguagesSection';
 
 const Index = () => {
   return (
@@ -16,9 +15,8 @@ const Index = () => {
         <HeroSection />
         <HowItWorksSection />
         <AdvantagesSection />
-        <TestimonialsSection />
-        <FaqSection />
         <CtaSection />
+        <LanguagesSection />
       </main>
       <Footer />
     </div>

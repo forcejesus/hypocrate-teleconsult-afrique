@@ -1,27 +1,9 @@
 
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Play, Star, CheckCircle, ArrowRight, Users, Video, MessageSquare } from 'lucide-react';
+import { Play, Star, CheckCircle, ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
-  const steps = [
-    {
-      icon: Users,
-      title: "Choisissez votre médecin",
-      description: "Sélectionnez un spécialiste selon vos besoins"
-    },
-    {
-      icon: Video,
-      title: "Consultation vidéo",
-      description: "Rencontrez votre médecin en ligne"
-    },
-    {
-      icon: MessageSquare,
-      title: "Traduction en temps réel",
-      description: "Un interprète vous assiste si nécessaire"
-    }
-  ];
-
   return (
     <section className="relative bg-gradient-to-br from-hypocrate-lightBlue via-white to-blue-50 py-20 md:py-32 overflow-hidden">
       {/* Background decorative elements */}
@@ -40,37 +22,19 @@ const HeroSection = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              <span className="text-gray-900">Consultez un médecin</span>
+              <span className="bg-gradient-to-r from-hypocrate-blue to-hypocrate-green bg-clip-text text-transparent">
+                Un médecin, chez vous,
+              </span>
               <br />
               <span className="bg-gradient-to-r from-hypocrate-blue to-hypocrate-green bg-clip-text text-transparent">
                 dans votre langue
               </span>
-              <br />
-              <span className="text-gray-900">depuis chez vous</span>
             </h1>
             
             <p className="text-xl text-gray-600 leading-relaxed max-w-xl">
               Connectez-vous avec des médecins certifiés du monde entier. Nos interprètes professionnels 
               facilitent la communication pour que vous receviez les meilleurs soins.
             </p>
-
-            {/* How it works steps */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
-              {steps.map((step, index) => (
-                <div key={index} className="bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-gray-100 group hover:shadow-md transition-all duration-300">
-                  <div className="flex flex-col items-center text-center">
-                    <div className="bg-gradient-to-br from-hypocrate-blue/10 to-hypocrate-green/10 p-3 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-                      <step.icon className="w-5 h-5 text-hypocrate-blue" />
-                    </div>
-                    <h3 className="font-semibold text-sm text-gray-900 mb-1">{step.title}</h3>
-                    <p className="text-xs text-gray-600">{step.description}</p>
-                  </div>
-                  {index < steps.length - 1 && (
-                    <div className="hidden sm:block absolute top-1/2 -right-2 w-4 h-0.5 bg-gradient-to-r from-hypocrate-blue to-hypocrate-green"></div>
-                  )}
-                </div>
-              ))}
-            </div>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
               <Button className="bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 text-white font-bold text-lg py-6 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 group">
@@ -83,36 +47,6 @@ const HeroSection = () => {
                   Voir la démo
                 </Button>
               </Link>
-            </div>
-            
-            <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="flex items-center bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-sm">
-                <div className="bg-green-100 rounded-full p-2 mr-3">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                </div>
-                <div>
-                  <div className="font-bold text-gray-900">24/7</div>
-                  <div className="text-sm text-gray-600">Disponible</div>
-                </div>
-              </div>
-              <div className="flex items-center bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-sm">
-                <div className="bg-blue-100 rounded-full p-2 mr-3">
-                  <CheckCircle className="w-5 h-5 text-hypocrate-blue" />
-                </div>
-                <div>
-                  <div className="font-bold text-gray-900">100+</div>
-                  <div className="text-sm text-gray-600">Médecins & Interprètes</div>
-                </div>
-              </div>
-              <div className="flex items-center bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-sm">
-                <div className="bg-purple-100 rounded-full p-2 mr-3">
-                  <CheckCircle className="w-5 h-5 text-purple-600" />
-                </div>
-                <div>
-                  <div className="font-bold text-gray-900">15+</div>
-                  <div className="text-sm text-gray-600">Langues supportées</div>
-                </div>
-              </div>
             </div>
           </div>
           
@@ -136,15 +70,58 @@ const HeroSection = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex -space-x-2">
                     <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-white flex items-center justify-center">
-                      <Users className="w-4 h-4 text-white" />
+                      <span className="text-white text-xs font-bold">Dr</span>
                     </div>
                     <div className="w-8 h-8 rounded-full bg-green-500 border-2 border-white flex items-center justify-center">
-                      <MessageSquare className="w-4 h-4 text-white" />
+                      <span className="text-white text-xs font-bold">In</span>
                     </div>
                   </div>
                   <span className="text-xs text-gray-500 bg-green-50 px-2 py-1 rounded-full">Traduction active</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Full-width availability section */}
+      <div className="w-full bg-white/80 backdrop-blur-sm py-12 mt-20">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="bg-green-100 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-green-600" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">24/7</div>
+              <div className="text-gray-600 font-medium">Service disponible</div>
+              <div className="text-sm text-gray-500 mt-2">Consultations d'urgence incluses</div>
+            </div>
+            
+            <div className="text-center bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="bg-blue-100 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-hypocrate-blue" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">200+</div>
+              <div className="text-gray-600 font-medium">Médecins & Interprètes</div>
+              <div className="text-sm text-gray-500 mt-2">Certifiés et expérimentés</div>
+            </div>
+            
+            <div className="text-center bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="bg-purple-100 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-purple-600" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">15+</div>
+              <div className="text-gray-600 font-medium">Langues supportées</div>
+              <div className="text-sm text-gray-500 mt-2">Priorité aux langues africaines</div>
+            </div>
+            
+            <div className="text-center bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="bg-orange-100 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-orange-600" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">&lt; 24h</div>
+              <div className="text-gray-600 font-medium">Délai de consultation</div>
+              <div className="text-sm text-gray-500 mt-2">Souvent le jour même</div>
             </div>
           </div>
         </div>
