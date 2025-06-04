@@ -1,5 +1,5 @@
 
-import { Languages, Globe, MessageSquare } from 'lucide-react';
+import { Languages, Globe } from 'lucide-react';
 
 const LanguagesSection = () => {
   const languages = [
@@ -8,13 +8,13 @@ const LanguagesSection = () => {
     { name: "Hausa", regions: ["Nigeria", "Niger"], flags: ["🇳🇬", "🇳🇪"], priority: true },
     { name: "Swahili", regions: ["Kenya", "Tanzanie"], flags: ["🇰🇪", "🇹🇿"], priority: true },
     { name: "Lingala", regions: ["RDC", "Congo"], flags: ["🇨🇩", "🇨🇬"], priority: true },
-    { name: "Amharique", regions: ["Éthiopie"], flags: ["🇪🇹"], priority: true },
+    { name: "Amharique", regions: ["Éthiopie"], flags: ["🇪🇹", "🇪🇹"], priority: true },
     { name: "Yoruba", regions: ["Nigeria", "Bénin"], flags: ["🇳🇬", "🇧🇯"], priority: true },
     { name: "Arabe", regions: ["Maghreb", "Moyen-Orient"], flags: ["🇲🇦", "🇸🇦"], priority: true },
     { name: "Mandingue", regions: ["Sénégal", "Mali"], flags: ["🇸🇳", "🇲🇱"], priority: true },
     { name: "Peul (Fulfulde)", regions: ["Sahel"], flags: ["🇸🇳", "🇲🇱"], priority: true },
-    { name: "Sango", regions: ["République centrafricaine"], flags: ["🇨🇫"], priority: true },
-    { name: "Malagasy", regions: ["Madagascar"], flags: ["🇲🇬"], priority: true },
+    { name: "Sango", regions: ["République centrafricaine"], flags: ["🇨🇫", "🇨🇫"], priority: true },
+    { name: "Malagasy", regions: ["Madagascar"], flags: ["🇲🇬", "🇲🇬"], priority: true },
     { name: "Français", regions: ["France", "Afrique francophone"], flags: ["🇫🇷", "🇨🇮"], priority: false },
     { name: "Anglais", regions: ["International"], flags: ["🇺🇸", "🇬🇧"], priority: false },
     { name: "Espagnol", regions: ["Espagne", "Amérique latine"], flags: ["🇪🇸", "🇲🇽"], priority: false },
@@ -48,7 +48,10 @@ const LanguagesSection = () => {
         <div className="mb-16">
           <div className="flex items-center justify-center mb-8">
             <Globe className="w-6 h-6 text-orange-500 mr-3" />
-            <h3 className="text-2xl font-bold text-gray-900">Langues africaines (priorité)</h3>
+            <h3 className="text-2xl font-bold text-gray-900">Langues africaines</h3>
+            <span className="ml-3 bg-orange-100 text-orange-600 text-xs font-bold px-3 py-1 rounded-full">
+              Disponible
+            </span>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -62,15 +65,12 @@ const LanguagesSection = () => {
                         <span key={idx} className="text-2xl">{flag}</span>
                       ))}
                     </div>
-                    <div className="bg-orange-50 rounded-full p-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <MessageSquare className="w-6 h-6 text-orange-600" />
-                    </div>
                   </div>
                   <h4 className="text-lg font-bold text-gray-900 mb-2">{language.name}</h4>
                   <p className="text-sm text-gray-600">{language.regions.join(", ")}</p>
                   <div className="absolute top-2 right-2">
-                    <span className="bg-orange-100 text-orange-600 text-xs font-bold px-2 py-1 rounded-full">
-                      Priorité
+                    <span className="bg-green-100 text-green-600 text-xs font-bold px-2 py-1 rounded-full">
+                      Disponible
                     </span>
                   </div>
                 </div>
@@ -84,6 +84,9 @@ const LanguagesSection = () => {
           <div className="flex items-center justify-center mb-8">
             <Languages className="w-6 h-6 text-hypocrate-blue mr-3" />
             <h3 className="text-2xl font-bold text-gray-900">Langues internationales</h3>
+            <span className="ml-3 bg-blue-100 text-blue-600 text-xs font-bold px-3 py-1 rounded-full">
+              Disponible
+            </span>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -95,12 +98,14 @@ const LanguagesSection = () => {
                       <span key={idx} className="text-2xl">{flag}</span>
                     ))}
                   </div>
-                  <div className="bg-blue-50 rounded-full p-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <MessageSquare className="w-6 h-6 text-hypocrate-blue" />
-                  </div>
                 </div>
                 <h4 className="text-lg font-bold text-gray-900 mb-2">{language.name}</h4>
                 <p className="text-sm text-gray-600">{language.regions.join(", ")}</p>
+                <div className="absolute top-2 right-2">
+                  <span className="bg-green-100 text-green-600 text-xs font-bold px-2 py-1 rounded-full">
+                    Disponible
+                  </span>
+                </div>
               </div>
             ))}
           </div>

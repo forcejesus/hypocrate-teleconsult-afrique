@@ -4,12 +4,11 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { User, Phone, Flag } from "lucide-react";
+import { User, Phone, Languages, MapPin } from "lucide-react";
 import { 
   Card, 
   CardContent, 
   CardDescription, 
-  CardFooter, 
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
@@ -43,7 +42,9 @@ const languages = [
   { id: "ln", name: "Lingala" },
   { id: "kt", name: "Kituba" },
   { id: "kg", name: "Kigongo" },
-  // Add more African languages as needed
+  { id: "sw", name: "Swahili" },
+  { id: "wo", name: "Wolof" },
+  { id: "bm", name: "Bambara" },
 ];
 
 // Profile completion schema
@@ -69,7 +70,7 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
     resolver: zodResolver(profileSchema),
     defaultValues: {
       phoneNumber: "",
-      countryCode: "+33", // France as default
+      countryCode: "+33",
       country: "FR",
       languages: [],
     },
@@ -80,19 +81,16 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // File type validation
     if (!file.type.includes("image/")) {
       toast.error("Le fichier sélectionné n'est pas une image");
       return;
     }
 
-    // File size validation (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       toast.error("L'image ne doit pas dépasser 5Mo");
       return;
     }
 
-    // Create a URL for the image preview
     const imageUrl = URL.createObjectURL(file);
     setProfileImage(imageUrl);
     toast.success("Photo de profil ajoutée");
@@ -113,54 +111,52 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
     });
   };
 
-  // Handle form submission
   const onSubmit = (values: ProfileFormValues) => {
     console.log("Profile completion values:", values);
     toast.success("Profil complété avec succès!");
     onComplete();
   };
 
-  // Get African countries
   const africanCountries = getAfricanCountries();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-hypocrate-lightBlue via-white to-hypocrate-lightGreen p-4 md:p-8">
-      <div className="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-10 pointer-events-none" 
-           style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1581091226825-a6a2a5aee158)' }}>
-      </div>
-      
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="w-full max-w-4xl mx-auto p-4 md:p-6 relative z-10"
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-2xl"
       >
-        <Card className="shadow-xl backdrop-blur-sm bg-white/90 border-t border-l border-white/20">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-hypocrate-blue to-hypocrate-green">
-              Complétez votre profil
+        <Card className="border-0 shadow-2xl bg-white">
+          <CardHeader className="text-center pb-8 pt-8">
+            <div className="mx-auto mb-4 w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
+              <User className="w-6 h-6 text-white" />
+            </div>
+            <CardTitle className="text-2xl font-bold text-gray-900">
+              Complétez votre profil patient
             </CardTitle>
-            <CardDescription>
-              Merci de compléter votre profil avant de continuer
+            <CardDescription className="text-gray-600 mt-2">
+              Quelques informations pour personnaliser votre expérience
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          
+          <CardContent className="px-8 pb-8">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 {/* Profile Picture */}
-                <div className="flex flex-col items-center mb-6">
-                  <Avatar className="h-32 w-32 mb-4 border-4 border-white shadow-lg">
+                <div className="flex flex-col items-center space-y-4">
+                  <Avatar className="h-24 w-24 border-4 border-blue-100">
                     {profileImage ? (
                       <AvatarImage src={profileImage} alt="Photo de profil" />
                     ) : (
-                      <AvatarFallback className="bg-gradient-to-r from-hypocrate-blue to-hypocrate-green text-white text-4xl">
-                        <User size={40} />
+                      <AvatarFallback className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-2xl">
+                        <User size={32} />
                       </AvatarFallback>
                     )}
                   </Avatar>
                   <Button 
                     variant="outline" 
-                    className="relative overflow-hidden bg-white hover:bg-gray-50" 
+                    className="relative overflow-hidden border-blue-200 hover:bg-blue-50" 
                     type="button"
                   >
                     <User size={16} className="mr-2" />
@@ -172,132 +168,148 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
                       className="absolute inset-0 cursor-pointer opacity-0"
                     />
                   </Button>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Photo de profil (non obligatoire)
-                  </p>
                 </div>
 
                 {/* Phone Number */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Phone className="w-4 h-4 text-blue-500" />
+                    <span className="font-medium text-gray-900">Téléphone</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="countryCode"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Indicatif</FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger className="border-gray-200 focus:border-blue-500">
+                                <SelectValue placeholder="Indicatif" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="max-h-[300px]">
+                              {countries.map((country) => (
+                                <SelectItem key={country.code} value={country.dialCode}>
+                                  <span className="mr-2">{country.flag}</span>
+                                  {country.dialCode}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="phoneNumber"
+                      render={({ field }) => (
+                        <FormItem className="md:col-span-2">
+                          <FormLabel>Numéro</FormLabel>
+                          <FormControl>
+                            <Input 
+                              className="border-gray-200 focus:border-blue-500" 
+                              placeholder="Votre numéro de téléphone" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+
+                {/* Country Selection */}
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <MapPin className="w-4 h-4 text-blue-500" />
+                    <span className="font-medium text-gray-900">Localisation</span>
+                  </div>
                   <FormField
                     control={form.control}
-                    name="countryCode"
+                    name="country"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Indicatif</FormLabel>
+                        <FormLabel>Pays de résidence</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger className="bg-white">
-                              <SelectValue placeholder="Indicatif" />
+                            <SelectTrigger className="border-gray-200 focus:border-blue-500">
+                              <SelectValue placeholder="Sélectionnez votre pays" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent className="max-h-[300px]">
-                            {countries.map((country) => (
-                              <SelectItem key={country.code} value={country.dialCode}>
+                            <div className="mb-2 px-2 py-1.5 text-sm font-semibold text-gray-600">Afrique</div>
+                            {africanCountries.map((country) => (
+                              <SelectItem key={country.code} value={country.code}>
                                 <span className="mr-2">{country.flag}</span>
-                                {country.dialCode} ({country.name})
+                                {country.name}
                               </SelectItem>
                             ))}
+                            <div className="mt-2 mb-2 px-2 py-1.5 text-sm font-semibold text-gray-600">Autres pays</div>
+                            {countries
+                              .filter(country => !country.isAfrican)
+                              .map((country) => (
+                                <SelectItem key={country.code} value={country.code}>
+                                  <span className="mr-2">{country.flag}</span>
+                                  {country.name}
+                                </SelectItem>
+                              ))}
                           </SelectContent>
                         </Select>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+                </div>
 
+                {/* Languages */}
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Languages className="w-4 h-4 text-blue-500" />
+                    <span className="font-medium text-gray-900">Langues parlées</span>
+                  </div>
                   <FormField
                     control={form.control}
-                    name="phoneNumber"
-                    render={({ field }) => (
-                      <FormItem className="md:col-span-2">
-                        <FormLabel>Numéro de téléphone</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                            <Input className="pl-10 bg-white" placeholder="Numéro de téléphone" {...field} />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
+                    name="languages"
+                    render={() => (
+                      <FormItem>
+                        <FormLabel>Sélectionnez vos langues</FormLabel>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                          {languages.map((language) => (
+                            <Button
+                              key={language.id}
+                              type="button"
+                              variant={selectedLanguages.includes(language.id) ? "default" : "outline"}
+                              className={`justify-start text-sm py-2 px-3 ${
+                                selectedLanguages.includes(language.id) 
+                                  ? "bg-blue-500 hover:bg-blue-600 text-white border-blue-500" 
+                                  : "border-gray-200 hover:bg-blue-50 hover:border-blue-300"
+                              }`}
+                              onClick={() => toggleLanguage(language.id)}
+                            >
+                              {language.name}
+                            </Button>
+                          ))}
+                        </div>
+                        {form.formState.errors.languages && (
+                          <p className="text-sm font-medium text-red-500 mt-2">
+                            {form.formState.errors.languages.message}
+                          </p>
+                        )}
                       </FormItem>
                     )}
                   />
                 </div>
 
-                {/* Country Selection */}
-                <FormField
-                  control={form.control}
-                  name="country"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Pays de résidence</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger className="w-full bg-white">
-                            <SelectValue placeholder="Sélectionnez votre pays" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className="max-h-[300px]">
-                          <div className="mb-2 px-2 py-1.5 text-sm font-semibold">Afrique</div>
-                          {africanCountries.map((country) => (
-                            <SelectItem key={country.code} value={country.code}>
-                              <span className="mr-2">{country.flag}</span>
-                              {country.name}
-                            </SelectItem>
-                          ))}
-                          <div className="mt-2 mb-2 px-2 py-1.5 text-sm font-semibold">Autres pays</div>
-                          {countries
-                            .filter(country => !country.isAfrican)
-                            .map((country) => (
-                              <SelectItem key={country.code} value={country.code}>
-                                <span className="mr-2">{country.flag}</span>
-                                {country.name}
-                              </SelectItem>
-                            ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Languages */}
-                <FormField
-                  control={form.control}
-                  name="languages"
-                  render={() => (
-                    <FormItem>
-                      <FormLabel>Langues parlées</FormLabel>
-                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
-                        {languages.map((language) => (
-                          <Button
-                            key={language.id}
-                            type="button"
-                            variant={selectedLanguages.includes(language.id) ? "default" : "outline"}
-                            className={`justify-start ${
-                              selectedLanguages.includes(language.id) 
-                                ? "bg-gradient-to-r from-hypocrate-blue to-hypocrate-green text-white" 
-                                : "bg-white"
-                            }`}
-                            onClick={() => toggleLanguage(language.id)}
-                          >
-                            {language.name}
-                          </Button>
-                        ))}
-                      </div>
-                      {form.formState.errors.languages && (
-                        <p className="text-sm font-medium text-destructive mt-2">
-                          {form.formState.errors.languages.message}
-                        </p>
-                      )}
-                    </FormItem>
-                  )}
-                />
-
                 <Button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 shadow-md hover:shadow-lg"
+                  className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-medium py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
                 >
-                  Compléter mon profil
+                  Terminer mon profil
                 </Button>
               </form>
             </Form>
