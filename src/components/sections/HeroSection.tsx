@@ -1,11 +1,8 @@
-
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Play, Star, CheckCircle, ArrowRight } from 'lucide-react';
-
 const HeroSection = () => {
-  return (
-    <section className="relative bg-gradient-to-br from-hypocrate-lightBlue via-white to-blue-50 py-20 md:py-32 overflow-hidden">
+  return <section className="relative bg-gradient-to-br from-hypocrate-lightBlue via-white to-blue-50 py-20 md:py-32 overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-hypocrate-blue/10 to-hypocrate-green/10 rounded-full blur-3xl"></div>
@@ -42,23 +39,18 @@ const HeroSection = () => {
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Link to="/comment-ca-marche">
-                <Button variant="outline" className="border-2 border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50 font-bold text-lg py-6 px-8 rounded-xl transition-all duration-200 group">
-                  <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
-                  Voir la démo
-                </Button>
+                
               </Link>
             </div>
           </div>
           
           {/* Image */}
-          <div className="w-full lg:w-1/2 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="w-full lg:w-1/2 animate-fade-in" style={{
+          animationDelay: '0.2s'
+        }}>
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-hypocrate-blue/20 to-hypocrate-green/20 rounded-3xl -rotate-3 transform"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80" 
-                alt="Téléconsultation médicale avec Hypocrate" 
-                className="w-full h-auto object-cover rounded-3xl shadow-2xl relative z-10 transform hover:scale-105 transition-transform duration-300"
-              />
+              <img src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80" alt="Téléconsultation médicale avec Hypocrate" className="w-full h-auto object-cover rounded-3xl shadow-2xl relative z-10 transform hover:scale-105 transition-transform duration-300" />
               
               {/* Floating card */}
               <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl z-20 max-w-[300px] transform hover:scale-105 transition-transform duration-300">
@@ -126,8 +118,6 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;

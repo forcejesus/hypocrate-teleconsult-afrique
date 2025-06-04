@@ -110,14 +110,7 @@ const Footer = () => {
               </div>
             </div>
             
-            <div className="mt-6 p-4 bg-gray-800 rounded-lg">
-              <h4 className="font-semibold mb-2">Horaires d'ouverture</h4>
-              <div className="text-sm text-gray-300 space-y-1">
-                <div>Lun - Ven : 8h00 - 20h00</div>
-                <div>Sam : 9h00 - 17h00</div>
-                <div>Dim : Urgences uniquement</div>
-              </div>
-            </div>
+            
           </div>
         </div>
 
