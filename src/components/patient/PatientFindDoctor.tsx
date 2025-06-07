@@ -1,268 +1,372 @@
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Search, Filter, Star, MapPin } from "lucide-react";
+import { Search, Star, Clock, Languages, MapPin, Video, Calendar, Filter, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { Slider } from "@/components/ui/slider";
-import { Link } from 'react-router-dom';
 
-// Données factices pour les médecins
+// Sample doctors data
 const doctors = [
   {
     id: 1,
     name: "Dr. Sophie Martin",
     specialty: "Médecine générale",
-    rating: 4.8,
-    reviewsCount: 124,
-    location: "Paris, France",
-    price: 45,
-    availableToday: true,
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop"
+    rating: 4.9,
+    reviews: 156,
+    languages: ["Français", "Anglais"],
+    country: "France",
+    experience: "15 ans",
+    nextAvailable: "Aujourd'hui 14h30",
+    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300",
+    isOnline: true,
+    bio: "Spécialiste en médecine générale avec une approche holistique du patient."
   },
   {
     id: 2,
-    name: "Dr. Antoine Dubois",
-    specialty: "Dermatologie",
-    rating: 4.6,
-    reviewsCount: 98,
-    location: "Lyon, France",
-    price: 65,
-    availableToday: false,
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop"
+    name: "Dr. Jean Dupont",
+    specialty: "Cardiologie",
+    rating: 4.8,
+    reviews: 203,
+    languages: ["Français", "Anglais", "Espagnol"],
+    country: "Belgique",
+    experience: "20 ans",
+    nextAvailable: "Demain 09h00",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300",
+    isOnline: false,
+    bio: "Cardiologue expérimenté, spécialisé dans les maladies cardiovasculaires."
   },
   {
     id: 3,
-    name: "Dr. Marie Lambert",
-    specialty: "Psychologie",
+    name: "Dr. Marie Leclerc",
+    specialty: "Pédiatrie",
     rating: 4.9,
-    reviewsCount: 157,
-    location: "Marseille, France",
-    price: 70,
-    availableToday: true,
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=2070&auto=format&fit=crop"
+    reviews: 134,
+    languages: ["Français", "Allemand"],
+    country: "Suisse",
+    experience: "12 ans",
+    nextAvailable: "Aujourd'hui 16h00",
+    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=300",
+    isOnline: true,
+    bio: "Pédiatre dévouée avec une approche centrée sur l'enfant et sa famille."
   },
   {
     id: 4,
-    name: "Dr. Jean Dupont",
-    specialty: "Cardiologie",
+    name: "Dr. Thomas Leroy",
+    specialty: "Dermatologie",
     rating: 4.7,
-    reviewsCount: 113,
-    location: "Bordeaux, France",
-    price: 80,
-    availableToday: false,
-    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop"
+    reviews: 89,
+    languages: ["Français", "Italien"],
+    country: "France",
+    experience: "8 ans",
+    nextAvailable: "Demain 11h30",
+    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300",
+    isOnline: true,
+    bio: "Dermatologue spécialisé dans le diagnostic et le traitement des affections cutanées."
   }
 ];
 
-// Spécialités disponibles
-const specialties = [
-  "Toutes les spécialités",
-  "Médecine générale",
-  "Dermatologie",
-  "Psychologie",
-  "Cardiologie",
-  "Nutrition",
-  "Pédiatrie",
-  "Gynécologie"
-];
+const specialties = Array.from(new Set(doctors.map(doctor => doctor.specialty)));
+const countries = Array.from(new Set(doctors.map(doctor => doctor.country)));
+const allLanguages = Array.from(new Set(doctors.flatMap(doctor => doctor.languages)));
 
-export const PatientFindDoctor = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSpecialty, setSelectedSpecialty] = useState('Toutes les spécialités');
-  const [priceRange, setPriceRange] = useState([0, 100]);
-  const [availableTodayOnly, setAvailableTodayOnly] = useState(false);
-  
-  // Filtrer les médecins
+export const PatientFindDoctor: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [onlineOnly, setOnlineOnly] = useState(false);
+
+  const toggleSpecialty = (specialty: string) => {
+    setSelectedSpecialties(prev => 
+      prev.includes(specialty) 
+        ? prev.filter(s => s !== specialty) 
+        : [...prev, specialty]
+    );
+  };
+
+  const toggleCountry = (country: string) => {
+    setSelectedCountries(prev => 
+      prev.includes(country) 
+        ? prev.filter(c => c !== country) 
+        : [...prev, country]
+    );
+  };
+
+  const toggleLanguage = (language: string) => {
+    setSelectedLanguages(prev => 
+      prev.includes(language) 
+        ? prev.filter(l => l !== language) 
+        : [...prev, language]
+    );
+  };
+
+  const clearFilters = () => {
+    setSelectedSpecialties([]);
+    setSelectedCountries([]);
+    setSelectedLanguages([]);
+    setOnlineOnly(false);
+    setSearchQuery("");
+  };
+
   const filteredDoctors = doctors.filter(doctor => {
-    // Filtrer par terme de recherche
-    const matchesSearch = doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         doctor.specialty.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    // Filtrer par spécialité
-    const matchesSpecialty = selectedSpecialty === 'Toutes les spécialités' || 
-                            doctor.specialty === selectedSpecialty;
-    
-    // Filtrer par prix
-    const matchesPrice = doctor.price >= priceRange[0] && doctor.price <= priceRange[1];
-    
-    // Filtrer par disponibilité
-    const matchesAvailability = !availableTodayOnly || doctor.availableToday;
-    
-    return matchesSearch && matchesSpecialty && matchesPrice && matchesAvailability;
-  });
-  
-  // Animation variants
-  const listVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+    const matchesSearch = doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSpecialty = selectedSpecialties.length === 0 || selectedSpecialties.includes(doctor.specialty);
+    const matchesCountry = selectedCountries.length === 0 || selectedCountries.includes(doctor.country);
+    const matchesLanguage = selectedLanguages.length === 0 || selectedLanguages.some(lang => doctor.languages.includes(lang));
+    const matchesOnline = !onlineOnly || doctor.isOnline;
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
-  };
+    return matchesSearch && matchesSpecialty && matchesCountry && matchesLanguage && matchesOnline;
+  });
+
+  const hasActiveFilters = selectedSpecialties.length > 0 || selectedCountries.length > 0 || 
+                          selectedLanguages.length > 0 || onlineOnly || searchQuery;
 
   return (
     <div className="space-y-6">
-      {/* Filtres */}
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Rechercher un médecin</h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Recherche par nom */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-            <Input
-              placeholder="Rechercher par nom ou spécialité"
-              className="pl-10 h-12 rounded-lg"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          
-          {/* Filtre par spécialité */}
+      {/* Header */}
+      <div className="text-center md:text-left">
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Trouver un médecin</h1>
+        <p className="text-gray-600">Trouvez le médecin parfait pour vos besoins</p>
+      </div>
+
+      {/* Search and Filters */}
+      <div className="bg-gray-50 rounded-2xl p-4 md:p-6 space-y-4">
+        {/* Search Bar */}
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+          <Input
+            placeholder="Rechercher par nom ou spécialité..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-12 h-12 bg-white border-gray-200 rounded-xl"
+          />
+        </div>
+
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap gap-3">
+          {/* Specialty Filter */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-full justify-between h-12 rounded-lg">
-                <span>{selectedSpecialty}</span>
-                <Filter size={18} />
+              <Button
+                variant="outline"
+                className="bg-white border-gray-200 hover:bg-gray-50"
+              >
+                <Filter className="mr-2 h-4 w-4" />
+                Spécialité
+                {selectedSpecialties.length > 0 && (
+                  <Badge variant="secondary" className="ml-2 bg-indigo-100 text-indigo-700">
+                    {selectedSpecialties.length}
+                  </Badge>
+                )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-full min-w-[220px]" align="start">
+            <DropdownMenuContent className="w-56">
               {specialties.map((specialty) => (
-                <DropdownMenuItem 
+                <DropdownMenuCheckboxItem
                   key={specialty}
-                  onClick={() => setSelectedSpecialty(specialty)}
-                  className="cursor-pointer"
+                  checked={selectedSpecialties.includes(specialty)}
+                  onCheckedChange={() => toggleSpecialty(specialty)}
                 >
                   {specialty}
-                </DropdownMenuItem>
+                </DropdownMenuCheckboxItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          
-          {/* Filtres supplémentaires */}
-          <div className="flex space-x-2">
+
+          {/* Country Filter */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className="bg-white border-gray-200 hover:bg-gray-50"
+              >
+                <MapPin className="mr-2 h-4 w-4" />
+                Pays
+                {selectedCountries.length > 0 && (
+                  <Badge variant="secondary" className="ml-2 bg-indigo-100 text-indigo-700">
+                    {selectedCountries.length}
+                  </Badge>
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              {countries.map((country) => (
+                <DropdownMenuCheckboxItem
+                  key={country}
+                  checked={selectedCountries.includes(country)}
+                  onCheckedChange={() => toggleCountry(country)}
+                >
+                  {country}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Language Filter */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className="bg-white border-gray-200 hover:bg-gray-50"
+              >
+                <Languages className="mr-2 h-4 w-4" />
+                Langues
+                {selectedLanguages.length > 0 && (
+                  <Badge variant="secondary" className="ml-2 bg-indigo-100 text-indigo-700">
+                    {selectedLanguages.length}
+                  </Badge>
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              {allLanguages.map((language) => (
+                <DropdownMenuCheckboxItem
+                  key={language}
+                  checked={selectedLanguages.includes(language)}
+                  onCheckedChange={() => toggleLanguage(language)}
+                >
+                  {language}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Online Only Filter */}
+          <Button
+            variant={onlineOnly ? "default" : "outline"}
+            onClick={() => setOnlineOnly(!onlineOnly)}
+            className={onlineOnly ? "bg-green-600 hover:bg-green-700" : "bg-white border-gray-200 hover:bg-gray-50"}
+          >
+            <div className="flex items-center">
+              <div className={`w-2 h-2 rounded-full mr-2 ${onlineOnly ? 'bg-white' : 'bg-green-500'}`} />
+              En ligne maintenant
+            </div>
+          </Button>
+
+          {/* Clear Filters */}
+          {hasActiveFilters && (
             <Button
-              variant={availableTodayOnly ? "default" : "outline"}
-              className={`flex-1 h-12 rounded-lg ${
-                availableTodayOnly 
-                  ? 'bg-hypocrate-blue hover:bg-blue-600' 
-                  : 'border-hypocrate-blue text-hypocrate-blue hover:bg-blue-50'
-              }`}
-              onClick={() => setAvailableTodayOnly(!availableTodayOnly)}
+              variant="ghost"
+              onClick={clearFilters}
+              className="text-gray-500 hover:text-gray-700"
             >
-              Disponible aujourd'hui
+              <X className="mr-2 h-4 w-4" />
+              Effacer
             </Button>
-          </div>
-        </div>
-        
-        {/* Filtre par prix */}
-        <div className="mt-6">
-          <div className="flex justify-between items-center mb-2">
-            <h4 className="font-medium text-gray-700">Prix de la consultation</h4>
-            <span className="text-sm text-gray-600">
-              {priceRange[0]}€ - {priceRange[1]}€
-            </span>
-          </div>
-          <Slider
-            defaultValue={[0, 100]}
-            min={0}
-            max={100}
-            step={5}
-            value={priceRange}
-            onValueChange={(value) => setPriceRange(value as number[])}
-            className="py-4"
-          />
+          )}
         </div>
       </div>
-      
-      {/* Liste des médecins */}
-      {filteredDoctors.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-8 bg-white rounded-lg shadow-sm">
-          <Search className="w-16 h-16 text-gray-300 mb-4" />
-          <h3 className="text-xl font-medium text-gray-700">Aucun médecin trouvé</h3>
-          <p className="text-gray-500 mt-2 text-center">
-            Essayez d'ajuster vos filtres de recherche pour voir plus de résultats.
-          </p>
-        </div>
-      ) : (
-        <motion.div
-          variants={listVariants}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
-          {filteredDoctors.map((doctor) => (
-            <motion.div key={doctor.id} variants={itemVariants}>
-              <Card className="overflow-hidden hover:shadow-md transition-shadow duration-300 h-full">
-                <div className="md:flex">
-                  <div className="md:w-1/3 h-full">
-                    <img 
-                      src={doctor.image} 
-                      alt={doctor.name} 
-                      className="w-full h-full object-cover object-center min-h-[180px]"
-                    />
+
+      {/* Results Count */}
+      <div className="flex justify-between items-center">
+        <p className="text-gray-600">
+          {filteredDoctors.length} médecin{filteredDoctors.length !== 1 ? 's' : ''} trouvé{filteredDoctors.length !== 1 ? 's' : ''}
+        </p>
+      </div>
+
+      {/* Doctors Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {filteredDoctors.map((doctor) => (
+          <motion.div
+            key={doctor.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300"
+          >
+            <div className="flex items-start space-x-4">
+              <div className="relative">
+                <Avatar className="h-16 w-16 border-2 border-gray-100">
+                  <AvatarImage src={doctor.image} alt={doctor.name} />
+                  <AvatarFallback className="bg-indigo-100 text-indigo-700">
+                    {doctor.name.split(' ').map(n => n[0]).join('')}
+                  </AvatarFallback>
+                </Avatar>
+                {doctor.isOnline && (
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full" />
                   </div>
-                  <CardContent className="md:w-2/3 p-6 flex flex-col justify-between">
-                    <div>
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h3 className="text-lg font-semibold">{doctor.name}</h3>
-                          <p className="text-sm text-gray-500">{doctor.specialty}</p>
-                        </div>
-                        {doctor.availableToday && (
-                          <Badge className="bg-green-500 hover:bg-green-600">
-                            Disponible aujourd'hui
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      <div className="flex flex-col space-y-2 mb-4">
-                        <div className="flex items-center">
-                          <Star className="h-4 w-4 text-amber-500 mr-1 fill-current" />
-                          <span className="text-sm font-medium">{doctor.rating}</span>
-                          <span className="text-sm text-gray-500 ml-1">
-                            ({doctor.reviewsCount} avis)
-                          </span>
-                        </div>
-                        <div className="flex items-center">
-                          <MapPin className="h-4 w-4 text-hypocrate-blue mr-1" />
-                          <span className="text-sm">{doctor.location}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <span className="text-sm">À partir de </span>
-                          <span className="text-lg font-bold ml-1 text-hypocrate-blue">{doctor.price}€</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <Button asChild className="w-full bg-gradient-to-r from-hypocrate-blue to-hypocrate-green hover:from-blue-600 hover:to-green-600 mt-2">
-                      <Link to={`/doctor-booking/${doctor.id}`}>
-                        Prendre rendez-vous
-                      </Link>
-                    </Button>
-                  </CardContent>
+                )}
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 truncate">{doctor.name}</h3>
+                    <p className="text-indigo-600 font-medium">{doctor.specialty}</p>
+                    <p className="text-sm text-gray-500 flex items-center mt-1">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      {doctor.country} • {doctor.experience} d'expérience
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-1 ml-2">
+                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                    <span className="text-sm font-medium text-gray-900">{doctor.rating}</span>
+                    <span className="text-sm text-gray-500">({doctor.reviews})</span>
+                  </div>
                 </div>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
+
+                <p className="text-gray-600 text-sm mt-2 line-clamp-2">{doctor.bio}</p>
+
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {doctor.languages.map((language) => (
+                    <Badge key={language} variant="secondary" className="text-xs bg-gray-100 text-gray-700">
+                      {language}
+                    </Badge>
+                  ))}
+                </div>
+
+                <div className="flex items-center justify-between mt-4">
+                  <div className="flex items-center text-sm text-gray-600">
+                    <Clock className="h-4 w-4 mr-1" />
+                    <span>Prochain créneau: <span className="font-medium text-gray-900">{doctor.nextAvailable}</span></span>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2 mt-4">
+                  <Button 
+                    className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl h-10"
+                  >
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Prendre RDV
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="icon"
+                    className="h-10 w-10 border-gray-200 hover:bg-gray-50 rounded-xl"
+                  >
+                    <Video className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {filteredDoctors.length === 0 && (
+        <div className="text-center py-12">
+          <div className="text-gray-400 mb-4">
+            <Search className="h-12 w-12 mx-auto" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Aucun médecin trouvé</h3>
+          <p className="text-gray-500 mb-4">Essayez de modifier vos critères de recherche</p>
+          <Button variant="outline" onClick={clearFilters}>
+            Réinitialiser les filtres
+          </Button>
+        </div>
       )}
     </div>
   );
 };
+
+export default PatientFindDoctor;
