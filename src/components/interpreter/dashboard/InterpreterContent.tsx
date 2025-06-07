@@ -1,36 +1,20 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { InterpreterAvailableConsultations } from '@/components/interpreter/InterpreterAvailableConsultations';
-import { InterpreterMyConsultations } from '@/components/interpreter/InterpreterMyConsultations';
-import { InterpreterHistory } from '@/components/interpreter/InterpreterHistory';
-import { InterpreterSettings } from '@/components/interpreter/InterpreterSettings';
+import InterpreterAvailableConsultations from '../InterpreterAvailableConsultations';
+import InterpreterMyConsultations from '../InterpreterMyConsultations';
+import InterpreterHistory from '../InterpreterHistory';
+import InterpreterSettings from '../InterpreterSettings';
 
 interface InterpreterContentProps {
   activeSection: string;
 }
 
-export const InterpreterContent: React.FC<InterpreterContentProps> = ({ activeSection }) => {
-  const renderContent = () => {
-    switch(activeSection) {
-      case 'available':
-        return <InterpreterAvailableConsultations />;
-      case 'myconsultations':
-        return <InterpreterMyConsultations />;
-      case 'history':
-        return <InterpreterHistory />;
-      case 'settings':
-        return <InterpreterSettings />;
-      default:
-        return <InterpreterAvailableConsultations />;
-    }
-  };
-
+const InterpreterContent: React.FC<InterpreterContentProps> = ({ activeSection }) => {
   const getSectionTitle = (section: string) => {
     switch(section) {
       case "available": return "Consultations disponibles";
-      case "myconsultations": return "Mes consultations programmées";
-      case "history": return "Historique des interprétations";
+      case "my": return "Mes consultations";
+      case "history": return "Historique des consultations";
       case "settings": return "Paramètres du compte";
       default: return "Consultations disponibles";
     }
@@ -38,11 +22,11 @@ export const InterpreterContent: React.FC<InterpreterContentProps> = ({ activeSe
 
   const getSectionDescription = (section: string) => {
     switch(section) {
-      case "available": return "Nouvelles demandes d'interprétation disponibles";
-      case "myconsultations": return "Vos consultations d'interprétation programmées";
-      case "history": return "Consultations d'interprétation passées et évaluations";
-      case "settings": return "Gérez vos langues, disponibilités et informations";
-      default: return "Nouvelles demandes d'interprétation disponibles";
+      case "available": return "Liste des consultations disponibles pour l'interprétation";
+      case "my": return "Consultations que vous avez acceptées et en cours";
+      case "history": return "Historique de vos consultations passées";
+      case "settings": return "Gérez vos informations personnelles et préférences";
+      default: return "Liste des consultations disponibles pour l'interprétation";
     }
   };
 
@@ -76,7 +60,10 @@ export const InterpreterContent: React.FC<InterpreterContentProps> = ({ activeSe
           transition={{ duration: 0.3 }}
           className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8"
         >
-          {renderContent()}
+          {activeSection === "available" && <InterpreterAvailableConsultations />}
+          {activeSection === "my" && <InterpreterMyConsultations />}
+          {activeSection === "history" && <InterpreterHistory />}
+          {activeSection === "settings" && <InterpreterSettings />}
         </motion.div>
       </div>
     </main>
