@@ -26,32 +26,32 @@ export const InterpreterMobileHeader: React.FC<InterpreterMobileHeaderProps> = (
   };
 
   return (
-    <header className="bg-white shadow-sm md:hidden border-b border-gray-100">
-      <div className="flex items-center justify-between px-4 py-4">
-        <div className="flex items-center">
+    <header className="bg-white shadow-sm md:hidden border-b border-gray-100 sticky top-0 z-40">
+      <div className="flex items-center justify-between px-4 py-3">
+        <div className="flex items-center flex-1 min-w-0">
           <Button
             id="mobile-menu-button"
             variant="ghost"
             size="icon"
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-            className="mr-3 hover:bg-gray-100"
+            className="mr-3 hover:bg-gray-100 flex-shrink-0"
           >
             {mobileSidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </Button>
-          <div>
-            <h1 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-green-600">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-green-600 truncate">
               {getSectionTitle(activeSection)}
             </h1>
           </div>
         </div>
         
-        <div className="flex items-center space-x-2">
-          <Button variant="ghost" size="icon">
-            <Headphones size={20} />
+        <div className="flex items-center space-x-2 flex-shrink-0">
+          <Button variant="ghost" size="icon" className="flex-shrink-0 h-8 w-8">
+            <Headphones size={18} />
           </Button>
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell size={20} />
-            <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 text-xs bg-teal-500">
+          <Button variant="ghost" size="icon" className="relative flex-shrink-0 h-8 w-8">
+            <Bell size={18} />
+            <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 text-[10px] bg-teal-500 flex items-center justify-center">
               3
             </Badge>
           </Button>

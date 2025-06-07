@@ -1,8 +1,8 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, MessageSquare, History, Settings, Languages } from 'lucide-react';
-import NavItem from '@/components/doctor/dashboard/NavItem';
+import { Globe, MessageSquare, History, Settings, Languages, Activity } from 'lucide-react';
+import NavItem from '@/components/patient/dashboard/NavItem';
 import LogoutButton from '@/components/auth/LogoutButton';
 
 interface InterpreterSidebarProps {
@@ -16,8 +16,8 @@ const InterpreterSidebar = ({ activeSection, setActiveSection, isMobile, mobileS
   const [isHovering, setIsHovering] = useState(false);
   
   const navItems = [
-    { id: 'available', icon: <Globe size={20} />, label: 'Consultations disponibles' },
-    { id: 'myconsultations', icon: <MessageSquare size={20} />, label: 'Mes consultations' },
+    { id: 'available', icon: <Globe size={20} />, label: 'Consultations disponibles', badge: 5 },
+    { id: 'myconsultations', icon: <MessageSquare size={20} />, label: 'Mes consultations', badge: 2 },
     { id: 'history', icon: <History size={20} />, label: 'Historique' },
     { id: 'settings', icon: <Settings size={20} />, label: 'Paramètres' },
   ];
@@ -31,9 +31,9 @@ const InterpreterSidebar = ({ activeSection, setActiveSection, isMobile, mobileS
       id="mobile-sidebar"
       className={`bg-white shadow-lg z-50 flex flex-col ${
         isMobile 
-          ? 'fixed left-0 top-0 h-full w-72 transform transition-transform duration-300 ease-in-out border-r border-gray-200' +
+          ? 'fixed left-0 top-0 h-full w-80 transform transition-transform duration-300 ease-in-out border-r border-gray-200' +
             (mobileSidebarOpen ? ' translate-x-0' : ' -translate-x-full')
-          : 'sticky top-0 h-screen w-72 flex-shrink-0 border-r border-gray-100'
+          : 'sticky top-0 h-screen w-80 flex-shrink-0 border-r border-gray-100'
       }`}
       onHoverStart={() => setIsHovering(true)}
       onHoverEnd={() => setIsHovering(false)}
@@ -48,22 +48,15 @@ const InterpreterSidebar = ({ activeSection, setActiveSection, isMobile, mobileS
 
         <div className="space-y-2 px-2 flex-1 overflow-auto">
           {navItems.map((item) => (
-            <motion.button
+            <NavItem
               key={item.id}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => handleClick(item.id)}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200 ${
-                activeSection === item.id
-                  ? 'bg-gradient-to-r from-teal-50 to-green-50 text-teal-700 border border-teal-200 shadow-sm'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-              }`}
-            >
-              <div className={`${activeSection === item.id ? 'text-teal-600' : 'text-gray-400'}`}>
-                {item.icon}
-              </div>
-              <span className="font-medium">{item.label}</span>
-            </motion.button>
+              id={item.id}
+              icon={item.icon}
+              label={item.label}
+              badge={item.badge}
+              isActive={activeSection === item.id}
+              onClick={handleClick}
+            />
           ))}
         </div>
 
@@ -73,8 +66,15 @@ const InterpreterSidebar = ({ activeSection, setActiveSection, isMobile, mobileS
               <Languages className="w-4 h-4 text-teal-600" />
               <span className="text-sm font-medium text-teal-700">Langues</span>
             </div>
-            <div className="text-xs text-gray-600">
+            <div className="text-xs text-gray-600 mb-2">
               Français, Wolof, Arabe
+            </div>
+            <div className="flex items-center space-x-2">
+              <Activity className="w-3 h-3 text-teal-600" />
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-xs text-gray-600">Disponible</span>
+              </div>
             </div>
           </div>
           
