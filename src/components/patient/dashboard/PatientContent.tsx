@@ -1,52 +1,36 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { PatientUpcomingConsultations } from '@/components/patient/PatientUpcomingConsultations';
-import { PatientPendingConsultations } from '@/components/patient/PatientPendingConsultations';
-import { PatientFindDoctor } from '@/components/patient/PatientFindDoctor';
-import { PatientSettings } from '@/components/patient/PatientSettings';
+import PatientUpcomingConsultations from '../PatientUpcomingConsultations';
+import PatientPendingConsultations from '../PatientPendingConsultations';
+import PatientFindDoctor from '../PatientFindDoctor';
+import PatientHistory from '../PatientHistory';
+import PatientSettings from '../PatientSettings';
 
 interface PatientContentProps {
   activeSection: string;
 }
 
-export const PatientContent: React.FC<PatientContentProps> = ({ activeSection }) => {
-  const renderContent = () => {
-    switch(activeSection) {
-      case 'upcoming':
-        return <PatientUpcomingConsultations />;
-      case 'pending':
-        return <PatientPendingConsultations />;
-      case 'find-doctor':
-        return <PatientFindDoctor />;
-      case 'history':
-        return <PatientUpcomingConsultations />; // Temporary, should be history component
-      case 'settings':
-        return <PatientSettings />;
-      default:
-        return <PatientUpcomingConsultations />;
-    }
-  };
-
+const PatientContent: React.FC<PatientContentProps> = ({ activeSection }) => {
   const getSectionTitle = (section: string) => {
     switch(section) {
-      case "upcoming": return "Mes rendez-vous";
-      case "pending": return "En attente de confirmation";
-      case "find-doctor": return "Trouver un médecin";
-      case "history": return "Historique des consultations";
+      case "upcoming": return "Mes prochaines consultations";
+      case "pending": return "Consultations en attente";
+      case "find": return "Trouver un médecin";
+      case "history": return "Historique de mes consultations";
       case "settings": return "Paramètres du compte";
-      default: return "Mes rendez-vous";
+      default: return "Mes prochaines consultations";
     }
   };
 
   const getSectionDescription = (section: string) => {
     switch(section) {
-      case "upcoming": return "Vos prochaines consultations confirmées";
-      case "pending": return "Consultations en cours de validation";
-      case "find-doctor": return "Trouvez un médecin disponible dans votre langue";
+      case "upcoming": return "Consultations programmées et confirmées";
+      case "pending": return "Demandes de consultation en cours de traitement";
+      case "find": return "Recherchez et réservez une consultation avec un médecin";
       case "history": return "Consultations passées et rapports médicaux";
       case "settings": return "Gérez vos informations personnelles et préférences";
-      default: return "Vos prochaines consultations confirmées";
+      default: return "Consultations programmées et confirmées";
     }
   };
 
@@ -78,9 +62,13 @@ export const PatientContent: React.FC<PatientContentProps> = ({ activeSection })
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8"
+          className={activeSection === 'find' ? '' : 'bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8'}
         >
-          {renderContent()}
+          {activeSection === "upcoming" && <PatientUpcomingConsultations />}
+          {activeSection === "pending" && <PatientPendingConsultations />}
+          {activeSection === "find" && <PatientFindDoctor />}
+          {activeSection === "history" && <PatientHistory />}
+          {activeSection === "settings" && <PatientSettings />}
         </motion.div>
       </div>
     </main>
