@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import PatientUpcomingConsultations from '../PatientUpcomingConsultations';
-import PatientPendingConsultations from '../PatientPendingConsultations';
+import { PatientUpcomingConsultations } from '../PatientUpcomingConsultations';
+import { PatientPendingConsultations } from '../PatientPendingConsultations';
 import PatientFindDoctor from '../PatientFindDoctor';
-import PatientHistory from '../PatientHistory';
-import PatientSettings from '../PatientSettings';
+import { PatientHistory } from '../PatientHistory';
+import { PatientSettings } from '../PatientSettings';
 
 interface PatientContentProps {
   activeSection: string;
