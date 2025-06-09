@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { User, Phone, Languages, MapPin, Camera, Check } from "lucide-react";
+import { User, Phone, Languages, MapPin, Camera, Check, ArrowLeft, AlertCircle } from "lucide-react";
 import { 
   Card, 
   CardContent, 
@@ -31,7 +31,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { toast } from "sonner";
-import { countries, getAfricanCountries } from "@/data/countries";
+import { countries, getAfricanCountries, getPhoneIndicatives } from "@/data/countries";
 
 // Languages options
 const languages = [
@@ -39,12 +39,15 @@ const languages = [
   { id: "en", name: "Anglais", flag: "🇬🇧" },
   { id: "es", name: "Espagnol", flag: "🇪🇸" },
   { id: "pt", name: "Portugais", flag: "🇵🇹" },
+  { id: "ar", name: "Arabe", flag: "🇸🇦" },
   { id: "ln", name: "Lingala", flag: "🇨🇩" },
   { id: "kt", name: "Kituba", flag: "🇨🇬" },
   { id: "kg", name: "Kigongo", flag: "🇦🇴" },
   { id: "sw", name: "Swahili", flag: "🇹🇿" },
   { id: "wo", name: "Wolof", flag: "🇸🇳" },
   { id: "bm", name: "Bambara", flag: "🇲🇱" },
+  { id: "ha", name: "Hausa", flag: "🇳🇬" },
+  { id: "yo", name: "Yoruba", flag: "🇳🇬" },
 ];
 
 // Profile completion schema
@@ -72,8 +75,8 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
     resolver: zodResolver(profileSchema),
     defaultValues: {
       phoneNumber: "",
-      countryCode: "+33",
-      country: "FR",
+      countryCode: "+237", // Cameroun par défaut
+      country: "CM",
       languages: [],
     },
   });
@@ -113,8 +116,18 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
     });
   };
 
-  const nextStep = () => {
-    if (step < totalSteps) setStep(step + 1);
+  const nextStep = async () => {
+    let isValid = true;
+    
+    if (step === 1) {
+      // Pas de validation nécessaire pour l'étape 1 (photo optionnelle)
+    } else if (step === 2) {
+      isValid = await form.trigger(['phoneNumber', 'countryCode', 'country']);
+    }
+    
+    if (isValid && step < totalSteps) {
+      setStep(step + 1);
+    }
   };
 
   const prevStep = () => {
@@ -128,6 +141,7 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
   };
 
   const africanCountries = getAfricanCountries();
+  const phoneIndicatives = getPhoneIndicatives();
 
   const getStepContent = () => {
     switch (step) {
@@ -167,7 +181,17 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
               </div>
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-gray-900">Ajoutez votre photo</h3>
-                <p className="text-sm text-gray-500">Aidez vos médecins à vous reconnaître</p>
+                <p className="text-sm text-gray-500">Aidez vos médecins à vous reconnaître (optionnel)</p>
+              </div>
+            </div>
+
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+              <div className="flex items-start space-x-3">
+                <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-blue-700">
+                  <p className="font-medium mb-1">Pourquoi ajouter une photo ?</p>
+                  <p>Votre photo aide les médecins à vous identifier rapidement lors des consultations et crée une relation de confiance.</p>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -198,18 +222,26 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
                   name="countryCode"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Indicatif</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormLabel>Indicatif pays</FormLabel>
+                      <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl>
                           <SelectTrigger className="border-gray-200 focus:border-blue-500 h-12">
                             <SelectValue placeholder="Indicatif" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent className="max-h-[300px]">
-                          {countries.map((country) => (
+                          <div className="mb-2 px-2 py-1.5 text-sm font-semibold text-gray-600 bg-gray-50">Pays Africains</div>
+                          {phoneIndicatives.filter(country => country.isAfrican).map((country) => (
                             <SelectItem key={country.code} value={country.dialCode}>
                               <span className="mr-2">{country.flag}</span>
-                              {country.dialCode}
+                              {country.dialCode} ({country.name})
+                            </SelectItem>
+                          ))}
+                          <div className="mt-2 mb-2 px-2 py-1.5 text-sm font-semibold text-gray-600 bg-gray-50">Autres pays</div>
+                          {phoneIndicatives.filter(country => !country.isAfrican).map((country) => (
+                            <SelectItem key={country.code} value={country.dialCode}>
+                              <span className="mr-2">{country.flag}</span>
+                              {country.dialCode} ({country.name})
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -224,7 +256,7 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
                   name="phoneNumber"
                   render={({ field }) => (
                     <FormItem className="md:col-span-2">
-                      <FormLabel>Numéro</FormLabel>
+                      <FormLabel>Numéro de téléphone</FormLabel>
                       <FormControl>
                         <Input 
                           className="border-gray-200 focus:border-blue-500 h-12" 
@@ -257,7 +289,7 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Pays de résidence</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger className="border-gray-200 focus:border-blue-500 h-12">
                           <SelectValue placeholder="Sélectionnez votre pays" />
@@ -314,7 +346,7 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
                 name="languages"
                 render={() => (
                   <FormItem>
-                    <FormLabel>Sélectionnez vos langues</FormLabel>
+                    <FormLabel>Sélectionnez vos langues parlées</FormLabel>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {languages.map((language) => (
                         <motion.div
@@ -349,6 +381,16 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
                   </FormItem>
                 )}
               />
+            </div>
+
+            <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+              <div className="flex items-start space-x-3">
+                <AlertCircle className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-purple-700">
+                  <p className="font-medium mb-1">Pourquoi indiquer vos langues ?</p>
+                  <p>Cela nous aide à vous proposer des médecins qui parlent vos langues ou à prévoir un interprète si nécessaire.</p>
+                </div>
+              </div>
             </div>
           </motion.div>
         );
@@ -396,11 +438,12 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
             </CardDescription>
             <div className="flex justify-center mt-4 space-x-2">
               {[...Array(totalSteps)].map((_, index) => (
-                <div
+                <button
                   key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index + 1 <= step ? "bg-blue-500" : "bg-gray-200"
-                  }`}
+                  onClick={() => index + 1 <= step && setStep(index + 1)}
+                  className={`w-8 h-2 rounded-full transition-all duration-300 ${
+                    index + 1 <= step ? "bg-blue-500 cursor-pointer hover:bg-blue-600" : "bg-gray-200"
+                  } ${index + 1 === step ? "ring-2 ring-blue-300" : ""}`}
                 />
               ))}
             </div>
@@ -417,9 +460,10 @@ export const PatientProfileCompletion = ({ onComplete }: PatientProfileCompletio
                       type="button" 
                       variant="outline"
                       onClick={prevStep}
-                      className="px-6 py-3 h-12 border-gray-300 hover:bg-gray-50"
+                      className="px-6 py-3 h-12 border-gray-300 hover:bg-gray-50 flex items-center space-x-2"
                     >
-                      Précédent
+                      <ArrowLeft size={16} />
+                      <span>Précédent</span>
                     </Button>
                   )}
                   

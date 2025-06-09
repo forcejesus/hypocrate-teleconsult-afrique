@@ -65,36 +65,40 @@ export const countries: Country[] = [
   { name: "Zambie", code: "ZM", dialCode: "+260", flag: "🇿🇲", isAfrican: true },
   { name: "Zimbabwe", code: "ZW", dialCode: "+263", flag: "🇿🇼", isAfrican: true },
   
-  // Autres pays (non africains)
-  { name: "Afghanistan", code: "AF", dialCode: "+93", flag: "🇦🇫" },
+  // Autres pays populaires (non africains)
+  { name: "France", code: "FR", dialCode: "+33", flag: "🇫🇷" },
+  { name: "Roumanie", code: "RO", dialCode: "+40", flag: "🇷🇴" },
+  { name: "Italie", code: "IT", dialCode: "+39", flag: "🇮🇹" },
+  { name: "Espagne", code: "ES", dialCode: "+34", flag: "🇪🇸" },
   { name: "Allemagne", code: "DE", dialCode: "+49", flag: "🇩🇪" },
+  { name: "Belgique", code: "BE", dialCode: "+32", flag: "🇧🇪" },
+  { name: "Suisse", code: "CH", dialCode: "+41", flag: "🇨🇭" },
+  { name: "Portugal", code: "PT", dialCode: "+351", flag: "🇵🇹" },
+  { name: "Royaume-Uni", code: "GB", dialCode: "+44", flag: "🇬🇧" },
+  { name: "Canada", code: "CA", dialCode: "+1", flag: "🇨🇦" },
+  { name: "États-Unis", code: "US", dialCode: "+1", flag: "🇺🇸" },
+  { name: "Pays-Bas", code: "NL", dialCode: "+31", flag: "🇳🇱" },
+  { name: "Autriche", code: "AT", dialCode: "+43", flag: "🇦🇹" },
+  { name: "Suède", code: "SE", dialCode: "+46", flag: "🇸🇪" },
+  { name: "Norvège", code: "NO", dialCode: "+47", flag: "🇳🇴" },
+  { name: "Danemark", code: "DK", dialCode: "+45", flag: "🇩🇰" },
+  
+  // Autres pays du monde
+  { name: "Afghanistan", code: "AF", dialCode: "+93", flag: "🇦🇫" },
   { name: "Arabie saoudite", code: "SA", dialCode: "+966", flag: "🇸🇦" },
   { name: "Argentine", code: "AR", dialCode: "+54", flag: "🇦🇷" },
   { name: "Australie", code: "AU", dialCode: "+61", flag: "🇦🇺" },
-  { name: "Autriche", code: "AT", dialCode: "+43", flag: "🇦🇹" },
-  { name: "Belgique", code: "BE", dialCode: "+32", flag: "🇧🇪" },
   { name: "Brésil", code: "BR", dialCode: "+55", flag: "🇧🇷" },
-  { name: "Canada", code: "CA", dialCode: "+1", flag: "🇨🇦" },
   { name: "Chili", code: "CL", dialCode: "+56", flag: "🇨🇱" },
   { name: "Chine", code: "CN", dialCode: "+86", flag: "🇨🇳" },
   { name: "Colombie", code: "CO", dialCode: "+57", flag: "🇨🇴" },
   { name: "Corée du Sud", code: "KR", dialCode: "+82", flag: "🇰🇷" },
-  { name: "Espagne", code: "ES", dialCode: "+34", flag: "🇪🇸" },
-  { name: "États-Unis", code: "US", dialCode: "+1", flag: "🇺🇸" },
-  { name: "France", code: "FR", dialCode: "+33", flag: "🇫🇷" },
   { name: "Inde", code: "IN", dialCode: "+91", flag: "🇮🇳" },
   { name: "Indonésie", code: "ID", dialCode: "+62", flag: "🇮🇩" },
-  { name: "Italie", code: "IT", dialCode: "+39", flag: "🇮🇹" },
   { name: "Japon", code: "JP", dialCode: "+81", flag: "🇯🇵" },
   { name: "Mexique", code: "MX", dialCode: "+52", flag: "🇲🇽" },
-  { name: "Norvège", code: "NO", dialCode: "+47", flag: "🇳🇴" },
   { name: "Nouvelle-Zélande", code: "NZ", dialCode: "+64", flag: "🇳🇿" },
-  { name: "Pays-Bas", code: "NL", dialCode: "+31", flag: "🇳🇱" },
-  { name: "Portugal", code: "PT", dialCode: "+351", flag: "🇵🇹" },
-  { name: "Royaume-Uni", code: "GB", dialCode: "+44", flag: "🇬🇧" },
   { name: "Russie", code: "RU", dialCode: "+7", flag: "🇷🇺" },
-  { name: "Suède", code: "SE", dialCode: "+46", flag: "🇸🇪" },
-  { name: "Suisse", code: "CH", dialCode: "+41", flag: "🇨🇭" },
   { name: "Thaïlande", code: "TH", dialCode: "+66", flag: "🇹🇭" },
   { name: "Turquie", code: "TR", dialCode: "+90", flag: "🇹🇷" },
 ];
@@ -111,4 +115,17 @@ export function getAfricanCountries(): Country[] {
 // Obtenir tous les pays
 export function getAllCountries(): Country[] {
   return countries;
+}
+
+// Obtenir les indicatifs téléphoniques avec priorité aux pays africains
+export function getPhoneIndicatives(): Country[] {
+  const africanCountries = countries.filter(country => country.isAfrican === true);
+  const popularCountries = countries.filter(country => 
+    !country.isAfrican && ['FR', 'RO', 'IT', 'ES', 'DE', 'BE', 'CH', 'PT', 'GB', 'CA', 'US'].includes(country.code)
+  );
+  const otherCountries = countries.filter(country => 
+    !country.isAfrican && !['FR', 'RO', 'IT', 'ES', 'DE', 'BE', 'CH', 'PT', 'GB', 'CA', 'US'].includes(country.code)
+  );
+  
+  return [...africanCountries, ...popularCountries, ...otherCountries];
 }

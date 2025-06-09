@@ -35,24 +35,19 @@ import {
   CheckCircle,
   Globe,
   Shield,
-  Star
+  Star,
+  ArrowLeft,
+  AlertCircle,
+  Check
 } from 'lucide-react';
-
-// Données exemple
-const countries = [
-  { code: "FR", name: "France", flag: "🇫🇷" },
-  { code: "BE", name: "Belgique", flag: "🇧🇪" },
-  { code: "CH", name: "Suisse", flag: "🇨🇭" },
-  { code: "CA", name: "Canada", flag: "🇨🇦" },
-  { code: "LU", name: "Luxembourg", flag: "🇱🇺" },
-  { code: "MC", name: "Monaco", flag: "🇲🇨" }
-];
+import { getPhoneIndicatives, getAfricanCountries, countries } from '@/data/countries';
 
 const languages = [
   { id: "fr", name: "Français", flag: "🇫🇷", level: "Natif" },
   { id: "en", name: "Anglais", flag: "🇬🇧", level: "Courant" },
   { id: "es", name: "Espagnol", flag: "🇪🇸", level: "Avancé" },
   { id: "pt", name: "Portugais", flag: "🇵🇹", level: "Intermédiaire" },
+  { id: "ar", name: "Arabe", flag: "🇸🇦", level: "Courant" },
   { id: "ln", name: "Lingala", flag: "🇨🇩", level: "Natif" },
   { id: "kt", name: "Kituba", flag: "🇨🇬", level: "Courant" },
   { id: "kg", name: "Kigongo", flag: "🇦🇴", level: "Avancé" },
@@ -60,16 +55,14 @@ const languages = [
   { id: "wo", name: "Wolof", flag: "🇸🇳", level: "Natif" },
   { id: "bm", name: "Bambara", flag: "🇲🇱", level: "Courant" },
   { id: "ha", name: "Hausa", flag: "🇳🇬", level: "Avancé" },
-  { id: "yo", name: "Yoruba", flag: "🇳🇬", level: "Courant" }
-];
-
-const phoneIndicatives = [
-  { code: "+33", country: "France", flag: "🇫🇷" },
-  { code: "+32", country: "Belgique", flag: "🇧🇪" },
-  { code: "+41", country: "Suisse", flag: "🇨🇭" },
-  { code: "+1", country: "Canada", flag: "🇨🇦" },
-  { code: "+352", country: "Luxembourg", flag: "🇱🇺" },
-  { code: "+377", country: "Monaco", flag: "🇲🇨" }
+  { id: "yo", name: "Yoruba", flag: "🇳🇬", level: "Courant" },
+  { id: "am", name: "Amharique", flag: "🇪🇹", level: "Avancé" },
+  { id: "ti", name: "Tigrinya", flag: "🇪🇷", level: "Courant" },
+  { id: "om", name: "Oromo", flag: "🇪🇹", level: "Intermédiaire" },
+  { id: "so", name: "Somali", flag: "🇸🇴", level: "Courant" },
+  { id: "mg", name: "Malgache", flag: "🇲🇬", level: "Natif" },
+  { id: "zu", name: "Zulu", flag: "🇿🇦", level: "Avancé" },
+  { id: "xh", name: "Xhosa", flag: "🇿🇦", level: "Courant" }
 ];
 
 // Schéma de validation
@@ -94,14 +87,14 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [step, setStep] = useState(1);
-  const totalSteps = 3;
+  const totalSteps = 4;
   
   // Initialiser le formulaire
   const form = useForm<z.infer<typeof profileCompletionSchema>>({
     resolver: zodResolver(profileCompletionSchema),
     defaultValues: {
-      country: "",
-      phoneIndicative: "",
+      country: "CM", // Cameroun par défaut
+      phoneIndicative: "+237",
       phoneNumber: "",
       languages: [],
       hourlyRate: "30",
@@ -137,8 +130,20 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
     });
   };
 
-  const nextStep = () => {
-    if (step < totalSteps) setStep(step + 1);
+  const nextStep = async () => {
+    let isValid = true;
+    
+    if (step === 1) {
+      // Pas de validation nécessaire pour l'étape 1 (photo optionnelle)
+    } else if (step === 2) {
+      isValid = await form.trigger(['country', 'phoneIndicative', 'phoneNumber']);
+    } else if (step === 3) {
+      isValid = await form.trigger(['languages', 'hourlyRate']);
+    }
+    
+    if (isValid && step < totalSteps) {
+      setStep(step + 1);
+    }
   };
 
   const prevStep = () => {
@@ -155,6 +160,9 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
     
     onComplete();
   };
+
+  const phoneIndicatives = getPhoneIndicatives();
+  const africanCountries = getAfricanCountries();
 
   const getStepContent = () => {
     switch (step) {
@@ -194,11 +202,30 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
               </div>
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-gray-900">Photo professionnelle</h3>
-                <p className="text-sm text-gray-500">Montrez votre professionnalisme</p>
+                <p className="text-sm text-gray-500">Montrez votre professionnalisme (optionnel)</p>
               </div>
             </div>
 
-            {/* Contact Information */}
+            <div className="bg-teal-50 p-4 rounded-lg border border-teal-200">
+              <div className="flex items-start space-x-3">
+                <AlertCircle className="w-5 h-5 text-teal-600 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-teal-700">
+                  <p className="font-medium mb-1">Bienvenue dans votre espace interprète !</p>
+                  <p>Nous allons configurer votre profil professionnel pour vous connecter avec des patients et médecins qui ont besoin de vos services d'interprétation.</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        );
+
+      case 2:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="space-y-6"
+          >
+            {/* Country Information */}
             <div className="space-y-6">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
@@ -218,20 +245,30 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                     <FormLabel>Pays de résidence</FormLabel>
                     <Select 
                       onValueChange={field.onChange} 
-                      defaultValue={field.value}
+                      value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger className="border-gray-200 focus:border-teal-500 h-12">
                           <SelectValue placeholder="Sélectionnez votre pays" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
-                        {countries.map((country) => (
+                      <SelectContent className="max-h-[300px]">
+                        <div className="mb-2 px-2 py-1.5 text-sm font-semibold text-gray-600 bg-gray-50">Afrique</div>
+                        {africanCountries.map((country) => (
                           <SelectItem key={country.code} value={country.code}>
                             <span className="mr-2">{country.flag}</span>
                             {country.name}
                           </SelectItem>
                         ))}
+                        <div className="mt-2 mb-2 px-2 py-1.5 text-sm font-semibold text-gray-600 bg-gray-50">Autres pays</div>
+                        {countries
+                          .filter(country => !country.isAfrican)
+                          .map((country) => (
+                            <SelectItem key={country.code} value={country.code}>
+                              <span className="mr-2">{country.flag}</span>
+                              {country.name}
+                            </SelectItem>
+                          ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -258,21 +295,29 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                   name="phoneIndicative"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Indicatif</FormLabel>
+                      <FormLabel>Indicatif pays</FormLabel>
                       <Select 
                         onValueChange={field.onChange} 
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger className="border-gray-200 focus:border-teal-500 h-12">
                             <SelectValue placeholder="+" />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent>
-                          {phoneIndicatives.map((indicative) => (
-                            <SelectItem key={indicative.code} value={indicative.code}>
-                              <span className="mr-2">{indicative.flag}</span>
-                              {indicative.code}
+                        <SelectContent className="max-h-[300px]">
+                          <div className="mb-2 px-2 py-1.5 text-sm font-semibold text-gray-600 bg-gray-50">Pays Africains</div>
+                          {phoneIndicatives.filter(country => country.isAfrican).map((country) => (
+                            <SelectItem key={country.code} value={country.dialCode}>
+                              <span className="mr-2">{country.flag}</span>
+                              {country.dialCode} ({country.name})
+                            </SelectItem>
+                          ))}
+                          <div className="mt-2 mb-2 px-2 py-1.5 text-sm font-semibold text-gray-600 bg-gray-50">Autres pays</div>
+                          {phoneIndicatives.filter(country => !country.isAfrican).map((country) => (
+                            <SelectItem key={country.code} value={country.dialCode}>
+                              <span className="mr-2">{country.flag}</span>
+                              {country.dialCode} ({country.name})
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -302,7 +347,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
           </motion.div>
         );
 
-      case 2:
+      case 3:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -355,7 +400,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                               </div>
                             </div>
                             {selectedLanguages.includes(language.id) && (
-                              <CheckCircle size={18} className="text-teal-600" />
+                              <Check size={18} className="text-teal-600" />
                             )}
                           </Button>
                         </motion.div>
@@ -403,7 +448,7 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
           </motion.div>
         );
 
-      case 3:
+      case 4:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -476,22 +521,25 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
             </motion.div>
             <CardTitle className="text-3xl font-bold text-gray-900">
               {step === 1 && "Votre profil professionnel"}
-              {step === 2 && "Vos compétences linguistiques"}
-              {step === 3 && "Félicitations !"}
+              {step === 2 && "Informations de contact"}
+              {step === 3 && "Compétences linguistiques"}
+              {step === 4 && "Félicitations !"}
             </CardTitle>
             <CardDescription className="text-gray-600 mt-2 text-lg">
-              {step === 1 && "Configurez vos informations de contact"}
-              {step === 2 && "Définissez vos langues et votre tarification"}
-              {step === 3 && "Votre profil d'interprète est maintenant actif"}
+              {step === 1 && "Commençons par votre photo professionnelle"}
+              {step === 2 && "Configurez vos informations de contact"}
+              {step === 3 && "Définissez vos langues et votre tarification"}
+              {step === 4 && "Votre profil d'interprète est maintenant actif"}
             </CardDescription>
 
             <div className="flex justify-center mt-4 space-x-2">
               {[...Array(totalSteps)].map((_, index) => (
-                <div
+                <button
                   key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index + 1 <= step ? "bg-teal-500" : "bg-gray-200"
-                  }`}
+                  onClick={() => index + 1 <= step && setStep(index + 1)}
+                  className={`w-8 h-2 rounded-full transition-all duration-300 ${
+                    index + 1 <= step ? "bg-teal-500 cursor-pointer hover:bg-teal-600" : "bg-gray-200"
+                  } ${index + 1 === step ? "ring-2 ring-teal-300" : ""}`}
                 />
               ))}
             </div>
@@ -503,25 +551,26 @@ export const InterpreterProfileCompletion: React.FC<InterpreterProfileCompletion
                 {getStepContent()}
                 
                 <div className="flex justify-between pt-6">
-                  {step > 1 && step < 3 && (
+                  {step > 1 && step < 4 && (
                     <Button 
                       type="button" 
                       variant="outline"
                       onClick={prevStep}
-                      className="px-6 py-3 h-12 border-gray-300 hover:bg-gray-50"
+                      className="px-6 py-3 h-12 border-gray-300 hover:bg-gray-50 flex items-center space-x-2"
                     >
-                      Précédent
+                      <ArrowLeft size={16} />
+                      <span>Précédent</span>
                     </Button>
                   )}
                   
-                  <div className={step === 1 || step === 3 ? "ml-auto" : ""}>
-                    {step < 3 ? (
+                  <div className={step === 1 || step === 4 ? "ml-auto" : ""}>
+                    {step < 4 ? (
                       <Button 
                         type="button"
                         onClick={nextStep}
                         className="px-8 py-3 h-12 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
                       >
-                        {step === 2 ? "Finaliser" : "Continuer"}
+                        {step === 3 ? "Finaliser" : "Continuer"}
                       </Button>
                     ) : (
                       <Button 
