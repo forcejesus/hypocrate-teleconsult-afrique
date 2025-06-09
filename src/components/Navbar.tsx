@@ -119,28 +119,6 @@ const Navbar = () => {
                     Comment ça marche
                   </Link>
                 </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <Link 
-                    to="/nos-medecins" 
-                    className={`px-4 py-2 rounded-lg font-semibold text-base transition-all duration-200 ${isActive('/nos-medecins') 
-                      ? 'text-hypocrate-blue bg-blue-50' 
-                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
-                  >
-                    Notre équipe
-                  </Link>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <Link 
-                    to="/contact" 
-                    className={`px-4 py-2 rounded-lg font-semibold text-base transition-all duration-200 ${isActive('/contact') 
-                      ? 'text-hypocrate-blue bg-blue-50' 
-                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
-                  >
-                    Contact
-                  </Link>
-                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -209,26 +187,6 @@ const Navbar = () => {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Comment ça marche
-                  </Link>
-                  
-                  <Link 
-                    to="/nos-medecins" 
-                    className={`py-3 px-4 font-semibold text-base rounded-lg transition-all duration-200 ${isActive('/nos-medecins') 
-                      ? 'text-hypocrate-blue bg-blue-50' 
-                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Notre équipe
-                  </Link>
-
-                  <Link 
-                    to="/contact" 
-                    className={`py-3 px-4 font-semibold text-base rounded-lg transition-all duration-200 ${isActive('/contact') 
-                      ? 'text-hypocrate-blue bg-blue-50' 
-                      : 'text-gray-700 hover:text-hypocrate-blue hover:bg-blue-50'}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Contact
                   </Link>
                   
                   <div className="flex flex-col space-y-3 pt-6 border-t">
