@@ -1,12 +1,9 @@
-
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Mail, MapPin, Phone } from 'lucide-react';
-
 const Contact = () => {
-  return (
-    <div className="flex flex-col min-h-screen">
+  return <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="flex-grow">
         {/* Hero Section */}
@@ -71,21 +68,8 @@ const Contact = () => {
               </div>
               
               <div className="mt-10">
-                <h3 className="font-semibold text-lg mb-3">Horaires d'ouverture</h3>
-                <ul className="space-y-2 text-gray-600">
-                  <li className="flex justify-between">
-                    <span>Lundi - Vendredi</span>
-                    <span>9:00 - 20:00</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Samedi</span>
-                    <span>9:00 - 18:00</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Dimanche</span>
-                    <span>Fermé</span>
-                  </li>
-                </ul>
+                
+                
               </div>
             </div>
             
@@ -98,48 +82,28 @@ const Contact = () => {
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Nom complet
                   </label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue"
-                    placeholder="Votre nom et prénom"
-                  />
+                  <input type="text" id="name" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue" placeholder="Votre nom et prénom" />
                 </div>
                 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Adresse e-mail
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue"
-                    placeholder="votre@email.com"
-                  />
+                  <input type="email" id="email" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue" placeholder="votre@email.com" />
                 </div>
                 
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
                     Sujet
                   </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue"
-                    placeholder="L'objet de votre message"
-                  />
+                  <input type="text" id="subject" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue" placeholder="L'objet de votre message" />
                 </div>
                 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                     Message
                   </label>
-                  <textarea
-                    id="message"
-                    rows={5}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue"
-                    placeholder="Votre message..."
-                  ></textarea>
+                  <textarea id="message" rows={5} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-hypocrate-blue focus:border-hypocrate-blue" placeholder="Votre message..."></textarea>
                 </div>
                 
                 <Button className="w-full bg-hypocrate-blue hover:bg-blue-600 text-white">
@@ -151,8 +115,6 @@ const Contact = () => {
         </div>
       </main>
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Contact;
